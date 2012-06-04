@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="CoAppPackageMaker.Views.PackageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"          
+             xmlns:Base="clr-namespace:CoAppPackageMaker.ViewModels.Base" mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <Grid d:DataContext="{d:DesignInstance Base:MainWindowViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />           
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Content="Name" Grid.Row="0" Margin="5"/>
+        <Label Content="Display Name" Grid.Row="1" Margin="5"/>
+        <Label Content="Arhitecture" Grid.Row="2"  Margin="5"/>
+        <Label Content="Version" Grid.Row="3"  Margin="5"/>
+        <Label Content="Feed" Grid.Row="4"  Margin="5"/>
+        <Label Content="Location" Grid.Row="5"  Margin="5"/>
+        <Label Content="Publisher" Grid.Row="6"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding PackageViewModel.Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PackageViewModel.DisplayName, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding PackageViewModel.Architecture, Mode=TwoWay}"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding PackageViewModel.Version, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding PackageViewModel.Feed, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding PackageViewModel.Location, Mode=TwoWay}"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding PackageViewModel.Publisher, Mode=TwoWay}"  Margin="5"/>
+
+
+
+
+    </Grid>
+</UserControl>
