@@ -15,9 +15,8 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
           ReplaceSignature=reader.GetRulesPropertyValueByName(signing, "replace-signature")=="true";
           Include = new ObservableCollection<string>(reader.GetRulesPropertyValues(signing, "include"));
           ObservableCollection<string> values = new ObservableCollection<string>(reader.GetRulesPropertyValues(signing, "attributes"));
-        
-          reader.ReadSigning();
-        }
+         // ObservableCollection<string> values2 = new ObservableCollection<string>(reader.GetRulesPropertyValues("assembly", "include")); la fel pt application
+         }
 
         #region Properties
         private string _companyAttribute;

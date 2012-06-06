@@ -12,25 +12,24 @@ namespace CoAppPackageMaker.ViewModels
 {
     class ApplicationRoleViewModel:ExtraPropertiesViewModelBase
     {
-
-        private  ObservableCollection<string> _includeFiles;
-       
-
-        public ApplicationRoleViewModel(string appName)
-        { 
-        
-        }
-
-        //  All files listed here will be included in the application directory.
-        public ObservableCollection<string> IncludeFiles
-        {
-            get { return _includeFiles; }
-            set
+        //with paramater name?
+        public ApplicationRoleViewModel(PackageReader reader)
             {
-                _includeFiles = value;
-                OnPropertyChanged("IncludeFiles");
+                _include = new ObservableCollection<string>(reader.GetRulesPropertyValues("application", "include"));
+              
             }
-        }
+
+            private ObservableCollection<string> _include;
+
+            public ObservableCollection<string> Include
+            {
+                get { return _include; }
+                set
+                {
+                    _include = value;
+                    OnPropertyChanged("Include");
+                }
+            }
 
     }
 }

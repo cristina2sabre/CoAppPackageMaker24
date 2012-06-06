@@ -68,12 +68,30 @@
                         <TabItem Header="License" Name="tabItem13" >
                             <Views:LicenseView Margin="5,10,5,5"/>
                         </TabItem>
+                        <TabItem Header="Compatibility Policy" Name="tabItem14" >
+                            <Views:CompatibilityPolicy Margin="5,10,5,5"/>
+                        </TabItem>
+                       
                     </TabControl>
                 </Grid>
             </TabItem>
             <TabItem Header="Package Roles rules" Name="tabItem2">
-                <Grid />
-            </TabItem>
+               
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0*" />
+                            <RowDefinition Height="339*" />
+                        </Grid.RowDefinitions>
+                        <TabControl Height="313" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControlr2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">              
+                            <TabItem Header="Application" Name="tabItem17" >
+                                <Views:ApplicationView Margin="5,10,5,5"/>
+                            </TabItem>
+                            <TabItem Header="Assembly" Name="tabItem18" >
+                                <Views:AssemblyView Margin="5,10,5,5"/>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                </TabItem>
             <TabItem Header="Custom Rules" Name="tabItem3">
                 <Grid />
             </TabItem>

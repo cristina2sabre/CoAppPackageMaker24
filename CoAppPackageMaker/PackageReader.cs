@@ -92,20 +92,7 @@ namespace CoAppPackageMaker
 
             return result;
         }
-        public List<string> ReadSigning()
-        {
-            List<string> res = new List<string>();
-            var fileRules = _packageSource.SigningRules;
-            foreach (Rule rule in fileRules)
-            {
-             List< object> r=   rule.Parent.GetCollection("attributes").ToList();
-             res = rule.PropertyNames.ToList();
-            res=    GetRulesPropertyValues("signing", "attributes").ToList();
-                //res.Add(d);
-             }
-
-            return res;
-        }
+       
 
         public string GetFilesRulesPropertyValueByParameterAndName(string parameter, string propertyName)
         {

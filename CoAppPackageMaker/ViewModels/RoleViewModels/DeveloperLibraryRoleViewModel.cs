@@ -18,9 +18,9 @@ namespace CoAppPackageMaker.ViewModels
          private ObservableCollection<string> _docs;
 
 
-         public DeveloperLibraryRoleViewModel(string libraryName)
-        { 
-        
+         public DeveloperLibraryRoleViewModel(PackageReader reader)
+        {
+            //_libraries = new ObservableCollection<string>(reader.GetRulesPropertyValues("developer-library", "reference-assemblies"));
         }
 
        

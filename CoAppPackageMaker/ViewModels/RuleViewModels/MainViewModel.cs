@@ -51,9 +51,9 @@ namespace CoAppPackageMaker.ViewModels.Base
 
           //}
 
-         // PathToFile = "D:\\P\\COPKG\\test2.autopkg";
-     // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-        PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+        // PathToFile = "D:\\P\\COPKG\\test2.autopkg";
+    // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
+     PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
 
           
          if (PathToFile != null && File.Exists(PathToFile))
@@ -69,24 +69,18 @@ namespace CoAppPackageMaker.ViewModels.Base
             _dictionaryHistory = new Dictionary<string, List<string>>();
             PackageReader reader = new PackageReader();
             reader.Read(PathToFile);
-            ManifestViewModel k = new ManifestViewModel(reader);
-            _manifestViewModel = k;
-            SigningViewModel signingViewModel= new SigningViewModel(reader);
-            _signingViewModel = signingViewModel;
-            RequiresViewModel requiresViewModel=new RequiresViewModel(reader);
-            _requiresViewModel = requiresViewModel;
+            _packageViewModel = new PackageViewModel(reader);
+            _metadataViewModel = new MetadataViewModel(reader);
+            _manifestViewModel = new ManifestViewModel(reader);
+            _signingViewModel = new SigningViewModel(reader);
+            _requiresViewModel = new RequiresViewModel(reader);
             _defineViewModel=new DefineViewModel(reader);
             _licenseViewModel=new LicenseViewModel(reader);
-            _packageCompositionViewModel = new PackageCompositionViewModel()
-            
-            {
-                Symlinks = reader.GetRulesPropertyValueByName("package-composition", "symlinks")
-            };
-            _ruleNames = reader.Rules;
-            foreach (string str in _ruleNames)
-            {
-                CreateModels(reader, str);
-            }
+            _compatibilityPolicy = new CompatibilityPolicy(reader);
+            _applicationRoleViewModel = new ApplicationRoleViewModel(reader);
+            _assemblyRoleViewModel = new AssemblyRoleViewModel(reader);
+            _packageCompositionViewModel = new PackageCompositionViewModel(reader);
+            _filesViewModel = new FilesViewModel(reader);
 
         }
 
@@ -101,43 +95,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
         }
 
-        
-        private void CreateModels(PackageReader reader, string name)
-        {
-            switch (name)
-            {
-                case "package":
-                    _packageViewModel = new PackageViewModel(reader);
-                    break;
-                case "metadata":
-                    _metadataViewModel = new MetadataViewModel(reader);
-                  break;
-                case "files":
-                  _filesViewModel = new FilesViewModel(reader);
-                 break;
-                default:
-                    Console.WriteLine("Invalid name");
-                    break;
-            }
-
-
-
-            _requiresViewModel = new RequiresViewModel(reader);
-         
-
-            _packageCompositionViewModel = new PackageCompositionViewModel()
-            {
-                Symlinks = reader.GetRulesPropertyValueByName("package-composition", "symlinks")
-            };
-
-
-            _packageCompositionViewModel = new PackageCompositionViewModel()
-            {
-                Symlinks = reader.GetRulesPropertyValueByName("faux-pax", "downloads")
-            };
-           
-        }
-
+       
         #region ViewModels
 
       
@@ -258,11 +216,46 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
         }
 
+
+        private CompatibilityPolicy _compatibilityPolicy;
+
+        public CompatibilityPolicy CompatibilityPolicy
+        {
+            get { return _compatibilityPolicy; }
+            set
+            {
+                _compatibilityPolicy = value;
+                OnPropertyChanged("CompatibilityPolicy");
+            }
+        }
+
+        private ApplicationRoleViewModel _applicationRoleViewModel;
+
+        public ApplicationRoleViewModel ApplicationRoleViewModel
+        {
+            get { return _applicationRoleViewModel; }
+            set
+            {
+                _applicationRoleViewModel = value;
+                OnPropertyChanged("ApplicationRoleViewModel");
+            }
+        }
+
+        private AssemblyRoleViewModel _assemblyRoleViewModel;
+
+        public AssemblyRoleViewModel AssemblyRoleViewModel
+        {
+            get { return _assemblyRoleViewModel; }
+            set
+            {
+                _assemblyRoleViewModel = value;
+                OnPropertyChanged("AssemblyRoleViewModel");
+            }
+        }
+
         
-
+        
         #endregion ViewModels
-
-       
 
        
          public ObservableCollection<string> RulesNames

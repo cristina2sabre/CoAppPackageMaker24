@@ -9,24 +9,22 @@ namespace CoAppPackageMaker.ViewModels
     //This role specifies shared libraries which are dynamically linked to by other assemblies and applications.
     class AssemblyRoleViewModel:ExtraPropertiesViewModelBase
     {
-
-         private  ObservableCollection<string> _setOfFiles;
-
-
-         public AssemblyRoleViewModel(string assemblyName)
-         {
-
-         }
-
-        // These files will be stored in Side-by-Side as a versioned assembly named <AssemblyName>
-        public ObservableCollection<string> SetOfFiles
-        {
-            get { return _setOfFiles; }
-            set
+        //withparam name?
+        public AssemblyRoleViewModel(PackageReader reader)
             {
-                _setOfFiles = value;
-                OnPropertyChanged("SetOfFiles");
+                _include = new ObservableCollection<string>(reader.GetRulesPropertyValues("assembly", "include"));
             }
-        }
+
+            private ObservableCollection<string> _include;
+
+            public ObservableCollection<string> Include
+            {
+                get { return _include; }
+                set
+                {
+                    _include = value;
+                    OnPropertyChanged("Include");
+                }
+            }
     }
 }

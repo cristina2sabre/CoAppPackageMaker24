@@ -9,8 +9,13 @@ namespace CoAppPackageMaker.ViewModels
 
     class PackageCompositionViewModel : ExtraPropertiesViewModelBase
     {
+        public PackageCompositionViewModel(PackageReader reader)
+        {
 
-     private string _symlinks;
+            Symlinks = reader.GetRulesPropertyValueByName("package-composition", "symlinks");
+        }
+
+        private string _symlinks;
      private string _fileCopy;
 
         public string Symlinks
