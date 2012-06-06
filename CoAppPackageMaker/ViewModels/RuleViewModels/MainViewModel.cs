@@ -27,38 +27,39 @@ namespace CoAppPackageMaker.ViewModels.Base
         private RequiresViewModel _requiresViewModel;
         private PackageCompositionViewModel _packageCompositionViewModel;
         private FilesViewModel _filesViewModel;
+        private ManifestViewModel _manifestViewModel;
        
         public MainWindowViewModel()
         {
+          //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+          //  PackageReader reader = new PackageReader();
+          //  reader.Read(PathToFile);
 
+          //  _ruleNames = reader.Rules;
+          //  Dictionary<string, IFactory> dic = new Dictionary<string, IFactory>();
+          //  dic.Add("package", new PackageViewModelFactory());
+          //  dic.Add("files",new FilesViewModelFactory());
+          //  foreach (string str in _ruleNames)
+          //  {
+          //      if (dic.ContainsKey(str))
+          //      {
+          //          object instance = (dic[str].CreateInstance(reader));
+          //          string name = instance.GetType().Name;
+          //          var p = GetType().GetProperty(name);
+          //          p.SetValue(this, instance, null);
+          //      }
 
-            PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-            PackageReader reader = new PackageReader();
-            reader.Read(PathToFile);
-
-            _ruleNames = reader.Rules;
-            Dictionary<string, IFactory> dic = new Dictionary<string, IFactory>();
-            dic.Add("package", new PackageViewModelFactory());
-
-            foreach (string str in _ruleNames)
-            {
-                if (dic.ContainsKey(str))
-                {
-                    object instance = (dic[str].CreateInstance(reader));
-                    string name = instance.GetType().Name;
-                    var p = GetType().GetProperty(name);
-                    p.SetValue(this, instance, null);
-                }
-
-            }
+          //}
 
          // PathToFile = "D:\\P\\COPKG\\test2.autopkg";
-         PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-         
-        
+     // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
+        PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+
+          
          if (PathToFile != null && File.Exists(PathToFile))
          {
-            LoadData();
+           
+         LoadData();
          }  
            
         }
@@ -68,6 +69,19 @@ namespace CoAppPackageMaker.ViewModels.Base
             _dictionaryHistory = new Dictionary<string, List<string>>();
             PackageReader reader = new PackageReader();
             reader.Read(PathToFile);
+            ManifestViewModel k = new ManifestViewModel(reader);
+            _manifestViewModel = k;
+            SigningViewModel signingViewModel= new SigningViewModel(reader);
+            _signingViewModel = signingViewModel;
+            RequiresViewModel requiresViewModel=new RequiresViewModel(reader);
+            _requiresViewModel = requiresViewModel;
+            _defineViewModel=new DefineViewModel(reader);
+            _licenseViewModel=new LicenseViewModel(reader);
+            _packageCompositionViewModel = new PackageCompositionViewModel()
+            
+            {
+                Symlinks = reader.GetRulesPropertyValueByName("package-composition", "symlinks")
+            };
             _ruleNames = reader.Rules;
             foreach (string str in _ruleNames)
             {
@@ -108,10 +122,8 @@ namespace CoAppPackageMaker.ViewModels.Base
 
 
 
-            _requiresViewModel = new RequiresViewModel()
-            {
-                RequiredPackages = new ObservableCollection<Package>()
-            };
+            _requiresViewModel = new RequiresViewModel(reader);
+         
 
             _packageCompositionViewModel = new PackageCompositionViewModel()
             {
@@ -195,6 +207,58 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
         }
 
+        public ManifestViewModel ManifestViewModel
+        {
+            get
+            {
+                return _manifestViewModel;
+            }
+            set
+            {
+               _manifestViewModel = value;
+                OnPropertyChanged("ManifestViewModel");
+            }
+        }
+
+        private SigningViewModel _signingViewModel;
+        public SigningViewModel SigningViewModel
+        {
+            get
+            {
+                return _signingViewModel;
+            }
+            set
+            {
+                _signingViewModel = value;
+                OnPropertyChanged("SigningViewModel");
+            }
+        }
+
+        private DefineViewModel _defineViewModel;
+
+        public DefineViewModel DefineViewModel
+        {
+            get { return _defineViewModel; }
+            set
+            {
+                _defineViewModel = value;
+                OnPropertyChanged("DefineViewModel");
+            }
+        }
+
+        private LicenseViewModel _licenseViewModel;
+
+        public LicenseViewModel LicenseViewModel
+        {
+            get { return _licenseViewModel; }
+            set
+            {
+                _licenseViewModel = value;
+                OnPropertyChanged("LicenseViewModel");
+            }
+        }
+
+        
 
         #endregion ViewModels
 

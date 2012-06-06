@@ -36,17 +36,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CoApp.Client, Version=1.2.0.364, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
+    <Reference Include="CoApp.Client, Version=1.2.0.384, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp-1.2.0.364-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Client.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp-1.2.0.384-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Client.dll</HintPath>
     </Reference>
     <Reference Include="CoApp.Developer.Toolkit, Version=1.2.0.173, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.173-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Developer.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="CoApp.Packaging, Version=1.2.0.236, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
+    <Reference Include="CoApp.Packaging, Version=1.2.0.258, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.236-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Packaging.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.258-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="CoApp.Toolkit, Version=1.2.0.296, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -78,7 +78,9 @@
     <Compile Include="ViewModels\RoleViewModels\ApplicationRoleViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\AssemblyRoleViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
+    <Compile Include="ViewModels\RuleViewModels\DefineViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\FilesViewModel.cs" />
+    <Compile Include="ViewModels\RuleViewModels\LicenseViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\DeveloperLibraryRoleViewModel.cs" />
     <Compile Include="ViewModels\Base\ExtraPropertiesViewModel.cs" />
@@ -89,8 +91,18 @@
     <Compile Include="ViewModels\RuleViewModels\PackageViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\RequiresViewModel.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModels\RuleViewModels\SigningViewModel.cs" />
+    <Compile Include="Views\DefineView.xaml.cs">
+      <DependentUpon>DefineView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Files.xaml.cs">
       <DependentUpon>Files.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LicenseView.xaml.cs">
+      <DependentUpon>LicenseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManifestView.xaml.cs">
+      <DependentUpon>ManifestView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MetadataView.xaml.cs">
       <DependentUpon>MetadataView.xaml</DependentUpon>
@@ -100,6 +112,12 @@
     </Compile>
     <Compile Include="Views\PackageView.xaml.cs">
       <DependentUpon>PackageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RequiresView.xaml.cs">
+      <DependentUpon>RequiresView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SigningView.xaml.cs">
+      <DependentUpon>SigningView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -113,7 +131,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\DefineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Files.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LicenseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManifestView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -126,6 +156,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PackageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RequiresView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SigningView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

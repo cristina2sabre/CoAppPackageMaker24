@@ -8,31 +8,83 @@ namespace CoAppPackageMaker.ViewModels
 {
     class ManifestViewModel : ExtraPropertiesViewModelBase
     {
-        private ObservableCollection<string> _assembly;
-        private ObservableCollection<string> _include;
 
-        public ManifestViewModel(string name) { 
-        
-        }
-        
-
-        public ObservableCollection<string> Assembly
+        private ObservableCollection<ManifestItemViewModel> _manifestCollection;
+        public ObservableCollection<ManifestItemViewModel> ManifestCollection
         {
-            get { return _assembly; }
+            get { return _manifestCollection; }
             set
             {
-                _assembly = value;
-                OnPropertyChanged("Assembly");
+                _manifestCollection = value;
+                OnPropertyChanged("ManifestCollection");
             }
         }
 
-        public ObservableCollection<string> Include
+
+        public ManifestViewModel(PackageReader reader)
         {
-            get { return _include; }
-            set
+            _manifestCollection = new ObservableCollection<ManifestItemViewModel>();
+
+            foreach (string parameter in reader.ReadManifestParameters())
             {
-                _include = value;
-                OnPropertyChanged("Include");
+
+                ObservableCollection<string> includeCollection = new ObservableCollection<string>(reader.GetManifestIncludeList(parameter, "include"));
+                ObservableCollection<string> assemblyCollection = new ObservableCollection<string>(reader.GetManifestIncludeList(parameter, "assembly"));
+                ManifestItemViewModel model = new ManifestItemViewModel(parameter)
+                {
+                    
+                    Include = includeCollection,
+                    Assembly = assemblyCollection
+                };
+                _manifestCollection.Add(model);
+            }
+
+        }
+        
+
+
+
+        public class ManifestItemViewModel : ViewModelBase
+        {
+
+
+            private ObservableCollection<string> _assembly;
+            private ObservableCollection<string> _include;
+
+
+            public ObservableCollection<string> Assembly
+            {
+                get { return _assembly; }
+                set
+                {
+                    _assembly = value;
+                    OnPropertyChanged("Assembly");
+                }
+            }
+
+            public ObservableCollection<string> Include
+            {
+                get { return _include; }
+                set
+                {
+                    _include = value;
+                    OnPropertyChanged("Include");
+                }
+            }
+            public ManifestItemViewModel(string parameter)
+            {
+                Name = String.Format("Manifest[{0}]", parameter);
+            }
+
+            private string _name;
+            public string Name
+            {
+                get { return _name; }
+                set
+                {
+                    _name = value;
+                    OnPropertyChanged("Name");
+                }
             }
         }
     }

@@ -45,17 +45,28 @@
                         <TabItem Header="Metadata" Name="tabItem5">
                             <Views:MetadataView Margin="5,10,5,5"/>                          
                         </TabItem>
-                        <TabItem Header="Requires" Name="tabItem6">
-                            <Grid />
-                        </TabItem>
+                       
                         <TabItem Header="Manifest" Name="tabItem7">
-                            <Grid />
+                            <Views:ManifestView Margin="5,10,5,5"/>
                         </TabItem>
                         <TabItem Header="Files" Name="tabItem8">
                             <Views:Files  Margin="5,10,5,5"/>
                         </TabItem>
                         <TabItem Header="Package Composition" Name="tabItem9" >
                             <Views:PackageComposition Margin="5,10,5,5"/>
+                        </TabItem>
+                        <TabItem Header="Requires" Name="tabItem10" >
+                            <Views:RequiresView Margin="5,10,5,5"/>
+                        </TabItem>
+                        <TabItem Header="Signing" Name="tabItem11" >
+                            <Views:SigningView Margin="5,10,5,5"/>
+                        </TabItem>
+
+                        <TabItem Header="Define" Name="tabItem12" >
+                            <Views:DefineView Margin="5,10,5,5"/>
+                        </TabItem>
+                        <TabItem Header="License" Name="tabItem13" >
+                            <Views:LicenseView Margin="5,10,5,5"/>
                         </TabItem>
                     </TabControl>
                 </Grid>

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using CoApp.Developer.Toolkit.Scripting.Languages.PropertySheet;
 using CoApp.Packaging;
@@ -16,13 +17,13 @@ namespace CoAppPackageMaker
         private PackageSource _packageSource;
         public  void Read(string pathToSourceFile)
         {
-           _packageSource = new PackageSource();
+            _packageSource = new PackageSource(pathToSourceFile,new Dictionary<string, string>());
             _packageSource.SourceFile =pathToSourceFile;
       
             try
             {
                 
-               _packageSource.LoadPackageSourceData(_packageSource.SourceFile, "#");
+              // _packageSource.LoadPackageSourceData(_packageSource.SourceFile);
               PropertyRule a= _packageSource.AllRoles.GetRulesByName("faux-pax").GetProperty("downloads");
            
                 Console.WriteLine(a);
@@ -73,14 +74,37 @@ namespace CoAppPackageMaker
             foreach (Rule rule in fileRules)
             {
                 string ruleParameter = rule.Parameter;
-                result.Add(ruleParameter);
-
-                IEnumerable<string> resdult =
-                    _packageSource.FileRules.GetRulesByParameter(rule.Parameter).GetPropertyValues("include");
-                List<string> sfs = resdult.ToList();
+                result.Add(ruleParameter);  
             }
 
             return result;
+        }
+
+        public List<string> ReadManifestParameters()
+        {
+            List<string> result = new List<string>();
+            var fileRules = _packageSource.ManifestRules;
+            foreach (Rule rule in fileRules)
+            {
+                string ruleParameter = rule.Parameter;
+                result.Add(ruleParameter);
+            }
+
+            return result;
+        }
+        public List<string> ReadSigning()
+        {
+            List<string> res = new List<string>();
+            var fileRules = _packageSource.SigningRules;
+            foreach (Rule rule in fileRules)
+            {
+             List< object> r=   rule.Parent.GetCollection("attributes").ToList();
+             res = rule.PropertyNames.ToList();
+            res=    GetRulesPropertyValues("signing", "attributes").ToList();
+                //res.Add(d);
+             }
+
+            return res;
         }
 
         public string GetFilesRulesPropertyValueByParameterAndName(string parameter, string propertyName)
@@ -91,6 +115,12 @@ namespace CoAppPackageMaker
         public IEnumerable<string> GetFilesIncludeList(string parameter)
         {
             IEnumerable<string> result = _packageSource.FileRules.GetRulesByParameter(parameter).GetPropertyValues("include");
+            return result;
+        }
+        public IEnumerable<string> GetManifestIncludeList(string parameter, string propertyName)
+        {
+          
+            IEnumerable<string> result = _packageSource.ManifestRules.GetRulesByParameter(parameter).GetPropertyValues(propertyName);
             return result;
         }
 

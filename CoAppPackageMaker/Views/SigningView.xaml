@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="CoAppPackageMaker.Views.SigningView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Content="Attributes:" FontWeight="Bold" Grid.Row="0" Margin="5"/>
+        <Label Content="Company" Grid.Row="1" Margin="20,5,5,5"/>
+        <Label Content="Description" Grid.Row="2"  Margin="20,5,5,5"/>
+        <Label Content="Product-name" Grid.Row="3"  Margin="20,5,5,5"/>
+        <Label Content="Product-version" Grid.Row="4"  Margin="20,5,5,5"/>
+        <Label Content="File-version" Grid.Row="5"  Margin="20,5,5,5"/>
+        <Label Content="Replace-signature" Grid.Row="6" FontWeight="Bold" Margin="5,5,5,5"/>
+        <Label Content="Include" Grid.Row="7" FontWeight="Bold" Margin="5,5,5,5"/>
+
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SigningViewModel.CompanyAttribute , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" TextWrapping="Wrap" MaxHeight="100" />
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SigningViewModel.DescriptionAttribute , Mode=TwoWay}"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding  SigningViewModel.ProductNameAttribute , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding  SigningViewModel.ProductVersion , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding  SigningViewModel.FileVersionAttribute , Mode=TwoWay}"  Margin="5"/>
+        <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding  SigningViewModel.ReplaceSignature , Mode=TwoWay}"  Margin="5,11,5,5"/>
+        <ListBox Grid.Column="1" Grid.Row="7" ItemsSource="{Binding SigningViewModel.Include}" Margin="5"/>
+    </Grid>
+</UserControl>

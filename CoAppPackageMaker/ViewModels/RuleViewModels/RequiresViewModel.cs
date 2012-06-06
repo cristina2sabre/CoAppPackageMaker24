@@ -10,9 +10,15 @@ namespace CoAppPackageMaker.ViewModels
 {
     class RequiresViewModel : ExtraPropertiesViewModelBase
     {
-        private ObservableCollection<Package> _requiredPackages;
 
-        public ObservableCollection<Package> RequiredPackages
+        public RequiresViewModel (PackageReader reader)
+        {
+            _requiredPackages = new ObservableCollection<string>(reader.GetRulesPropertyValues("requires", "package"));
+        }
+
+        private ObservableCollection<string> _requiredPackages;
+
+        public ObservableCollection<string> RequiredPackages
         {
             get { return _requiredPackages; }
             set
