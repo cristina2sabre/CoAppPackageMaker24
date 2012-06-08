@@ -24,6 +24,21 @@ namespace CoAppPackageMaker.ViewModels
         public PackageViewModel(PackageReader reader)
         {
             string package = "package";
+
+            SourcePackageViewModel=new PackageViewModel()
+                                     {
+                                       
+            Name = reader.GetRulesSourcePropertyValueByName(package, "name"),
+            DisplayName = reader.GetRulesSourcePropertyValueByName(package, "display-name"),
+            Architecture = reader.GetRulesSourcePropertyValueByName(package, "arch"),
+            Feed = reader.GetRulesSourcePropertyValueByName(package, "feed"),
+            Location = reader.GetRulesSourcePropertyValueByName(package, "location"),
+            Publisher = reader.GetRulesSourcePropertyValueByName(package, "publisher"),
+            Version = reader.GetRulesSourcePropertyValueByName(package, "version"),
+            IsEditable = true
+
+                                     };
+
             Name = reader.GetRulesPropertyValueByName(package, "name");
             DisplayName = reader.GetRulesPropertyValueByName(package, "display-name");
             Architecture = reader.GetRulesPropertyValueByName(package, "arch");
@@ -31,9 +46,38 @@ namespace CoAppPackageMaker.ViewModels
             Location = reader.GetRulesPropertyValueByName(package, "location");
             Publisher = reader.GetRulesPropertyValueByName(package, "publisher");
             Version = reader.GetRulesPropertyValueByName(package, "version");
+            SourceString = reader.GetRulesSourceStringPropertyValueByName(package, "version");
+            IsEditable =false;
+
         }
 
+        private PackageViewModel _sourcePackageViewModel;
 
+        public PackageViewModel SourcePackageViewModel
+        {
+            get { return _sourcePackageViewModel; }
+            set
+            {
+                _sourcePackageViewModel = value;
+                OnPropertyChanged(" SourcePackageViewModel");
+            }
+        }
+
+        private string _sourceString;
+
+        public string SourceString
+        {
+            get { return _sourceString; }
+            set
+            {
+                _sourceString = value;
+                OnPropertyChanged("SourceString");
+            }
+        }
+
+        
+
+        
 
         public string Name
         {
@@ -52,6 +96,8 @@ namespace CoAppPackageMaker.ViewModels
             {
                 _version = value;
                 OnPropertyChanged("Version");
+                //Reevaluate("Version");
+
             }
         }
 
@@ -106,7 +152,24 @@ namespace CoAppPackageMaker.ViewModels
         }
 
         //tips, visualisation in extra class
+        private bool _isEditable;
 
+        public bool IsEditable
+        {
+            get { return _isEditable; }
+            set
+            {
+                _isEditable = value;
+                OnPropertyChanged("IsEditable");
+            }
+        }
+
+        
+
+        private void Reevaluate(string propertyName)
+        {
+            _sourcePackageViewModel.Version = "ege";
+        }
     }
 
     public class PackageViewModelFactory : IFactory

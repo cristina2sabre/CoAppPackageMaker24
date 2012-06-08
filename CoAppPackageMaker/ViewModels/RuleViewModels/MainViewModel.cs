@@ -28,7 +28,19 @@ namespace CoAppPackageMaker.ViewModels.Base
         private PackageCompositionViewModel _packageCompositionViewModel;
         private FilesViewModel _filesViewModel;
         private ManifestViewModel _manifestViewModel;
-       
+        private ObservableCollection<ExtraPropertiesViewModelBase> _allViewModels =new ObservableCollection<ExtraPropertiesViewModelBase>();
+
+        public ObservableCollection<ExtraPropertiesViewModelBase> AllViewModels
+        {
+            get { return _allViewModels; }
+            set
+            {
+                _allViewModels = value;
+                OnPropertyChanged("AllViewModels");
+            }
+        }
+
+        
         public MainWindowViewModel()
         {
           //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
@@ -53,13 +65,10 @@ namespace CoAppPackageMaker.ViewModels.Base
 
         // PathToFile = "D:\\P\\COPKG\\test2.autopkg";
     // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-     PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
-
-          
+          PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
          if (PathToFile != null && File.Exists(PathToFile))
          {
-           
-         LoadData();
+             LoadData();
          }  
            
         }
@@ -69,6 +78,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             _dictionaryHistory = new Dictionary<string, List<string>>();
             PackageReader reader = new PackageReader();
             reader.Read(PathToFile);
+         //  _allViewModels.Add();
             _packageViewModel = new PackageViewModel(reader);
             _metadataViewModel = new MetadataViewModel(reader);
             _manifestViewModel = new ManifestViewModel(reader);
@@ -383,5 +393,7 @@ namespace CoAppPackageMaker.ViewModels.Base
          }
 
 #endregion
+
+         
     }
 }

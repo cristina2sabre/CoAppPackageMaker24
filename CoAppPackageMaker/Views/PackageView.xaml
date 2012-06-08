@@ -6,7 +6,7 @@
              xmlns:Base="clr-namespace:CoAppPackageMaker.ViewModels.Base" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <Grid d:DataContext="{d:DesignInstance Base:MainWindowViewModel}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -28,13 +28,13 @@
         <Label Content="Feed" Grid.Row="4"  Margin="5"/>
         <Label Content="Location" Grid.Row="5"  Margin="5"/>
         <Label Content="Publisher" Grid.Row="6"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding PackageViewModel.Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PackageViewModel.DisplayName, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding PackageViewModel.Architecture, Mode=TwoWay}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding PackageViewModel.Version, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding PackageViewModel.Feed, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding PackageViewModel.Location, Mode=TwoWay}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding PackageViewModel.Publisher, Mode=TwoWay}"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DisplayName, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Architecture, Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Version, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Feed, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Location, Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding Publisher, Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
 
 
 

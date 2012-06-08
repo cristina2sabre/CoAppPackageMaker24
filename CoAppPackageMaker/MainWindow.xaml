@@ -5,7 +5,8 @@
         xmlns:ViewModels="clr-namespace:CoAppPackageMaker.ViewModels"
         xmlns:Model="clr-namespace:CoApp.Packaging.Common.Model;assembly=CoApp.Client"
         xmlns:Views="clr-namespace:CoAppPackageMaker.Views" Title="CoAppMaker" 
-        Height="575" Width="675"
+     
+        Height="600" Width="675"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <Base:MainWindowViewModel />
@@ -31,17 +32,34 @@
             </GroupBox>
         </DockPanel>
 
-        <TabControl Height="371" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="639" Grid.Row="1"  Margin="5">
+        <TabControl Height="390" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="639" Grid.Row="1"  Margin="5">
             <TabItem Header="Standard Rules" Name="tabItem1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0*" />
                         <RowDefinition Height="339*" />
                     </Grid.RowDefinitions>
-                    <TabControl Height="313" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControl2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">
-                        <TabItem Header="Package" Name="tabItem4">
-                            <Views:PackageView Margin="5,10,5,5"/>                              
+                    <TabControl Height="350" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControl2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">
+                        <TabItem Header="Package" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0*" />
+                                    <RowDefinition Height="359*" />
+                                </Grid.RowDefinitions>
+                                <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                    <TabItem Header="Source Value" >
+                                        <Views:PackageView Margin="5,10,5,5" DataContext="{Binding PackageViewModel.SourcePackageViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Evaluated">
+                                        <Views:PackageView Margin="5,10,5,5" DataContext="{Binding PackageViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Package" >
+                                        <TextBlock Text="{Binding PackageViewModel.SourceString}"/>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
                         </TabItem>
+                       
                         <TabItem Header="Metadata" Name="tabItem5">
                             <Views:MetadataView Margin="5,10,5,5"/>                          
                         </TabItem>

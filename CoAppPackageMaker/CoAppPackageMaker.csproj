@@ -36,17 +36,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CoApp.Client, Version=1.2.0.384, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
+    <Reference Include="CoApp.Client, Version=1.2.0.386, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp-1.2.0.384-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Client.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp-1.2.0.386-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Client.dll</HintPath>
     </Reference>
     <Reference Include="CoApp.Developer.Toolkit, Version=1.2.0.173, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.173-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Developer.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="CoApp.Packaging, Version=1.2.0.258, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
+    <Reference Include="CoApp.Packaging, Version=1.2.0.259, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.258-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Packaging.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.259-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="CoApp.Toolkit, Version=1.2.0.296, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

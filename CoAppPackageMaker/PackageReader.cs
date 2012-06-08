@@ -22,10 +22,30 @@ namespace CoAppPackageMaker
       
             try
             {
-                
+               // IEnumerable<string> result = _packageSource.AllRoles.GetRulesByName("").GetPropertyValues("");
+                List<string> result = new List<string>();
+                var fileRules = _packageSource.PackageRules;
+                foreach (Rule rule in fileRules)
+                {
+                 IEnumerable<string> resulet=   rule.GetDynamicMemberNames();
+                    foreach (string fileRule in rule.PropertyNames)
+                    {
+                        
+                    }
+
+                   
+                    //foreach (PropertyValue value in rule.PropertyValues)
+                    //{
+                    //   string gf= value.Label;
+                    //    IEnumerable<string> wdw=  value.SourceValues;
+                    //}
+
+                }
+
+              
               // _packageSource.LoadPackageSourceData(_packageSource.SourceFile);
-              PropertyRule a= _packageSource.AllRoles.GetRulesByName("faux-pax").GetProperty("downloads");
-           
+              PropertyRule a= _packageSource.AllRoles.GetRulesByName("package").GetProperty("location");
+              
                 Console.WriteLine(a);
             }
             catch (Exception exception)
@@ -44,11 +64,53 @@ namespace CoAppPackageMaker
             return result;
         }
 
+        public IEnumerable<string> GetRulesSourcePropertyValuesByName(string ruleName, string propertyName)
+        {
+            IEnumerable<string> result = null;
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+
+            foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
+            {
+                result = propertyValue.SourceValues;
+            }
+            return result;
+        }
+
+        public string GetRulesSourcePropertyValueByName(string ruleName, string propertyName)
+        {
+            
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+         PropertyValue propertyValue=  propertyRule.PropertyValues.FirstOrDefault();
+         //IEnumerable<string> items = new string[3];
+
+         //items.ToList().Add(("msg2"));
+         //propertyValue.SourceValues = items;
+
+            return (propertyValue != null) ? propertyValue.SourceValues.FirstOrDefault() : String.Empty;
+           
+        }
+
+        public string GetRulesSourceStringPropertyValueByName(string ruleName, string propertyName)
+        {
+
+            IEnumerable<Rule> rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            StringBuilder result = new StringBuilder();
+            foreach (Rule rule in rules)
+            {
+               
+                result.Append(rule.SourceString);
+            }
+
+
+            return result.ToString();
+
+        }
 
         public string GetRolesPropertyValueByName(string roleName, string propertyName)
         {
 
             string result = _packageSource.AllRoles.GetRulesByName(roleName).GetPropertyValue(propertyName);
+            
             return result;
         }
 
