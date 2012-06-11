@@ -63,9 +63,9 @@ namespace CoAppPackageMaker.ViewModels.Base
 
           //}
 
-        // PathToFile = "D:\\P\\COPKG\\test2.autopkg";
-    // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-          PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+   //PathToFile = "D:\\P\\COPKG\\test2.autopkg";
+ //  PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
+  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
          if (PathToFile != null && File.Exists(PathToFile))
          {
              LoadData();
@@ -84,9 +84,9 @@ namespace CoAppPackageMaker.ViewModels.Base
             _manifestViewModel = new ManifestViewModel(reader);
             _signingViewModel = new SigningViewModel(reader);
             _requiresViewModel = new RequiresViewModel(reader);
-            _defineViewModel=new DefineViewModel(reader);
-            _licenseViewModel=new LicenseViewModel(reader);
-            _compatibilityPolicy = new CompatibilityPolicy(reader);
+            _defineViewModel = new DefineViewModel(reader);
+            _licenseViewModel = new LicenseViewModel(reader);
+            _compatibilityPolicy = new CompatibilityPolicyViewModel(reader);
             _applicationRoleViewModel = new ApplicationRoleViewModel(reader);
             _assemblyRoleViewModel = new AssemblyRoleViewModel(reader);
             _packageCompositionViewModel = new PackageCompositionViewModel(reader);
@@ -132,7 +132,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             set
             {
                 _metadataViewModel = value;
-                OnPropertyChanged(" MetadataViewModel");
+                OnPropertyChanged("MetadataViewModel");
             }
         }
 
@@ -227,9 +227,9 @@ namespace CoAppPackageMaker.ViewModels.Base
         }
 
 
-        private CompatibilityPolicy _compatibilityPolicy;
+        private CompatibilityPolicyViewModel _compatibilityPolicy;
 
-        public CompatibilityPolicy CompatibilityPolicy
+        public CompatibilityPolicyViewModel CompatibilityPolicy
         {
             get { return _compatibilityPolicy; }
             set

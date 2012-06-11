@@ -41,7 +41,7 @@
 
     </UserControl.Resources>
     <ListBox
-      ItemTemplate="{StaticResource ManifestTemplate}" ItemsSource="{Binding ManifestViewModel.ManifestCollection}">
+      ItemTemplate="{StaticResource ManifestTemplate}" ItemsSource="{Binding ManifestCollection}">
 
     </ListBox>
 </UserControl>

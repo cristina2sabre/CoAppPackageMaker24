@@ -25,13 +25,13 @@
         <Label Content="Author-version" Grid.Row="2"  Margin="5"/>
         <Label Content="Bug-tracker" Grid.Row="3"  Margin="5"/>
         <Label Content="Stability" Grid.Row="4"  Margin="5"/>
-        <Label Content="Licenses" Grid.Row="5"  Margin="5"/>       
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding MetadataViewModel.Summary , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding MetadataViewModel.Description , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" TextWrapping="Wrap" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding  MetadataViewModel.AuthorVersion , Mode=TwoWay}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding  MetadataViewModel.BugTracker , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding  MetadataViewModel.Stability , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding  MetadataViewModel.Licenses , Mode=TwoWay}"  Margin="5"/>
+        <Label Content="Licenses" Grid.Row="5"  Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Summary , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}" />
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Description , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" TextWrapping="Wrap" MaxHeight="75" ScrollViewer.VerticalScrollBarVisibility="Visible" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding  AuthorVersion , Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding  BugTracker , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding  Stability , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding  Licenses , Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
 
 
 

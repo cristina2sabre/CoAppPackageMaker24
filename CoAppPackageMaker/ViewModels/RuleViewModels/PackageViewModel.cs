@@ -46,7 +46,7 @@ namespace CoAppPackageMaker.ViewModels
             Location = reader.GetRulesPropertyValueByName(package, "location");
             Publisher = reader.GetRulesPropertyValueByName(package, "publisher");
             Version = reader.GetRulesPropertyValueByName(package, "version");
-            SourceString = reader.GetRulesSourceStringPropertyValueByName(package, "version");
+            SourceString = reader.GetRulesSourceStringPropertyValueByName(package);
             IsEditable =false;
 
         }
@@ -63,22 +63,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        private string _sourceString;
-
-        public string SourceString
-        {
-            get { return _sourceString; }
-            set
-            {
-                _sourceString = value;
-                OnPropertyChanged("SourceString");
-            }
-        }
-
-        
-
-        
-
+     
         public string Name
         {
             get { return _name; }
@@ -151,22 +136,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        //tips, visualisation in extra class
-        private bool _isEditable;
-
-        public bool IsEditable
-        {
-            get { return _isEditable; }
-            set
-            {
-                _isEditable = value;
-                OnPropertyChanged("IsEditable");
-            }
-        }
-
-        
-
-        private void Reevaluate(string propertyName)
+       private void Reevaluate(string propertyName)
         {
             _sourcePackageViewModel.Version = "ege";
         }

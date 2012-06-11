@@ -17,80 +17,57 @@ namespace CoAppPackageMaker
         private PackageSource _packageSource;
         public  void Read(string pathToSourceFile)
         {
-            _packageSource = new PackageSource(pathToSourceFile,new Dictionary<string, string>());
-            _packageSource.SourceFile =pathToSourceFile;
-      
             try
             {
-               // IEnumerable<string> result = _packageSource.AllRoles.GetRulesByName("").GetPropertyValues("");
-                List<string> result = new List<string>();
-                var fileRules = _packageSource.PackageRules;
-                foreach (Rule rule in fileRules)
-                {
-                 IEnumerable<string> resulet=   rule.GetDynamicMemberNames();
-                    foreach (string fileRule in rule.PropertyNames)
-                    {
-                        
-                    }
-
-                   
-                    //foreach (PropertyValue value in rule.PropertyValues)
-                    //{
-                    //   string gf= value.Label;
-                    //    IEnumerable<string> wdw=  value.SourceValues;
-                    //}
-
-                }
-
-              
-              // _packageSource.LoadPackageSourceData(_packageSource.SourceFile);
-              PropertyRule a= _packageSource.AllRoles.GetRulesByName("package").GetProperty("location");
-              
-                Console.WriteLine(a);
+                _packageSource = new PackageSource(pathToSourceFile, new Dictionary<string, string>());
             }
+
             catch (Exception exception)
             {
-
                MessageBox.Show(exception.ToString());
             }
 
-        
         }
        
         public string GetRulesPropertyValueByName(string ruleName,string propertyName)
         {
-
-            string result = _packageSource.AllRules.GetRulesByName(ruleName).GetPropertyValue(propertyName);
-            return result;
+            var rules = _packageSource.AllRules.GetRulesByName(ruleName);
+           return (rules!=null)?rules.GetPropertyValue(propertyName):String.Empty;
+         
+           
         }
 
         public IEnumerable<string> GetRulesSourcePropertyValuesByName(string ruleName, string propertyName)
         {
-            IEnumerable<string> result = null;
+            IEnumerable<string> result = new string[0];
             PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
-
-            foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
+            if(propertyRule!=null)
             {
-                result = propertyValue.SourceValues;
+                foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
+                {
+                    result = propertyValue.SourceValues;
+
+                }
             }
+           
             return result;
         }
 
         public string GetRulesSourcePropertyValueByName(string ruleName, string propertyName)
         {
-            
-            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
-         PropertyValue propertyValue=  propertyRule.PropertyValues.FirstOrDefault();
-         //IEnumerable<string> items = new string[3];
-
-         //items.ToList().Add(("msg2"));
-         //propertyValue.SourceValues = items;
-
-            return (propertyValue != null) ? propertyValue.SourceValues.FirstOrDefault() : String.Empty;
-           
+            string result = String.Empty;
+            var rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            PropertyRule propertyRule = rules.GetProperty(ruleName, propertyName);
+            if(propertyRule!=null)
+            {
+                PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+                result=(propertyValue != null) ? propertyValue.SourceValues.FirstOrDefault() : String.Empty;
+            }
+            return result;    
         }
 
-        public string GetRulesSourceStringPropertyValueByName(string ruleName, string propertyName)
+    
+        public string GetRulesSourceStringPropertyValueByName(string ruleName)
         {
 
             IEnumerable<Rule> rules = _packageSource.AllRules.GetRulesByName(ruleName);
@@ -124,8 +101,9 @@ namespace CoAppPackageMaker
 
         public IEnumerable<string> GetRulesPropertyValues(string ruleName, string propertyName)
         {
-
-            IEnumerable<string> result = _packageSource.AllRules.GetRulesByName(ruleName).GetPropertyValues(propertyName);
+            IEnumerable<string> result;
+            IEnumerable<Rule> rulesByName = _packageSource.AllRules.GetRulesByName(ruleName);
+            result =(rulesByName!=null)? rulesByName.GetPropertyValues(propertyName):new string[0];
             return result;
         }
 
@@ -168,9 +146,24 @@ namespace CoAppPackageMaker
         }
         public IEnumerable<string> GetManifestIncludeList(string parameter, string propertyName)
         {
-          
-            IEnumerable<string> result = _packageSource.ManifestRules.GetRulesByParameter(parameter).GetPropertyValues(propertyName);
+            IEnumerable<Rule> rules = _packageSource.ManifestRules;
+            IEnumerable<string> result = (rules!=null) ?rules.GetRulesByParameter(parameter).GetPropertyValues(propertyName):null;
             return result;
+        }
+
+        public IEnumerable<string> GetManifestIncludeList2(string parameter, string propertyName)
+        {
+
+            IEnumerable<string> result = null;
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(parameter).GetProperty(parameter, propertyName);
+
+            foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
+            {
+                result = propertyValue.SourceValues;
+
+            }
+            return result;
+              
         }
 
         public ObservableCollection<String> Rules

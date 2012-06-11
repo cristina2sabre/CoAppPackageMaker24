@@ -23,7 +23,7 @@ namespace CoAppPackageMaker.ViewModels
         {
 
             string metadata = "metadata";
-
+          
             {
                 Summary = reader.GetRulesPropertyValueByName(metadata, "summary");
                 Description = reader.GetRulesPropertyValueByName(metadata, "description");
@@ -31,7 +31,20 @@ namespace CoAppPackageMaker.ViewModels
                 BugTracker = reader.GetRulesPropertyValueByName(metadata, "bug-tracker");
                 Stability = reader.GetRulesPropertyValueByName(metadata, "stability");
                 Licenses = reader.GetRulesPropertyValueByName(metadata, "licenses");
+                IsEditable = false;
+                SourceString = reader.GetRulesSourceStringPropertyValueByName(metadata);
+
             };
+            SourceMetadataViewModel = new SMetadataViewModel(reader)
+                                          {
+                                              Summary = reader.GetRulesSourcePropertyValueByName(metadata, "summary"),
+                                              Description = reader.GetRulesSourcePropertyValueByName(metadata, "description"),
+                                              AuthorVersion = reader.GetRulesSourcePropertyValueByName(metadata, "author-version"),
+                                              BugTracker = reader.GetRulesSourcePropertyValueByName(metadata, "bug-tracker"),
+                                              Stability = reader.GetRulesSourcePropertyValueByName(metadata, "stability"),
+                                              Licenses = reader.GetRulesSourcePropertyValueByName(metadata, "licenses"),
+                                              IsEditable = true
+                                          };
         }
 
         public String Summary
@@ -41,7 +54,9 @@ namespace CoAppPackageMaker.ViewModels
             {
                 _summary = value;
                 OnPropertyChanged("Summary");
+               
             }
+
         }
 
         public String Description
@@ -93,7 +108,29 @@ namespace CoAppPackageMaker.ViewModels
                 OnPropertyChanged("Licenses");
             }
         }
+
+        private MetadataViewModel _sourceMetadataViewModel;
+
+        public MetadataViewModel SourceMetadataViewModel
+        {
+            get { return _sourceMetadataViewModel; }
+            set
+            {
+                _sourceMetadataViewModel = value;
+                OnPropertyChanged("SourceMetadataViewModel");
+            }
+        }
+
       
 
+        public class SMetadataViewModel :MetadataViewModel
+        {
+            public SMetadataViewModel(PackageReader reader)
+            {
+
+
+            }
+        }
+        
     }
 }

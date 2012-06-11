@@ -29,5 +29,28 @@ namespace CoAppPackageMaker.ViewModels
                 OnPropertyChanged("IsRequired");
             }
         }
+
+        private string _sourceString;
+        public string SourceString
+        {
+            get { return _sourceString; }
+            set
+            {
+                _sourceString = value;
+                OnPropertyChanged("SourceString");
+            }
+        }
+
+        private bool _isEditable;
+
+        public bool IsEditable
+        {
+            get { return _isEditable; }
+            set
+            {
+                _isEditable = value;
+                OnPropertyChanged("IsEditable");
+            }
+        }
     }
 }

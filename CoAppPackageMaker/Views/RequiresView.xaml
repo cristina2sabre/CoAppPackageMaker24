@@ -11,6 +11,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="Required Packages:" FontWeight="Bold" Margin="5,0,0,0"/>
-        <ListView  Grid.Row="1" Margin="5,5,5,5" ItemsSource="{Binding RequiresViewModel.RequiredPackages}"/>
+        <ListView  Grid.Row="1" Margin="5,5,5,5" ItemsSource="{Binding RequiredPackages}"/>
     </Grid>
 </UserControl>

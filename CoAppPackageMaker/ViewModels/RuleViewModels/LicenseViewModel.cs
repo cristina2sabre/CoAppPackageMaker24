@@ -6,16 +6,21 @@ using System.Text;
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
     public class LicenseViewModel:ExtraPropertiesViewModelBase
-   
-
 {
-    public LicenseViewModel(PackageReader reader)
+        public LicenseViewModel ()
+        {
+
+        }
+
+        public LicenseViewModel(PackageReader reader)
     {
         string license = "license";
 
-        License = reader.GetRulesPropertyValueByName("license", "license");
-        LicenseType = reader.GetRulesPropertyValueByName("license","license-type");
-        LicenseUrl = reader.GetRulesPropertyValueByName("license","license-url" );
+        License = reader.GetRulesPropertyValueByName(license, "license");
+        LicenseType = reader.GetRulesPropertyValueByName(license,"license-type");
+        LicenseUrl = reader.GetRulesPropertyValueByName(license, "license-url");
+        _sourceValueLicenseViewModel=new SourceLicenseViewModel(reader);
+        SourceString = reader.GetRulesSourceStringPropertyValueByName(license);
 
     }
 
@@ -55,7 +60,30 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
-        
+        private SourceLicenseViewModel _sourceValueLicenseViewModel;
+
+        public SourceLicenseViewModel SourceValueLicenseViewModel
+        {
+            get { return _sourceValueLicenseViewModel; }
+            set
+            {
+                _sourceValueLicenseViewModel = value;
+                OnPropertyChanged("SourceValueLicenseViewModel");
+            }
+        }
+
+        public class SourceLicenseViewModel:LicenseViewModel
+        {
+             public SourceLicenseViewModel(PackageReader reader)
+             {
+                 string license = "license";
+                 License = reader.GetRulesSourcePropertyValueByName(license, "license");
+                 LicenseType = reader.GetRulesSourcePropertyValueByName(license, "license-type");
+                 LicenseUrl = reader.GetRulesSourcePropertyValueByName(license, "license-url");
+             }
+        }
+
+     
 
 }
 }

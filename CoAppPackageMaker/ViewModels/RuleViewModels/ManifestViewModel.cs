@@ -20,6 +20,10 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+       
+        public ManifestViewModel()
+        {
+        }
 
         public ManifestViewModel(PackageReader reader)
         {
@@ -34,24 +38,58 @@ namespace CoAppPackageMaker.ViewModels
                 {
                     
                     Include = includeCollection,
-                    Assembly = assemblyCollection
+                    Assembly = assemblyCollection,
+                   
                 };
                 _manifestCollection.Add(model);
             }
 
+            {
+                _sourceManifestViewModel = new ManifestViewModel();
+                SourceManifestViewModel._manifestCollection = new ObservableCollection<ManifestItemViewModel>();
+
+                foreach (string parameter in reader.ReadManifestParameters())
+                {
+                  
+                    ObservableCollection<string> includeCollection = new ObservableCollection<string>(reader.GetManifestIncludeList2("manifest", "include"));
+                    ObservableCollection<string> assemblyCollection = new ObservableCollection<string>(reader.GetManifestIncludeList2("manifest", "assembly"));
+                    ManifestItemViewModel model = new ManifestItemViewModel(parameter)
+                    {
+
+                        Include = includeCollection,
+                        Assembly = assemblyCollection,
+
+                    };
+                    SourceManifestViewModel._manifestCollection.Add(model);
+                }
+
+                
+            }
+
+          
+           
+           
+             SourceString = reader.GetRulesSourceStringPropertyValueByName("manifest");
+
         }
-        
 
 
+        private ManifestViewModel _sourceManifestViewModel;
+
+        public ManifestViewModel SourceManifestViewModel
+        {
+            get { return _sourceManifestViewModel; }
+            set
+            {
+                _sourceManifestViewModel = value;
+                OnPropertyChanged("SourceManifestViewModel");
+            }
+        }
 
         public class ManifestItemViewModel : ViewModelBase
         {
 
-
             private ObservableCollection<string> _assembly;
-            private ObservableCollection<string> _include;
-
-
             public ObservableCollection<string> Assembly
             {
                 get { return _assembly; }
@@ -62,6 +100,7 @@ namespace CoAppPackageMaker.ViewModels
                 }
             }
 
+            private ObservableCollection<string> _include;
             public ObservableCollection<string> Include
             {
                 get { return _include; }
@@ -71,6 +110,7 @@ namespace CoAppPackageMaker.ViewModels
                     OnPropertyChanged("Include");
                 }
             }
+
             public ManifestItemViewModel(string parameter)
             {
                 Name = String.Format("Manifest[{0}]", parameter);
@@ -85,6 +125,17 @@ namespace CoAppPackageMaker.ViewModels
                     _name = value;
                     OnPropertyChanged("Name");
                 }
+            }
+
+        }
+
+        public class SManifestViewModel : ManifestViewModel
+        {
+            public SManifestViewModel(PackageReader reader)
+               
+            {
+                
+
             }
         }
     }

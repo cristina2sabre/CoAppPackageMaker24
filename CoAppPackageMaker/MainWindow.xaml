@@ -4,7 +4,8 @@
         xmlns:Base="clr-namespace:CoAppPackageMaker.ViewModels.Base"
         xmlns:ViewModels="clr-namespace:CoAppPackageMaker.ViewModels"
         xmlns:Model="clr-namespace:CoApp.Packaging.Common.Model;assembly=CoApp.Client"
-        xmlns:Views="clr-namespace:CoAppPackageMaker.Views" Title="CoAppMaker" 
+        xmlns:Views="clr-namespace:CoAppPackageMaker.Views"
+        xmlns:RuleViewModels="clr-namespace:CoAppPackageMaker.ViewModels.RuleViewModels" Title="CoAppMaker" 
      
         Height="600" Width="675"
         WindowStartupLocation="CenterScreen">
@@ -61,11 +62,43 @@
                         </TabItem>
                        
                         <TabItem Header="Metadata" Name="tabItem5">
-                            <Views:MetadataView Margin="5,10,5,5"/>                          
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0*" />
+                                    <RowDefinition Height="359*" />
+                                </Grid.RowDefinitions>
+                                <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                    <TabItem Header="Source Value" >
+                                        <Views:MetadataView  Margin="5,10,5,5" DataContext="{Binding MetadataViewModel.SourceMetadataViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Evaluated">
+                                        <Views:MetadataView Margin="5,10,5,5" DataContext="{Binding MetadataViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Package" >
+                                        <TextBlock Text="{Binding MetadataViewModel.SourceString}"/>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
                         </TabItem>
                        
                         <TabItem Header="Manifest" Name="tabItem7">
-                            <Views:ManifestView Margin="5,10,5,5"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0*" />
+                                    <RowDefinition Height="359*" />
+                                </Grid.RowDefinitions>
+                                <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                    <TabItem Header="Source Value" >
+                                        <Views:ManifestView  Margin="5,10,5,5" DataContext="{Binding ManifestViewModel.SourceManifestViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Evaluated">
+                                        <Views:ManifestView Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Package" >
+                                        <TextBox Text="{Binding ManifestViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
                         </TabItem>
                         <TabItem Header="Files" Name="tabItem8">
                             <Views:Files  Margin="5,10,5,5"/>
@@ -74,7 +107,23 @@
                             <Views:PackageComposition Margin="5,10,5,5"/>
                         </TabItem>
                         <TabItem Header="Requires" Name="tabItem10" >
-                            <Views:RequiresView Margin="5,10,5,5"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0*" />
+                                    <RowDefinition Height="359*" />
+                                </Grid.RowDefinitions>
+                                <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                    <TabItem Header="Source Value" >
+                                        <Views:RequiresView Margin="5,10,5,5" DataContext="{Binding RequiresViewModel.SourceValueRequiresViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Evaluated">
+                                        <Views:RequiresView Margin="5,10,5,5" DataContext="{Binding RequiresViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Package" >
+                                        <TextBox Text="{Binding RequiresViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
                         </TabItem>
                         <TabItem Header="Signing" Name="tabItem11" >
                             <Views:SigningView Margin="5,10,5,5"/>
@@ -84,10 +133,42 @@
                             <Views:DefineView Margin="5,10,5,5"/>
                         </TabItem>
                         <TabItem Header="License" Name="tabItem13" >
-                            <Views:LicenseView Margin="5,10,5,5"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0*" />
+                                    <RowDefinition Height="359*" />
+                                </Grid.RowDefinitions>
+                                <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                    <TabItem Header="Source Value" >
+                                        <Views:LicenseView Margin="5,10,5,5" DataContext="{Binding LicenseViewModel.SourceValueLicenseViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Evaluated">
+                                        <Views:LicenseView Margin="5,10,5,5" DataContext="{Binding LicenseViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Package" >
+                                        <TextBox Text="{Binding LicenseViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
                         </TabItem>
                         <TabItem Header="Compatibility Policy" Name="tabItem14" >
-                            <Views:CompatibilityPolicy Margin="5,10,5,5"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0*" />
+                                    <RowDefinition Height="359*" />
+                                </Grid.RowDefinitions>
+                                <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                    <TabItem Header="Source Value" >
+                                        <Views:CompatibilityPolicy Margin="5,10,5,5" DataContext="{Binding CompatibilityPolicy.SourceValueCompatibilityPolicyViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Evaluated">
+                                        <Views:CompatibilityPolicy Margin="5,10,5,5" DataContext="{Binding CompatibilityPolicy}"/>
+                                    </TabItem>
+                                    <TabItem Header="Package" >
+                                        <TextBox Text="{Binding CompatibilityPolicy.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
                         </TabItem>
                        
                     </TabControl>

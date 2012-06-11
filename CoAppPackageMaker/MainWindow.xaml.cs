@@ -24,8 +24,6 @@ namespace CoAppPackageMaker
         public MainWindow()
         {
             InitializeComponent();
-           
-
         }
 
       

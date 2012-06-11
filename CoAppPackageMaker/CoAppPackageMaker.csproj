@@ -78,7 +78,7 @@
     <Compile Include="ViewModels\RoleViewModels\ApplicationRoleViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\AssemblyRoleViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
-    <Compile Include="ViewModels\RuleViewModels\CompatibilityPolicy.cs" />
+    <Compile Include="ViewModels\RuleViewModels\CompatibilityPolicyViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\DefineViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\FilesViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\LicenseViewModel.cs" />
