@@ -18,7 +18,11 @@ namespace CoAppPackageMaker.ViewModels
         public RequiresViewModel (PackageReader reader)
         {
             _requiredPackages = new ObservableCollection<string>(reader.GetRulesPropertyValues("requires", "package"));
-            SourceValueRequiresViewModel = new SourceRequiresViewModel(reader);
+            SourceValueRequiresViewModel = new RequiresViewModel()
+                                               {
+                                                    _requiredPackages = new ObservableCollection<string>(reader.GetRulesSourcePropertyValuesByName("requires", "package"))
+                                               };
+
             SourceString = reader.GetRulesSourceStringPropertyValueByName("requires");
         }
 
@@ -34,35 +38,18 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        private SourceRequiresViewModel _sourceValueRequiresViewModel;
+        private RequiresViewModel _sourceValueRequiresViewModel;
 
-        public SourceRequiresViewModel SourceValueRequiresViewModel
+        public RequiresViewModel SourceValueRequiresViewModel
         {
             get { return _sourceValueRequiresViewModel; }
             set
             {
                 _sourceValueRequiresViewModel = value;
-                OnPropertyChanged("SourceValueRequiresViewModel");
+                OnPropertyChanged("RequiresViewModel");
             }
         }
-        private string _sourceString;
-        public string SourceString
-        {
-            get { return _sourceString; }
-            set
-            {
-                _sourceString = value;
-                OnPropertyChanged("SourceString");
-            }
-        }
-
-        public class SourceRequiresViewModel:RequiresViewModel
-        {
-        public SourceRequiresViewModel(PackageReader reader)
-        {
-      
-            _requiredPackages = new ObservableCollection<string>(reader.GetRulesSourcePropertyValuesByName("requires", "package"));
-        }
+     
         }
     }
-}
+

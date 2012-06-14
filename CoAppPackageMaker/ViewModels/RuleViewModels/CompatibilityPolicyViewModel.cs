@@ -1,4 +1,6 @@
-﻿namespace CoAppPackageMaker.ViewModels
+﻿using System.ComponentModel;
+
+namespace CoAppPackageMaker.ViewModels
 {
    public class CompatibilityPolicyViewModel:ExtraPropertiesViewModelBase
     {
@@ -12,9 +14,20 @@
            Minimum = reader.GetRulesPropertyValueByName(compatibilityPolicy, "minimum");
            Maximum = reader.GetRulesPropertyValueByName(compatibilityPolicy, "maximum");
            Versions = reader.GetRulesPropertyValueByName(compatibilityPolicy, "versions");
+           IsEditable = false;
+           SourceValueCompatibilityPolicyViewModel = new CompatibilityPolicyViewModel()
+                                                       {
+                                                            Minimum = reader.GetRulesSourcePropertyValueByName(compatibilityPolicy, "minimum"),
+                Maximum = reader.GetRulesSourcePropertyValueByName(compatibilityPolicy, "maximum"),
+                Versions = reader.GetRulesSourcePropertyValueByName(compatibilityPolicy, "versions"),
+                IsEditable = true
+                                                       };
 
            SourceString = reader.GetRulesSourceStringPropertyValueByName(compatibilityPolicy);
-           _sourceValueCompatibilityPolicyViewModel = new SourceCompatibilityPolicyViewModel(reader);
+
+           SourceValueCompatibilityPolicyViewModel.PropertyChanged += EvaluatedChanged;
+
+           
        }
 
        private string _minimum;
@@ -50,8 +63,8 @@
            }
        }
 
-       private SourceCompatibilityPolicyViewModel _sourceValueCompatibilityPolicyViewModel;
-       public SourceCompatibilityPolicyViewModel SourceValueCompatibilityPolicyViewModel
+       private CompatibilityPolicyViewModel _sourceValueCompatibilityPolicyViewModel;
+       public CompatibilityPolicyViewModel SourceValueCompatibilityPolicyViewModel
        {
            get { return _sourceValueCompatibilityPolicyViewModel; }
            set
@@ -60,18 +73,28 @@
                OnPropertyChanged("SourceCompatibilityPolicyViewModel");
            }
        }
-       
 
-       public class SourceCompatibilityPolicyViewModel:CompatibilityPolicyViewModel
+       public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
        {
-            public SourceCompatibilityPolicyViewModel(PackageReader reader)
-            {
-                string compatibilityPolicy = "compatability-policy";
-                Minimum = reader.GetRulesSourcePropertyValueByName(compatibilityPolicy, "minimum");
-                Maximum = reader.GetRulesSourcePropertyValueByName(compatibilityPolicy, "maximum");
-                Versions = reader.GetRulesSourcePropertyValueByName(compatibilityPolicy, "versions");
-            }
+           {
+               switch (args.PropertyName)
+               {
+                   case "Minimum":
+                       Minimum = ((CompatibilityPolicyViewModel)sender).Minimum;
+                       break;
+                   case "Maximum":
+                       Maximum = ((CompatibilityPolicyViewModel)sender).Maximum;
+                       break;
+                   case "Versions":
+                       Versions = ((CompatibilityPolicyViewModel)sender).Versions;
+                       break;
+
+               }
+
+           }
+
        }
+     
        
     }
 }

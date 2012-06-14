@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
 using System.Security.Policy;
+using CoAppPackageMaker.ViewModels.Base;
+using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    class PackageViewModel : ExtraPropertiesViewModelBase
+    class PackageViewModel : ExtraPropertiesViewModelBase,ISupportsUndo
     {
-        private string _name;
-        private string _version;
-        private string _architecture;
-        private string _displayName;
-        private string _location;
-        private string _feed;
-        private string _publisher;
-
+        
+  
         public PackageViewModel()
         {
+
         }
 
         public PackageViewModel(PackageReader reader)
@@ -35,24 +34,25 @@ namespace CoAppPackageMaker.ViewModels
             Location = reader.GetRulesSourcePropertyValueByName(package, "location"),
             Publisher = reader.GetRulesSourcePropertyValueByName(package, "publisher"),
             Version = reader.GetRulesSourcePropertyValueByName(package, "version"),
-            IsEditable = true
+            IsEditable = true,
+
 
                                      };
 
-            Name = reader.GetRulesPropertyValueByName(package, "name");
-            DisplayName = reader.GetRulesPropertyValueByName(package, "display-name");
-            Architecture = reader.GetRulesPropertyValueByName(package, "arch");
-            Feed = reader.GetRulesPropertyValueByName(package, "feed");
-            Location = reader.GetRulesPropertyValueByName(package, "location");
-            Publisher = reader.GetRulesPropertyValueByName(package, "publisher");
-            Version = reader.GetRulesPropertyValueByName(package, "version");
-            SourceString = reader.GetRulesSourceStringPropertyValueByName(package);
-            IsEditable =false;
+            //Name = reader.GetRulesPropertyValueByName(package, "name");
+            //DisplayName = reader.GetRulesPropertyValueByName(package, "display-name");
+            //Architecture = reader.GetRulesPropertyValueByName(package, "arch");
+            //Feed = reader.GetRulesPropertyValueByName(package, "feed");
+            //Location = reader.GetRulesPropertyValueByName(package, "location");
+            //Publisher = reader.GetRulesPropertyValueByName(package, "publisher");
+            //Version = reader.GetRulesPropertyValueByName(package, "version");
+            //SourceString = reader.GetRulesSourceStringPropertyValueByName(package);
+            //IsEditable = false;
 
+            //SourcePackageViewModel.PropertyChanged += EvaluatedChanged;
         }
 
         private PackageViewModel _sourcePackageViewModel;
-
         public PackageViewModel SourcePackageViewModel
         {
             get { return _sourcePackageViewModel; }
@@ -63,17 +63,24 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-     
+        private string _name;
         public string Name
         {
             get { return _name; }
             set
             {
+               
+                    DefaultChangeFactory.OnChanging(this, "Name", _name, value);
+               
+               
+               
                 _name = value;
                 OnPropertyChanged("Name");
+              
             }
         }
 
+        private string _version;
         public string Version
         {
             get { return _version; }
@@ -81,11 +88,11 @@ namespace CoAppPackageMaker.ViewModels
             {
                 _version = value;
                 OnPropertyChanged("Version");
-                //Reevaluate("Version");
-
+             
             }
         }
 
+        private string _architecture;
         public string Architecture
         {
             get { return _architecture; }
@@ -96,6 +103,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        private string _displayName;
         public string DisplayName
         {
             get { return _displayName; }
@@ -106,6 +114,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        private string _location;
         public string Location
         {
             get { return _location; }
@@ -115,7 +124,8 @@ namespace CoAppPackageMaker.ViewModels
                 OnPropertyChanged("Location");
             }
         }
-        
+
+        private string _feed;
         public string Feed
         {
             get { return _feed; }
@@ -126,6 +136,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        private string _publisher;
         public string Publisher
         {
             get { return _publisher; }
@@ -136,10 +147,63 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-       private void Reevaluate(string propertyName)
+        public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
-            _sourcePackageViewModel.Version = "ege";
+            {
+                switch (args.PropertyName)
+                {
+                    case "Name":
+                        Name = ((PackageViewModel) sender).Name;
+                        break;
+                    case "Version":
+                        Version = ((PackageViewModel)sender).Version;
+                        break;
+                    case "DisplayName":
+                        DisplayName = ((PackageViewModel)sender).DisplayName;
+                        break;
+                    case "Location":
+                        Location = ((PackageViewModel)sender).Location;
+                        break;
+                    case "Feed":
+                        Feed = ((PackageViewModel)sender).Feed;
+                        break;
+                    case "Architecture":
+                        Architecture = ((PackageViewModel)sender).Architecture;
+                        break;
+                    case "Publisher":
+                        Publisher = ((PackageViewModel)sender).Publisher;
+                        break;
+
+                }
+
+            }
         }
+
+        private MainWindowViewModel _Root;
+        public MainWindowViewModel Root
+        {
+            get { return _Root; }
+            set
+            {
+                if (value == _Root)
+                    return;
+
+                // This line will log the property change with the undo framework.
+                DefaultChangeFactory.OnChanging(this, "Root", _Root, value);
+
+                _Root = value;
+                OnPropertyChanged("Root");
+            }
+        }
+
+        #region ISupportsUndo Members
+
+        public object GetUndoRoot()
+        {
+            return this.Root;
+        }
+
+        #endregion
     }
 
     public class PackageViewModelFactory : IFactory

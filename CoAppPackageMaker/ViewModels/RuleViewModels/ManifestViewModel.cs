@@ -129,14 +129,6 @@ namespace CoAppPackageMaker.ViewModels
 
         }
 
-        public class SManifestViewModel : ManifestViewModel
-        {
-            public SManifestViewModel(PackageReader reader)
-               
-            {
-                
-
-            }
-        }
+       
     }
 }

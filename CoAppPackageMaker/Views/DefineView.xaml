@@ -18,9 +18,9 @@
         </Grid.ColumnDefinitions>
         <Label Content="Flavor" Grid.Row="0" Margin="5"/>
         <Label Content="Arch" Grid.Row="1" Margin="5"/>
-      
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding DefineViewModel.Flavor, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DefineViewModel.Arhitecture, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Flavor, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Architecture, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
       
 
 

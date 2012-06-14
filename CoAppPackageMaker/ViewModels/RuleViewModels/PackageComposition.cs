@@ -16,7 +16,7 @@ namespace CoAppPackageMaker.ViewModels
         }
 
         private string _symlinks;
-     private string _fileCopy;
+         private string _fileCopy;
 
         public string Symlinks
         {

@@ -8,12 +8,17 @@
         xmlns:RuleViewModels="clr-namespace:CoAppPackageMaker.ViewModels.RuleViewModels" Title="CoAppMaker" 
      
         Height="600" Width="675"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" >
     <Window.DataContext>
         <Base:MainWindowViewModel />
         
     </Window.DataContext>
+    <Window.CommandBindings>
+        <CommandBinding Command="Undo" Executed="Undo_Executed" CanExecute="Undo_CanExecute" />
+        <CommandBinding Command="Redo" Executed="Redo_Executed" CanExecute="Redo_CanExecute" />
+    </Window.CommandBindings>
     <Window.Resources>
+    
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>          
@@ -26,14 +31,14 @@
             <GroupBox Margin="5" HorizontalAlignment="Right" >
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
                     <Button  Width="20" Margin="5" Content="S"/>
-                    <Button  Width="20" Margin="5" Content="U"/>
-                    <Button  Width="20" Margin="5" Content="R"/>
+                    <Button  Width="20" Margin="5" Content="U" Command="Undo"/>
+                    <Button  Width="20" Margin="5" Content="R" Command="Redo"/>
                     <Button  Width="35" Margin="5" Content="Reset"/>
                 </StackPanel>
             </GroupBox>
         </DockPanel>
 
-        <TabControl Height="390" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="639" Grid.Row="1"  Margin="5">
+        <TabControl Height="390" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="639" Grid.Row="1"  Margin="5" >
             <TabItem Header="Standard Rules" Name="tabItem1">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -49,10 +54,10 @@
                                 </Grid.RowDefinitions>
                                 <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:PackageView Margin="5,10,5,5" DataContext="{Binding PackageViewModel.SourcePackageViewModel}"/>
+                                        <Views:PackageView Margin="5,10,5,5" DataContext="{Binding PackageViewModel.SourcePackageViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:PackageView Margin="5,10,5,5" DataContext="{Binding PackageViewModel}"/>
+                                        <Views:PackageView Margin="5,10,5,5" DataContext="{Binding  PackageViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBlock Text="{Binding PackageViewModel.SourceString}"/>
@@ -126,11 +131,27 @@
                             </Grid>
                         </TabItem>
                         <TabItem Header="Signing" Name="tabItem11" >
-                            <Views:SigningView Margin="5,10,5,5"/>
+                            <Views:SigningView  Margin="5,10,5,5"/>
                         </TabItem>
 
                         <TabItem Header="Define" Name="tabItem12" >
-                            <Views:DefineView Margin="5,10,5,5"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0*" />
+                                    <RowDefinition Height="359*" />
+                                </Grid.RowDefinitions>
+                                <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                    <TabItem Header="Source Value" >
+                                        <Views:DefineView Margin="5,10,5,5" DataContext="{Binding DefineViewModel.SourceValueDefineViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Evaluated">
+                                        <Views:DefineView Margin="5,10,5,5" DataContext="{Binding DefineViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Package" >
+                                        <TextBox Text="{Binding DefineViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
                         </TabItem>
                         <TabItem Header="License" Name="tabItem13" >
                             <Grid>

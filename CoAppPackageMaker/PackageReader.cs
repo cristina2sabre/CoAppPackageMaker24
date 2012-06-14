@@ -132,7 +132,19 @@ namespace CoAppPackageMaker
 
             return result;
         }
-       
+
+        public List<string> ReadSinging()
+        {
+            List<string> result = new List<string>();
+            var fileRules = _packageSource.DefineRules;
+            foreach (Rule rule in fileRules)
+            {
+                string ruleParameter = rule.Parameter;
+                result.Add(ruleParameter);
+            }
+
+            return result;
+        }
 
         public string GetFilesRulesPropertyValueByParameterAndName(string parameter, string propertyName)
         {

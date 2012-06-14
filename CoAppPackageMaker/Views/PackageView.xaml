@@ -28,7 +28,7 @@
         <Label Content="Feed" Grid.Row="4"  Margin="5"/>
         <Label Content="Location" Grid.Row="5"  Margin="5"/>
         <Label Content="Publisher" Grid.Row="6"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"   Margin="5" IsEnabled="{Binding IsEditable}" IsUndoEnabled="False"/>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DisplayName, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Architecture, Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
         <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Version, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>

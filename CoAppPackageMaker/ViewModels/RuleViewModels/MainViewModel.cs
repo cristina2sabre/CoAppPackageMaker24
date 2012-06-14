@@ -6,22 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using CoApp.Developer.Toolkit.Scripting.Languages.PropertySheet;
 using CoApp.Packaging;
 using CoApp.Packaging.Client;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
+using MonitoredUndo;
 
 
 namespace CoAppPackageMaker.ViewModels.Base
 {
-    class MainWindowViewModel:ViewModelBase
+    class MainWindowViewModel:ViewModelBase, ISupportsUndo
     {
         private string _ruleNameSelectedItem;
         private ObservableCollection<string> _ruleNames;
         private ObservableCollection<string> _roleNames;
-        //the key is the name of the rule property, the list contains values
-        private Dictionary<string, List<string>> _dictionaryHistory;
+       
         private PackageViewModel _packageViewModel;
         private MetadataViewModel _metadataViewModel;
         private RequiresViewModel _requiresViewModel;
@@ -40,57 +41,63 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
         }
 
-        
+
         public MainWindowViewModel()
         {
-          //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
-          //  PackageReader reader = new PackageReader();
-          //  reader.Read(PathToFile);
+            //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+            //  PackageReader reader = new PackageReader();
+            //  reader.Read(PathToFile);
 
-          //  _ruleNames = reader.Rules;
-          //  Dictionary<string, IFactory> dic = new Dictionary<string, IFactory>();
-          //  dic.Add("package", new PackageViewModelFactory());
-          //  dic.Add("files",new FilesViewModelFactory());
-          //  foreach (string str in _ruleNames)
-          //  {
-          //      if (dic.ContainsKey(str))
-          //      {
-          //          object instance = (dic[str].CreateInstance(reader));
-          //          string name = instance.GetType().Name;
-          //          var p = GetType().GetProperty(name);
-          //          p.SetValue(this, instance, null);
-          //      }
+            //  _ruleNames = reader.Rules;
+            //  Dictionary<string, IFactory> dic = new Dictionary<string, IFactory>();
+            //  dic.Add("package", new PackageViewModelFactory());
+            //  dic.Add("files",new FilesViewModelFactory());
+            //  foreach (string str in _ruleNames)
+            //  {
+            //      if (dic.ContainsKey(str))
+            //      {
+            //          object instance = (dic[str].CreateInstance(reader));
+            //          string name = instance.GetType().Name;
+            //          var p = GetType().GetProperty(name);
+            //          p.SetValue(this, instance, null);
+            //      }
 
-          //}
+            //}
 
-   //PathToFile = "D:\\P\\COPKG\\test2.autopkg";
- //  PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
-         if (PathToFile != null && File.Exists(PathToFile))
-         {
-             LoadData();
-         }  
-           
+            //PathToFile = "D:\\P\\COPKG\\test2.autopkg";
+            //  PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
+            PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+            if (PathToFile != null && File.Exists(PathToFile))
+            {
+                LoadData();
+            }
+
+
         }
 
         private void LoadData()
         {
-            _dictionaryHistory = new Dictionary<string, List<string>>();
+            
             PackageReader reader = new PackageReader();
             reader.Read(PathToFile);
-         //  _allViewModels.Add();
-            _packageViewModel = new PackageViewModel(reader);
+
+            PackageViewModel = new PackageViewModel(reader) {Root = this};
+            PackageViewModel.SourcePackageViewModel.Root = this;
+
             _metadataViewModel = new MetadataViewModel(reader);
             _manifestViewModel = new ManifestViewModel(reader);
             _signingViewModel = new SigningViewModel(reader);
             _requiresViewModel = new RequiresViewModel(reader);
             _defineViewModel = new DefineViewModel(reader);
+            reader.ReadSinging();
             _licenseViewModel = new LicenseViewModel(reader);
             _compatibilityPolicy = new CompatibilityPolicyViewModel(reader);
             _applicationRoleViewModel = new ApplicationRoleViewModel(reader);
             _assemblyRoleViewModel = new AssemblyRoleViewModel(reader);
             _packageCompositionViewModel = new PackageCompositionViewModel(reader);
             _filesViewModel = new FilesViewModel(reader);
+
+            _allViewModels.Add(_packageViewModel);
 
         }
 
@@ -117,6 +124,12 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
             set
             {
+                // This line will log the property change with the undo framework.
+                //if (_packageViewModel!=null)
+                {
+           //  DefaultChangeFactory.OnChanging(this, "PackageViewModel", _packageViewModel, value);
+                }
+               
                 _packageViewModel = value;
                 OnPropertyChanged("PackageViewModel");
             }
@@ -298,12 +311,7 @@ namespace CoAppPackageMaker.ViewModels.Base
                  OnPropertyChanged("RuleNameSelectedItem");
              }
          }
-
-        
-
-       
-
-        
+ 
         
          #region Commands
 
@@ -341,7 +349,7 @@ namespace CoAppPackageMaker.ViewModels.Base
 #endregion
 
 
-         #region methods
+         #region Methods
 
          void DeleteExecute()
          {
@@ -394,6 +402,16 @@ namespace CoAppPackageMaker.ViewModels.Base
 
 #endregion
 
-         
+         #region ISupportsUndo Members
+
+         public object GetUndoRoot()
+         {
+             return this;
+         }
+
+         #endregion
+
+
+       
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Security.Policy;
@@ -8,13 +9,6 @@ namespace CoAppPackageMaker.ViewModels
 {
     class MetadataViewModel : ExtraPropertiesViewModelBase
     {
-        private string _summary;
-        private string _description;
-        private string _authorVersion;
-        private string _bugTracker;
-        private string _stability;
-        private string _licenses;
-       
         public  MetadataViewModel()
         {
         }
@@ -35,7 +29,7 @@ namespace CoAppPackageMaker.ViewModels
                 SourceString = reader.GetRulesSourceStringPropertyValueByName(metadata);
 
             };
-            SourceMetadataViewModel = new SMetadataViewModel(reader)
+            SourceMetadataViewModel = new MetadataViewModel()
                                           {
                                               Summary = reader.GetRulesSourcePropertyValueByName(metadata, "summary"),
                                               Description = reader.GetRulesSourcePropertyValueByName(metadata, "description"),
@@ -45,8 +39,11 @@ namespace CoAppPackageMaker.ViewModels
                                               Licenses = reader.GetRulesSourcePropertyValueByName(metadata, "licenses"),
                                               IsEditable = true
                                           };
+
+            SourceMetadataViewModel.PropertyChanged += EvaluatedChanged;
         }
 
+        private string _summary;
         public String Summary
         {
             get { return _summary; }
@@ -59,6 +56,7 @@ namespace CoAppPackageMaker.ViewModels
 
         }
 
+        private string _description;
         public String Description
         {
             get { return _description; }
@@ -69,6 +67,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        private string _authorVersion;
         public String AuthorVersion
         {
             get { return _authorVersion; }
@@ -79,6 +78,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        private string _bugTracker;
         public String BugTracker
         {
             get { return _bugTracker; }
@@ -89,6 +89,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        private string _stability;
         public String Stability
         {
             get { return _stability; }
@@ -99,6 +100,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        private string _licenses;
         public String Licenses
         {
             get { return _licenses; }
@@ -110,7 +112,6 @@ namespace CoAppPackageMaker.ViewModels
         }
 
         private MetadataViewModel _sourceMetadataViewModel;
-
         public MetadataViewModel SourceMetadataViewModel
         {
             get { return _sourceMetadataViewModel; }
@@ -121,16 +122,36 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-      
-
-        public class SMetadataViewModel :MetadataViewModel
+        public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
-            public SMetadataViewModel(PackageReader reader)
             {
+                switch (args.PropertyName)
+                {
+                    case "Summary":
+                        Summary = ((MetadataViewModel)sender).Summary;
+                        break;
+                    case "Description":
+                        Description = ((MetadataViewModel)sender).Description;
+                        break;
+                    case "AuthorVersion":
+                        AuthorVersion = ((MetadataViewModel)sender).AuthorVersion;
+                        break;
+                    case "BugTracker":
+                        BugTracker = ((MetadataViewModel)sender).BugTracker;
+                        break;
+                    case "Stability":
+                        Stability = ((MetadataViewModel)sender).Stability;
+                        break;
+                    case "Licenses":
+                        Licenses = ((MetadataViewModel)sender).Licenses;
+                        break;
 
+                }
 
             }
         }
-        
+
+
+
     }
 }
