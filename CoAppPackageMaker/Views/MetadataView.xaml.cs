@@ -23,5 +23,10 @@ namespace CoAppPackageMaker.Views
         {
             InitializeComponent();
         }
+
+        private void TextBox_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
     }
 }

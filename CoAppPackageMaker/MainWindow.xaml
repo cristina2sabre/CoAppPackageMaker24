@@ -74,10 +74,10 @@
                                 </Grid.RowDefinitions>
                                 <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:MetadataView  Margin="5,10,5,5" DataContext="{Binding MetadataViewModel.SourceMetadataViewModel}"/>
+                                        <Views:MetadataView  Margin="5,10,5,5" DataContext="{Binding MetadataViewModel.SourceMetadataViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:MetadataView Margin="5,10,5,5" DataContext="{Binding MetadataViewModel}"/>
+                                        <Views:MetadataView Margin="5,10,5,5" DataContext="{Binding MetadataViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBlock Text="{Binding MetadataViewModel.SourceString}"/>

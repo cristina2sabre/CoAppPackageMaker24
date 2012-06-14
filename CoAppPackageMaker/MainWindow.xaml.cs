@@ -25,8 +25,7 @@ namespace CoAppPackageMaker
         public MainWindow()
         {
             InitializeComponent();
-           // DataContext = new MainWindowViewModel();
-           // LayoutRoot_Loaded();
+           
         }
 
 
@@ -41,44 +40,14 @@ namespace CoAppPackageMaker
         }
         #endregion
 
-
+        /// <summary>
+        ///Monitored Undo Framework
+        /// </summary>
+        /// <from> http://muf.codeplex.com/ </from>
         #region Event Handlers
 
-        private void LayoutRoot_Loaded()
-        {
-            // The undo / redo stack collections are not "Observable", so we 
-            // need to manually refresh the UI when they change.
-            var root = UndoService.Current[this];
-            root.UndoStackChanged += new EventHandler(OnUndoStackChanged);
-            root.RedoStackChanged += new EventHandler(OnRedoStackChanged);
-             
 
-        }
-
-        // Refresh the UI when the undo stack changes.
-        void OnUndoStackChanged(object sender, EventArgs e)
-        {
-            RefreshUndoStackList();
-        }
-
-        // Refresh the UI when the redo stack changes.
-        void OnRedoStackChanged(object sender, EventArgs e)
-        {
-            RefreshUndoStackList();
-        }
-
-        // Refresh the UI when the undo / redo stacks change.
-        private void RefreshUndoStackList()
-        {
-            // Calling refresh on the CollectionView will tell the UI to rebind the list.
-            // If the list were an ObservableCollection, or implemented INotifyCollectionChanged, this would not be needed.
-            var cv = CollectionViewSource.GetDefaultView(UndoStack);
-            cv.Refresh();
-
-            cv = CollectionViewSource.GetDefaultView(RedoStack);
-            cv.Refresh();
-        }
-        // The following 4 event handlers support the "CommandBindings" in the window.
+        //// The following 4 event handlers support the "CommandBindings" in the window.
         // These hook to the Undo and Redo commands.
 
         private void Undo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -86,7 +55,7 @@ namespace CoAppPackageMaker
             // Tell the UI whether Undo is available.
             var catalog = VM;
             e.CanExecute = UndoService.Current[catalog].CanUndo;
-          //  e.CanExecute = true;
+         
         }
 
         private void Redo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -94,7 +63,7 @@ namespace CoAppPackageMaker
             // Tell the UI whether Redo is available.
             var catalog = VM;
             e.CanExecute = UndoService.Current[catalog].CanRedo;
-           // e.CanExecute = true;
+          
         }
 
         private void Undo_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -107,45 +76,19 @@ namespace CoAppPackageMaker
             // document, but in a larger system the root would probably be your
             // domain model.
 
-            //var undoRoot = UndoService.Current[this];
-            //undoRoot.Undo();
+         var root = VM;
 
-
-         var catalog = VM;
-
-           if (null != catalog)
+           if (null != root)
                 UndoService.Current[VM].Undo();
+           
         }
 
         private void Redo_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            // A shorthand version of the above call to Undo, except 
-            // that this calls Redo.
-          //UndoService.Current[].Redo();
-            var catalog = VM;
-
-            if (null != catalog)
-                UndoService.Current[catalog].Redo();
-        }
-
-
-
-        public IEnumerable<ChangeSet> UndoStack
-        {
-            get
-            {
-                return UndoService.Current[this].UndoStack;
-
-            }
-        }
-
-        public IEnumerable<ChangeSet> RedoStack
-        {
-            get
-            {
-                return UndoService.Current[this].RedoStack;
-
-            }
+           
+            var root = VM;
+            if (null != root)
+                UndoService.Current[root].Redo();
         }
 
 

@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using CoApp.Developer.Toolkit.Scripting.Languages.PropertySheet;
+
 using CoApp.Packaging;
 using CoApp.Packaging.Client;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
@@ -81,10 +81,12 @@ namespace CoAppPackageMaker.ViewModels.Base
             PackageReader reader = new PackageReader();
             reader.Read(PathToFile);
 
-            PackageViewModel = new PackageViewModel(reader) {Root = this};
+            PackageViewModel = new PackageViewModel(reader);
+             //{ Root = this }
             PackageViewModel.SourcePackageViewModel.Root = this;
 
             _metadataViewModel = new MetadataViewModel(reader);
+            MetadataViewModel.SourceMetadataViewModel.Root = this;
             _manifestViewModel = new ManifestViewModel(reader);
             _signingViewModel = new SigningViewModel(reader);
             _requiresViewModel = new RequiresViewModel(reader);

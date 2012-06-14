@@ -39,17 +39,17 @@ namespace CoAppPackageMaker.ViewModels
 
                                      };
 
-            //Name = reader.GetRulesPropertyValueByName(package, "name");
-            //DisplayName = reader.GetRulesPropertyValueByName(package, "display-name");
-            //Architecture = reader.GetRulesPropertyValueByName(package, "arch");
-            //Feed = reader.GetRulesPropertyValueByName(package, "feed");
-            //Location = reader.GetRulesPropertyValueByName(package, "location");
-            //Publisher = reader.GetRulesPropertyValueByName(package, "publisher");
-            //Version = reader.GetRulesPropertyValueByName(package, "version");
-            //SourceString = reader.GetRulesSourceStringPropertyValueByName(package);
-            //IsEditable = false;
+            Name = reader.GetRulesPropertyValueByName(package, "name");
+            DisplayName = reader.GetRulesPropertyValueByName(package, "display-name");
+            Architecture = reader.GetRulesPropertyValueByName(package, "arch");
+            Feed = reader.GetRulesPropertyValueByName(package, "feed");
+            Location = reader.GetRulesPropertyValueByName(package, "location");
+            Publisher = reader.GetRulesPropertyValueByName(package, "publisher");
+            Version = reader.GetRulesPropertyValueByName(package, "version");
+            SourceString = reader.GetRulesSourceStringPropertyValueByName(package);
+            IsEditable = false;
 
-            //SourcePackageViewModel.PropertyChanged += EvaluatedChanged;
+            SourcePackageViewModel.PropertyChanged += EvaluatedChanged;
         }
 
         private PackageViewModel _sourcePackageViewModel;
@@ -69,13 +69,9 @@ namespace CoAppPackageMaker.ViewModels
             get { return _name; }
             set
             {
-               
-                    DefaultChangeFactory.OnChanging(this, "Name", _name, value);
-               
-               
-               
-                _name = value;
-                OnPropertyChanged("Name");
+               DefaultChangeFactory.OnChanging(this, "Name", _name, value);
+               _name = value;
+               OnPropertyChanged("Name");
               
             }
         }
@@ -86,6 +82,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _version; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "Version", _version, value);
                 _version = value;
                 OnPropertyChanged("Version");
              
@@ -98,6 +95,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _architecture; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "Architecture", _architecture, value);
                 _architecture = value;
                 OnPropertyChanged("Architecture");
             }
@@ -109,6 +107,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _displayName; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "DisplayName", _displayName, value);
                 _displayName = value;
                 OnPropertyChanged("DisplayName");
             }
@@ -120,6 +119,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _location; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "Location", _location, value);
                 _location = value;
                 OnPropertyChanged("Location");
             }
@@ -131,6 +131,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _feed; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "Feed", _feed, value);
                 _feed = value;
                 OnPropertyChanged("Feed");
             }
@@ -142,6 +143,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _publisher; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "Publisher", _publisher, value);
                 _publisher = value;
                 OnPropertyChanged("Publisher");
             }
@@ -153,7 +155,9 @@ namespace CoAppPackageMaker.ViewModels
                 switch (args.PropertyName)
                 {
                     case "Name":
+                        //reevaluate
                         Name = ((PackageViewModel) sender).Name;
+                       
                         break;
                     case "Version":
                         Version = ((PackageViewModel)sender).Version;

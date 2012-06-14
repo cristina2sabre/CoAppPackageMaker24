@@ -62,6 +62,9 @@ namespace CoAppPackageMaker
             {
                 PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
                 result=(propertyValue != null) ? propertyValue.SourceValues.FirstOrDefault() : String.Empty;
+
+              //  IEnumerable<string> resudlt = new string[0];
+              //  propertyValue.SourceValues =  resudlt;
             }
             return result;    
         }

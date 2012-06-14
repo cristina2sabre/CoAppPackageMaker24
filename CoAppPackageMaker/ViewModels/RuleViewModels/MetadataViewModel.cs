@@ -4,10 +4,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Security.Policy;
+using CoAppPackageMaker.ViewModels.Base;
+using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    class MetadataViewModel : ExtraPropertiesViewModelBase
+    class MetadataViewModel : ExtraPropertiesViewModelBase,ISupportsUndo
     {
         public  MetadataViewModel()
         {
@@ -27,6 +29,7 @@ namespace CoAppPackageMaker.ViewModels
                 Licenses = reader.GetRulesPropertyValueByName(metadata, "licenses");
                 IsEditable = false;
                 SourceString = reader.GetRulesSourceStringPropertyValueByName(metadata);
+                IsFocused = true;
 
             };
             SourceMetadataViewModel = new MetadataViewModel()
@@ -49,11 +52,29 @@ namespace CoAppPackageMaker.ViewModels
             get { return _summary; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "Summary", _summary, value);
                 _summary = value;
                 OnPropertyChanged("Summary");
-               
+                IsFocused = true;
+
             }
 
+        }
+
+        private bool _isFocused = false;
+        public bool IsFocused
+        {
+            get
+            {
+                return _isFocused;
+            }
+            set
+            {
+                _isFocused = false;
+                _isFocused = value;
+
+                OnPropertyChanged("IsFocused");
+            }
         }
 
         private string _description;
@@ -62,6 +83,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _description; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "Description", _description, value);
                 _description = value;
                 OnPropertyChanged("Description");
             }
@@ -73,6 +95,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _authorVersion; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "AuthorVersion", _authorVersion, value);
                 _authorVersion = value;
                 OnPropertyChanged("AuthorVersion");
             }
@@ -84,6 +107,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _bugTracker; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "BugTracker", _bugTracker, value);
                 _bugTracker = value;
                 OnPropertyChanged("BugTracker");
             }
@@ -95,6 +119,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _stability; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "Stability", _stability, value);
                 _stability = value;
                 OnPropertyChanged("Stability");
             }
@@ -106,6 +131,7 @@ namespace CoAppPackageMaker.ViewModels
             get { return _licenses; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "Licenses", _licenses, value);
                 _licenses = value;
                 OnPropertyChanged("Licenses");
             }
@@ -151,7 +177,31 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        private MainWindowViewModel _Root;
+        public MainWindowViewModel Root
+        {
+            get { return _Root; }
+            set
+            {
+                if (value == _Root)
+                    return;
 
+                // This line will log the property change with the undo framework.
+                DefaultChangeFactory.OnChanging(this, "Root", _Root, value);
+
+                _Root = value;
+                OnPropertyChanged("Root");
+            }
+        }
+
+        #region ISupportsUndo Members
+
+        public object GetUndoRoot()
+        {
+            return this.Root;
+        }
+
+        #endregion
 
     }
 }
