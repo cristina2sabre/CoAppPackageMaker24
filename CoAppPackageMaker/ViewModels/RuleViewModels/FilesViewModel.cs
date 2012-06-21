@@ -9,7 +9,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
    
 
-    class FilesViewModel:ExtraPropertiesViewModelBase
+    public class FilesViewModel:ExtraPropertiesViewModelBase
     {
         private ObservableCollection<FilesItemViewModel> _filesCollection;
         public ObservableCollection<FilesItemViewModel> FilesCollection

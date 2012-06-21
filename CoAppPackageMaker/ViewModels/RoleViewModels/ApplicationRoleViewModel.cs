@@ -10,7 +10,7 @@ using System.Text;
 //Frequently an application package will depend upon many assembly packages, which must be listed in a requires rule and referenced by way of manifest rules.
 namespace CoAppPackageMaker.ViewModels
 {
-    class ApplicationRoleViewModel:ExtraPropertiesViewModelBase
+    public class ApplicationRoleViewModel:ExtraPropertiesViewModelBase
     {
         //with paramater name?
         public ApplicationRoleViewModel(PackageReader reader)

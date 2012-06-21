@@ -8,7 +8,7 @@ using CoApp.Packaging.Client;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    class RequiresViewModel : ExtraPropertiesViewModelBase
+    public class RequiresViewModel : ExtraPropertiesViewModelBase
     {
         public RequiresViewModel()
         {

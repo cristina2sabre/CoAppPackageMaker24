@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    class ManifestViewModel : ExtraPropertiesViewModelBase
+     public class ManifestViewModel : ExtraPropertiesViewModelBase
     {
 
         private ObservableCollection<ManifestItemViewModel> _manifestCollection;

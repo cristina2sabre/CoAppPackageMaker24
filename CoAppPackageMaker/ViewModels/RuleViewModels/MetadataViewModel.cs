@@ -9,37 +9,39 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    class MetadataViewModel : ExtraPropertiesViewModelBase,ISupportsUndo
+    public class MetadataViewModel : ExtraPropertiesViewModelBase,ISupportsUndo
     {
+        private PackageReader _reader;
+        private const string Metadata = "metadata";
         public  MetadataViewModel()
         {
         }
 
         public MetadataViewModel(PackageReader reader)
         {
-
-            string metadata = "metadata";
+            _reader = reader;
+           
           
             {
-                Summary = reader.GetRulesPropertyValueByName(metadata, "summary");
-                Description = reader.GetRulesPropertyValueByName(metadata, "description");
-                AuthorVersion = reader.GetRulesPropertyValueByName(metadata, "author-version");
-                BugTracker = reader.GetRulesPropertyValueByName(metadata, "bug-tracker");
-                Stability = reader.GetRulesPropertyValueByName(metadata, "stability");
-                Licenses = reader.GetRulesPropertyValueByName(metadata, "licenses");
+                Summary = reader.GetRulesPropertyValueByName(Metadata, "summary");
+                Description = reader.GetRulesPropertyValueByName(Metadata, "description");
+                AuthorVersion = reader.GetRulesPropertyValueByName(Metadata, "author-version");
+                BugTracker = reader.GetRulesPropertyValueByName(Metadata, "bug-tracker");
+                Stability = reader.GetRulesPropertyValueByName(Metadata, "stability");
+                Licenses = reader.GetRulesPropertyValueByName(Metadata, "licenses");
                 IsEditable = false;
-                SourceString = reader.GetRulesSourceStringPropertyValueByName(metadata);
+                SourceString = reader.GetRulesSourceStringPropertyValueByName(Metadata);
                 IsFocused = true;
 
             };
             SourceMetadataViewModel = new MetadataViewModel()
                                           {
-                                              Summary = reader.GetRulesSourcePropertyValueByName(metadata, "summary"),
-                                              Description = reader.GetRulesSourcePropertyValueByName(metadata, "description"),
-                                              AuthorVersion = reader.GetRulesSourcePropertyValueByName(metadata, "author-version"),
-                                              BugTracker = reader.GetRulesSourcePropertyValueByName(metadata, "bug-tracker"),
-                                              Stability = reader.GetRulesSourcePropertyValueByName(metadata, "stability"),
-                                              Licenses = reader.GetRulesSourcePropertyValueByName(metadata, "licenses"),
+                                              Summary = reader.GetRulesSourcePropertyValueByName(Metadata, "summary"),
+                                              Description = reader.GetRulesSourcePropertyValueByName(Metadata, "description"),
+                                              AuthorVersion = reader.GetRulesSourcePropertyValueByName(Metadata, "author-version"),
+                                              BugTracker = reader.GetRulesSourcePropertyValueByName(Metadata, "bug-tracker"),
+                                              Stability = reader.GetRulesSourcePropertyValueByName(Metadata, "stability"),
+                                              Licenses = reader.GetRulesSourcePropertyValueByName(Metadata, "licenses"),
                                               IsEditable = true
                                           };
 
@@ -150,58 +152,44 @@ namespace CoAppPackageMaker.ViewModels
 
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
-            {
+
+            IEnumerable<string> newValues;
                 switch (args.PropertyName)
                 {
                     case "Summary":
-                        Summary = ((MetadataViewModel)sender).Summary;
+                        //reevaluate
+                        newValues = new[] { ((MetadataViewModel)sender).Summary };
+                        Summary = _reader.SetNewSourceValue(Metadata, "summary", newValues);
                         break;
                     case "Description":
-                        Description = ((MetadataViewModel)sender).Description;
+                        newValues = new [] { ((MetadataViewModel)sender).Description };
+                        Description = _reader.SetNewSourceValue(Metadata, "description", newValues);
                         break;
                     case "AuthorVersion":
-                        AuthorVersion = ((MetadataViewModel)sender).AuthorVersion;
+                        newValues = new [] { ((MetadataViewModel)sender).AuthorVersion };
+                        AuthorVersion = _reader.SetNewSourceValue(Metadata, "author-version", newValues);
                         break;
                     case "BugTracker":
-                        BugTracker = ((MetadataViewModel)sender).BugTracker;
+                        newValues = new [] { ((MetadataViewModel)sender).BugTracker };
+                        BugTracker = _reader.SetNewSourceValue(Metadata, "bug-tracker", newValues);
                         break;
                     case "Stability":
-                        Stability = ((MetadataViewModel)sender).Stability;
+                        newValues = new[] { ((MetadataViewModel)sender).Stability };
+                        Stability = _reader.SetNewSourceValue(Metadata, "stability", newValues);
                         break;
                     case "Licenses":
-                        Licenses = ((MetadataViewModel)sender).Licenses;
+                        newValues = new[] { ((MetadataViewModel)sender).Licenses };
+                        Licenses = _reader.SetNewSourceValue(Metadata, "licenses", newValues);
                         break;
 
                 }
 
-            }
-        }
+      
+    }
 
-        private MainWindowViewModel _Root;
-        public MainWindowViewModel Root
-        {
-            get { return _Root; }
-            set
-            {
-                if (value == _Root)
-                    return;
+       
 
-                // This line will log the property change with the undo framework.
-                DefaultChangeFactory.OnChanging(this, "Root", _Root, value);
-
-                _Root = value;
-                OnPropertyChanged("Root");
-            }
-        }
-
-        #region ISupportsUndo Members
-
-        public object GetUndoRoot()
-        {
-            return this.Root;
-        }
-
-        #endregion
+       
 
     }
 }

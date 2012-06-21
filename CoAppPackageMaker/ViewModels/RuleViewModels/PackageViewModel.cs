@@ -11,42 +11,44 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    class PackageViewModel : ExtraPropertiesViewModelBase,ISupportsUndo
+    public class PackageViewModel : ExtraPropertiesViewModelBase
     {
-        
+        private PackageReader _reader;
+        private const string Package = "package";
   
         public PackageViewModel()
         {
-
+            
         }
 
         public PackageViewModel(PackageReader reader)
         {
-            string package = "package";
+            _reader = reader;
+          
 
             SourcePackageViewModel=new PackageViewModel()
                                      {
                                        
-            Name = reader.GetRulesSourcePropertyValueByName(package, "name"),
-            DisplayName = reader.GetRulesSourcePropertyValueByName(package, "display-name"),
-            Architecture = reader.GetRulesSourcePropertyValueByName(package, "arch"),
-            Feed = reader.GetRulesSourcePropertyValueByName(package, "feed"),
-            Location = reader.GetRulesSourcePropertyValueByName(package, "location"),
-            Publisher = reader.GetRulesSourcePropertyValueByName(package, "publisher"),
-            Version = reader.GetRulesSourcePropertyValueByName(package, "version"),
+            Name = reader.GetRulesSourcePropertyValueByName(Package, "name"),
+            DisplayName = reader.GetRulesSourcePropertyValueByName(Package, "display-name"),
+            Architecture = reader.GetRulesSourcePropertyValueByName(Package, "arch"),
+            Feed = reader.GetRulesSourcePropertyValueByName(Package, "feed"),
+            Location = reader.GetRulesSourcePropertyValueByName(Package, "location"),
+            Publisher = reader.GetRulesSourcePropertyValueByName(Package, "publisher"),
+            Version = reader.GetRulesSourcePropertyValueByName(Package, "version"),
             IsEditable = true,
 
 
                                      };
 
-            Name = reader.GetRulesPropertyValueByName(package, "name");
-            DisplayName = reader.GetRulesPropertyValueByName(package, "display-name");
-            Architecture = reader.GetRulesPropertyValueByName(package, "arch");
-            Feed = reader.GetRulesPropertyValueByName(package, "feed");
-            Location = reader.GetRulesPropertyValueByName(package, "location");
-            Publisher = reader.GetRulesPropertyValueByName(package, "publisher");
-            Version = reader.GetRulesPropertyValueByName(package, "version");
-            SourceString = reader.GetRulesSourceStringPropertyValueByName(package);
+            Name = reader.GetRulesPropertyValueByName(Package, "name");
+            DisplayName = reader.GetRulesPropertyValueByName(Package, "display-name");
+            Architecture = reader.GetRulesPropertyValueByName(Package, "arch");
+            Feed = reader.GetRulesPropertyValueByName(Package, "feed");
+            Location = reader.GetRulesPropertyValueByName(Package, "location");
+            Publisher = reader.GetRulesPropertyValueByName(Package, "publisher");
+            Version = reader.GetRulesPropertyValueByName(Package, "version");
+            SourceString = reader.GetRulesSourceStringPropertyValueByName(Package);
             IsEditable = false;
 
             SourcePackageViewModel.PropertyChanged += EvaluatedChanged;
@@ -152,30 +154,37 @@ namespace CoAppPackageMaker.ViewModels
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
             {
+                IEnumerable<string> newValues;
                 switch (args.PropertyName)
                 {
                     case "Name":
                         //reevaluate
-                        Name = ((PackageViewModel) sender).Name;
-                       
+                        newValues= new[]{((PackageViewModel) sender).Name};
+                        Name = _reader.SetNewSourceValue(Package, "name", newValues);
                         break;
                     case "Version":
-                        Version = ((PackageViewModel)sender).Version;
+                        newValues = new[] { ((PackageViewModel)sender).Version};
+                        Version = _reader.SetNewSourceValue(Package, "version", newValues);
                         break;
                     case "DisplayName":
-                        DisplayName = ((PackageViewModel)sender).DisplayName;
+                        newValues = new[] { ((PackageViewModel)sender).DisplayName };
+                        DisplayName = _reader.SetNewSourceValue(Package, "display-name", newValues);
                         break;
                     case "Location":
-                        Location = ((PackageViewModel)sender).Location;
+                        newValues = new[] { ((PackageViewModel)sender).Location };
+                        Location = _reader.SetNewSourceValue(Package, "location", newValues);
                         break;
                     case "Feed":
-                        Feed = ((PackageViewModel)sender).Feed;
+                        newValues = new[] { ((PackageViewModel)sender).Feed };
+                        Feed = _reader.SetNewSourceValue(Package, "feed", newValues);
                         break;
                     case "Architecture":
-                        Architecture = ((PackageViewModel)sender).Architecture;
+                        newValues = new[] { ((PackageViewModel)sender).Architecture };
+                        Architecture = _reader.SetNewSourceValue(Package, "arch", newValues);
                         break;
                     case "Publisher":
-                        Publisher = ((PackageViewModel)sender).Publisher;
+                        newValues = new[] { ((PackageViewModel)sender).Publisher };
+                        Publisher = _reader.SetNewSourceValue(Package, "publisher", newValues);
                         break;
 
                 }
@@ -183,31 +192,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        private MainWindowViewModel _Root;
-        public MainWindowViewModel Root
-        {
-            get { return _Root; }
-            set
-            {
-                if (value == _Root)
-                    return;
-
-                // This line will log the property change with the undo framework.
-                DefaultChangeFactory.OnChanging(this, "Root", _Root, value);
-
-                _Root = value;
-                OnPropertyChanged("Root");
-            }
-        }
-
-        #region ISupportsUndo Members
-
-        public object GetUndoRoot()
-        {
-            return this.Root;
-        }
-
-        #endregion
+        
     }
 
     public class PackageViewModelFactory : IFactory

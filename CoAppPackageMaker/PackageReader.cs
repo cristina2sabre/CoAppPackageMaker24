@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using CoApp.Developer.Toolkit.Scripting.Languages.PropertySheet;
 using CoApp.Packaging;
+using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker
 {
@@ -29,13 +30,7 @@ namespace CoAppPackageMaker
 
         }
        
-        public string GetRulesPropertyValueByName(string ruleName,string propertyName)
-        {
-            var rules = _packageSource.AllRules.GetRulesByName(ruleName);
-           return (rules!=null)?rules.GetPropertyValue(propertyName):String.Empty;
-         
-           
-        }
+      
 
         public IEnumerable<string> GetRulesSourcePropertyValuesByName(string ruleName, string propertyName)
         {
@@ -53,6 +48,86 @@ namespace CoAppPackageMaker
             return result;
         }
 
+        public string GetRulesSourcePropertyValuesByNameForSigning(string ruleName, string propertyName, string attributeName)
+        {
+            IEnumerable<string> result = new string[0];
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+            if (propertyRule != null)
+            {
+                result = propertyRule.PropertyValues.Single((item => item.Label == attributeName)).SourceValues;
+               
+            }
+          //  result = (propertyValue != null) ? propertyValue.SourceValues.FirstOrDefault() : String.Empty;
+            return result.FirstOrDefault();
+        }
+
+        public ObservableCollection<DefineViewModel.DefineItemViewModel> GetDefineRules(string type, DefineViewModel defineViewModel)
+        {
+            
+           
+            var  result=new ObservableCollection<DefineViewModel.DefineItemViewModel>();
+           foreach (Rule rule in _packageSource.DefineRules)
+           {
+             
+               foreach (string s in rule.PropertyNames)
+               {
+                   var model = new DefineViewModel.DefineItemViewModel();
+                   PropertyRule w = rule[s];
+                   model.Label = s;
+                   var firstOrDefault = w.PropertyValues.FirstOrDefault();
+                   if (firstOrDefault != null)
+                   {
+                       model.Value =(type=="value")? w.Value:firstOrDefault.SourceValues.FirstOrDefault();
+                   }
+                      
+                   if (type != "value")
+                   {
+                       model.IsEditable = true;
+                       model.Root = defineViewModel.Root;
+                   }
+                   result.Add(model);
+               }
+              
+           }
+            return result;
+            
+       }
+
+       public string PropertyRuleValue(Rule rule,string name)
+       {
+           PropertyRule w = rule[name];
+           string er = w.Value;
+           return er;
+       }
+
+
+       public string SetNewSourceValueSigning(string ruleName, string propertyName,string attributeName, IEnumerable<string> value)
+        {
+            IEnumerable<string> result = new string[0];
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+            if (propertyRule != null)
+            {
+               propertyRule.PropertyValues.First((item => item.Label == attributeName)).SourceValues=value;
+
+            }
+            result = propertyRule.PropertyValues.Single((item => item.Label == attributeName)).Values; 
+            return  result.FirstOrDefault();
+        }
+       
+          
+        public string GetRulesPropertyValuesByNameForSigning(string ruleName, string propertyName, string attributeName)
+        {
+            IEnumerable<string> result = new string[0];
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+            if (propertyRule != null)
+            {
+                result = propertyRule.PropertyValues.Single((item => item.Label == attributeName)).Values;
+
+            }
+            //  result = (propertyValue != null) ? propertyValue.SourceValues.FirstOrDefault() : String.Empty;
+            return result.FirstOrDefault();
+        }
+
         public string GetRulesSourcePropertyValueByName(string ruleName, string propertyName)
         {
             string result = String.Empty;
@@ -67,6 +142,50 @@ namespace CoAppPackageMaker
               //  propertyValue.SourceValues =  resudlt;
             }
             return result;    
+        }
+
+        public string GetRulesPropertyValueByName(string ruleName, string propertyName)
+        {
+            var rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            return (rules != null) ? rules.GetPropertyValue(propertyName) : String.Empty;
+
+
+        }
+        public string SetNewSourceValue(string ruleName, string propertyName, IEnumerable<string> value)
+       {
+           var rules = _packageSource.AllRules.GetRulesByName(ruleName);
+           PropertyRule propertyRule = rules.GetProperty(ruleName, propertyName);
+           if (propertyRule != null)
+           {
+               PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+
+               if (propertyValue != null)
+               {
+
+                   propertyValue.SourceValues = value;
+               }
+
+           }
+           return (rules != null) ? rules.GetPropertyValue(propertyName) : String.Empty;
+       }
+
+       public void SetRulesSourceProperty(string ruleName, string propertyName, IEnumerable<string> value)
+        {
+            
+            var rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            PropertyRule propertyRule = rules.GetProperty(ruleName, propertyName);
+            if (propertyRule != null)
+            {
+                PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+
+                if(propertyValue!=null)
+                {
+                   
+                 propertyValue.SourceValues = value;
+                }
+                
+            }
+            
         }
 
     

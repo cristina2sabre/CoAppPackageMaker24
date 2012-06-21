@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CoAppPackageMaker.ViewModels.Base;
+using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
- public abstract class ExtraPropertiesViewModelBase:ViewModelBase
+    public abstract class ExtraPropertiesViewModelBase : ViewModelBase, ISupportsUndo
     {
         private string _helpTip;
         private bool _isRequired;
@@ -52,5 +54,33 @@ namespace CoAppPackageMaker.ViewModels
                 OnPropertyChanged("IsEditable");
             }
         }
+
+        public bool IsReadOnly { get; set; }
+
+        private MainWindowViewModel _root;
+        public MainWindowViewModel Root
+        {
+            get { return _root; }
+            set
+            {
+                if (value == _root)
+                    return;
+
+                // This line will log the property change with the undo framework.
+                DefaultChangeFactory.OnChanging(this, "Root", _root, value);
+
+                _root = value;
+                OnPropertyChanged("Root");
+            }
+        }
+
+        #region ISupportsUndo Members
+
+        public object GetUndoRoot()
+        {
+            return this.Root;
+        }
+
+        #endregion
     }
 }

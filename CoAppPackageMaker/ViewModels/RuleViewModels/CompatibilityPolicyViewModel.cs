@@ -1,29 +1,34 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
    public class CompatibilityPolicyViewModel:ExtraPropertiesViewModelBase
     {
+       private PackageReader _reader;
+       private const string CompatibilityPolicy = "compatability-policy";
        public CompatibilityPolicyViewModel()
        {
        }
 
        public CompatibilityPolicyViewModel(PackageReader reader)
        {
-           string compatibilityPolicy = "compatability-policy";
-           Minimum = reader.GetRulesPropertyValueByName(compatibilityPolicy, "minimum");
-           Maximum = reader.GetRulesPropertyValueByName(compatibilityPolicy, "maximum");
-           Versions = reader.GetRulesPropertyValueByName(compatibilityPolicy, "versions");
+           _reader = reader;
+          
+           Minimum = reader.GetRulesPropertyValueByName(CompatibilityPolicy, "minimum");
+           Maximum = reader.GetRulesPropertyValueByName(CompatibilityPolicy, "maximum");
+           Versions = reader.GetRulesPropertyValueByName(CompatibilityPolicy, "versions");
            IsEditable = false;
            SourceValueCompatibilityPolicyViewModel = new CompatibilityPolicyViewModel()
                                                        {
-                                                            Minimum = reader.GetRulesSourcePropertyValueByName(compatibilityPolicy, "minimum"),
-                Maximum = reader.GetRulesSourcePropertyValueByName(compatibilityPolicy, "maximum"),
-                Versions = reader.GetRulesSourcePropertyValueByName(compatibilityPolicy, "versions"),
+                                                            Minimum = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "minimum"),
+                Maximum = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "maximum"),
+                Versions = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "versions"),
                 IsEditable = true
                                                        };
 
-           SourceString = reader.GetRulesSourceStringPropertyValueByName(compatibilityPolicy);
+           SourceString = reader.GetRulesSourceStringPropertyValueByName(CompatibilityPolicy);
 
            SourceValueCompatibilityPolicyViewModel.PropertyChanged += EvaluatedChanged;
 
@@ -36,6 +41,7 @@ namespace CoAppPackageMaker.ViewModels
            get { return _minimum; }
            set
            {
+               DefaultChangeFactory.OnChanging(this, "Minimum", _minimum, value);
                _minimum = value;
                OnPropertyChanged("Minimum");
            }
@@ -47,6 +53,7 @@ namespace CoAppPackageMaker.ViewModels
            get { return _maximum; }
            set
            {
+               DefaultChangeFactory.OnChanging(this, "Maximum", _maximum, value);
                _maximum = value;
                OnPropertyChanged("Maximum");
            }
@@ -58,6 +65,7 @@ namespace CoAppPackageMaker.ViewModels
            get { return _versions; }
            set
            {
+               DefaultChangeFactory.OnChanging(this, "Versions", _versions, value);
                _versions = value;
                OnPropertyChanged("Versions");
            }
@@ -76,11 +84,14 @@ namespace CoAppPackageMaker.ViewModels
 
        public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
        {
+           IEnumerable<string> newValues;
            {
                switch (args.PropertyName)
                {
                    case "Minimum":
-                       Minimum = ((CompatibilityPolicyViewModel)sender).Minimum;
+                        
+                        newValues= new[]{((CompatibilityPolicyViewModel)sender).Minimum};
+                        Minimum = _reader.SetNewSourceValue(CompatibilityPolicy, "minimum", newValues);
                        break;
                    case "Maximum":
                        Maximum = ((CompatibilityPolicyViewModel)sender).Maximum;

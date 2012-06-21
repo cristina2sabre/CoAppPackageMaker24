@@ -7,7 +7,7 @@ using System.Text;
 namespace CoAppPackageMaker.ViewModels
 {
     //This role specifies shared libraries which are dynamically linked to by other assemblies and applications.
-    class AssemblyRoleViewModel:ExtraPropertiesViewModelBase
+    public class AssemblyRoleViewModel:ExtraPropertiesViewModelBase
     {
         //withparam name?
         public AssemblyRoleViewModel(PackageReader reader)

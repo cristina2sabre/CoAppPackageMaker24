@@ -17,7 +17,7 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.Base
 {
-    class MainWindowViewModel:ViewModelBase, ISupportsUndo
+  public  class MainWindowViewModel:ViewModelBase, ISupportsUndo
     {
         private string _ruleNameSelectedItem;
         private ObservableCollection<string> _ruleNames;
@@ -64,9 +64,9 @@ namespace CoAppPackageMaker.ViewModels.Base
 
             //}
 
-            //PathToFile = "D:\\P\\COPKG\\test2.autopkg";
-            //  PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-            PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+          //  PathToFile = "D:\\P\\COPKG\\test2.autopkg";
+           // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
+           PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
             if (PathToFile != null && File.Exists(PathToFile))
             {
                 LoadData();
@@ -84,16 +84,20 @@ namespace CoAppPackageMaker.ViewModels.Base
             PackageViewModel = new PackageViewModel(reader);
              //{ Root = this }
             PackageViewModel.SourcePackageViewModel.Root = this;
-
             _metadataViewModel = new MetadataViewModel(reader);
             MetadataViewModel.SourceMetadataViewModel.Root = this;
             _manifestViewModel = new ManifestViewModel(reader);
+            ManifestViewModel.SourceManifestViewModel.Root = this;
             _signingViewModel = new SigningViewModel(reader);
+            SigningViewModel.SourceSigningViewModel.Root = this;
             _requiresViewModel = new RequiresViewModel(reader);
-            _defineViewModel = new DefineViewModel(reader);
+            _defineViewModel = new DefineViewModel(reader, this);
+           // DefineViewModel.SourceDefineViewModel.Root = this;
+         
             reader.ReadSinging();
             _licenseViewModel = new LicenseViewModel(reader);
             _compatibilityPolicy = new CompatibilityPolicyViewModel(reader);
+            _compatibilityPolicy.SourceValueCompatibilityPolicyViewModel.Root = this;
             _applicationRoleViewModel = new ApplicationRoleViewModel(reader);
             _assemblyRoleViewModel = new AssemblyRoleViewModel(reader);
             _packageCompositionViewModel = new PackageCompositionViewModel(reader);
