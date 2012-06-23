@@ -6,8 +6,8 @@ using System.Collections.ObjectModel;
 
 namespace TestProject1
 {
-    
-    
+
+
     ///// <summary>
     /////This is a test class for MainWindowViewModelTest and is intended
     /////to contain all MainWindowViewModelTest Unit Tests
@@ -50,9 +50,9 @@ namespace TestProject1
     //        _mainWindowViewModel.DeleteCommand.Execute(_ruleName);
 
     //        //assert
-    //        Assert.AreEqual(_count-1, 1);
+    //        Assert.AreEqual(_count - 1, 1);
     //    }
 
-       
+
     //}
 }

@@ -13,29 +13,9 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
     public class DefineViewModel : ExtraPropertiesViewModelBase
     {
 
-
-
-
         private PackageReader _reader;
 
-        //string define = "*";
-        //Flavor = reader.GetRulesPropertyValueByName(define, "flavor");
-        //Architecture = reader.GetRulesPropertyValueByName(define, "arch");
-        //SourceString = reader.GetRulesSourceStringPropertyValueByName("*");
-        //IsEditable =false;
-        //_sourceValueDefineViewModel = new DefineViewModel()
-        //                                  {
-        //                                      Architecture = reader.GetRulesSourcePropertyValueByName("*", "arch" ),
-        //                                      Flavor = reader.GetRulesSourcePropertyValueByName("*", "flavor"),
-        //                                      IsEditable = true
-        //                                  };
-
-
-
-
-
         private ObservableCollection<DefineItemViewModel> _defineCollection;
-
         public ObservableCollection<DefineItemViewModel> DefineCollection
         {
             get { return _defineCollection; }
@@ -47,76 +27,73 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
 
 
-        public DefineViewModel()
-        {
-        }
-
         public DefineViewModel(PackageReader reader, MainWindowViewModel root)
         {
             _reader = reader;
-            _defineCollection = reader.GetDefineRules("value", this);
-            SourceDefineViewModel = new DefineViewModel {Root = root};
-            SourceDefineViewModel._defineCollection = reader.GetDefineRules("source", SourceDefineViewModel);
+            Root = root;
+            _defineCollection = reader.GetDefineRules( this);
             SourceString = reader.GetRulesSourceStringPropertyValueByName("*");
-            SourceDefineViewModel.DefineCollection.CollectionChanged += ContentCollectionChanged;
-
-
         }
 
-
-
-        private DefineViewModel _sourceManifestViewModel;
-
-        public DefineViewModel SourceDefineViewModel
-        {
-            get { return _sourceManifestViewModel; }
-            set
-            {
-                _sourceManifestViewModel = value;
-                OnPropertyChanged("SourceDefineViewModel");
-            }
-        }
 
         public class DefineItemViewModel : ExtraPropertiesViewModelBase
         {
 
             private string _label;
-
             public string Label
             {
                 get { return _label; }
                 set
                 {
-
                     DefaultChangeFactory.OnChanging(this, "Label", _label, value);
                     _label = value;
                     OnPropertyChanged("Label");
-                   
-                }
+                   }
             }
 
-
             private string _value;
-
             public string Value
             {
                 get { return _value; }
                 set
                 {
-                    DefaultChangeFactory.OnChanging(this, "Value", _value, value);
                     _value = value;
                     OnPropertyChanged("Value");
                 }
             }
 
+            private string _sourceValue;
+            public string SourceValue
+            {
+                get { return _sourceValue; }
+                set
+                {
+                    DefaultChangeFactory.OnChanging(this, "SourceValue", _sourceValue, value);
+                    _sourceValue = value;
+                    OnPropertyChanged("SourceValue");
+                    if(_reader!=null)
+                    {
 
+                        Value = _reader.SetSourceDefineRules(this.Label, new[] { (_sourceValue) });
+                     
+                    }
+                   
+                   
+                }
+            }
 
-        }
-
+            private PackageReader _reader;
+            public PackageReader Reader
+            {
+                get { return _reader; }
+                set
+                {
+                    _reader = value;
+                    OnPropertyChanged("Reader");
+                }
+            }
+           
+        }   
        
-        public void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
- 
-        {
-        }
     }
 }

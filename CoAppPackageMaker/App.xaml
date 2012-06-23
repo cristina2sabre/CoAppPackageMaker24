@@ -3,6 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <DataTemplate x:Key="DefineTemplateEvaluated">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="220" />
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"   Grid.Row="0" Grid.Column="0" Margin="5"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" IsEnabled="False"  TextWrapping="Wrap" MaxHeight="75" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="5" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DefineTemplateSource">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="220" />
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"   Grid.Row="0" Grid.Column="0" Margin="5"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" IsEnabled="True" TextWrapping="Wrap" MaxHeight="75" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="5" />
+            </Grid>
+        </DataTemplate>
     </Application.Resources>
 </Application>

@@ -17,6 +17,7 @@
         <CommandBinding Command="Undo" Executed="Undo_Executed" CanExecute="Undo_CanExecute" />
         <CommandBinding Command="Redo" Executed="Redo_Executed" CanExecute="Redo_CanExecute" />
     </Window.CommandBindings>
+    
     <Window.Resources>
     
     </Window.Resources>
@@ -174,10 +175,14 @@
                                 </Grid.RowDefinitions>
                                 <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:DefineView Margin="5,10,5,5" DataContext="{Binding DefineViewModel.SourceDefineViewModel}"/>
+                                        <ListBox ItemTemplate="{StaticResource ResourceKey=DefineTemplateSource}" ItemsSource="{Binding DefineViewModel.DefineCollection}">
+                                        </ListBox>
+                                        <!--<Views:DefineView Margin="5,10,5,5" DataContext="{Binding DefineViewModel.SourceDefineViewModel}"/>-->
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:DefineView Margin="5,10,5,5" DataContext="{Binding DefineViewModel}"/>
+                                        <ListBox ItemTemplate="{StaticResource DefineTemplateEvaluated}" ItemsSource="{Binding DefineViewModel.DefineCollection}">
+                                        </ListBox>
+                                        <!--<Views:DefineView Margin="5,10,5,5" DataContext="{Binding DefineViewModel}"/>-->
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding DefineViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -223,7 +228,8 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                       
+                        <TabItem Header="Publisher Rules" Name="tabItem15" >
+                        </TabItem>
                     </TabControl>
                 </Grid>
             </TabItem>
@@ -241,7 +247,11 @@
                             <TabItem Header="Assembly" Name="tabItem18" >
                                 <Views:AssemblyView Margin="5,10,5,5"/>
                             </TabItem>
-                        </TabControl>
+                        <TabItem Header="Developer library" Name="tabItem19" >
+                            <!--<Views:AssemblyView Margin="5,10,5,5"/>-->
+                            <TextBlock Text="to add :headers, libraries, docs" />
+                        </TabItem>
+                    </TabControl>
                     </Grid>
                 </TabItem>
             <TabItem Header="Custom Rules" Name="tabItem3">

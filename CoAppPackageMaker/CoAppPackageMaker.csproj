@@ -96,7 +96,7 @@
     <Compile Include="ViewModels\RuleViewModels\ImportViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\ManifestViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\MetadataViewModel.cs" />
-    <Compile Include="ViewModels\RuleViewModels\PackageComposition.cs" />
+    <Compile Include="ViewModels\RuleViewModels\PackageCompositionViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\PackageViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\RequiresViewModel.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />

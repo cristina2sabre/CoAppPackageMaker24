@@ -6,11 +6,11 @@
              xmlns:RuleViewModels="clr-namespace:CoAppPackageMaker.ViewModels.RuleViewModels" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <DataTemplate x:Key="FileTemplate">       
+        <DataTemplate x:Key="FileTemplate">   
               
                     <Expander  IsExpanded="False" Margin="5">
                         <Expander.Header>
-                            <TextBlock FontWeight="Bold" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"></TextBlock>
+                            <TextBox  FontWeight="Bold" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"></TextBox>
                         </Expander.Header>
                                    <Grid>
                     <Grid.RowDefinitions>
@@ -33,10 +33,7 @@
                     <ListView Width="200" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Include , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
                     <TextBox Width="200" Grid.Column="1" Grid.Row="2" Text="{Binding  TrimPath , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
                </Grid>
-            </Expander>
-               
-             
-           
+            </Expander>       
         </DataTemplate>
    
 

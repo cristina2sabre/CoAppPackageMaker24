@@ -57,14 +57,12 @@ namespace CoAppPackageMaker
                 result = propertyRule.PropertyValues.Single((item => item.Label == attributeName)).SourceValues;
                
             }
-          //  result = (propertyValue != null) ? propertyValue.SourceValues.FirstOrDefault() : String.Empty;
+        
             return result.FirstOrDefault();
         }
 
-        public ObservableCollection<DefineViewModel.DefineItemViewModel> GetDefineRules(string type, DefineViewModel defineViewModel)
+        public ObservableCollection<DefineViewModel.DefineItemViewModel> GetDefineRules(DefineViewModel defineViewModel)
         {
-            
-           
             var  result=new ObservableCollection<DefineViewModel.DefineItemViewModel>();
            foreach (Rule rule in _packageSource.DefineRules)
            {
@@ -72,19 +70,18 @@ namespace CoAppPackageMaker
                foreach (string s in rule.PropertyNames)
                {
                    var model = new DefineViewModel.DefineItemViewModel();
-                   PropertyRule w = rule[s];
+                   PropertyRule propertyRule = rule[s];
                    model.Label = s;
-                   var firstOrDefault = w.PropertyValues.FirstOrDefault();
+                   var firstOrDefault = propertyRule.PropertyValues.FirstOrDefault();
                    if (firstOrDefault != null)
                    {
-                       model.Value =(type=="value")? w.Value:firstOrDefault.SourceValues.FirstOrDefault();
+                       model.Value = propertyRule.Value;
+                       model.SourceValue = firstOrDefault.SourceValues.FirstOrDefault();
+                       model.Root = defineViewModel.Root;
+                       model.Reader = this;
+                     
                    }
                       
-                   if (type != "value")
-                   {
-                       model.IsEditable = true;
-                       model.Root = defineViewModel.Root;
-                   }
                    result.Add(model);
                }
               
@@ -92,6 +89,29 @@ namespace CoAppPackageMaker
             return result;
             
        }
+
+        public string SetSourceDefineRules(string propertyName, IEnumerable<string> value)
+        {
+
+            foreach (Rule rule in _packageSource.DefineRules)
+            {
+              
+                    PropertyRule propertyRule = rule[propertyName];
+                 
+                    if (propertyRule != null)
+                    {
+                     PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+
+                        if (propertyValue != null)
+                        {
+                            propertyValue.SourceValues = value;
+                            return propertyRule.Value;
+                        }
+                       
+                    }
+            }
+            return String.Empty;
+        }
 
        public string PropertyRuleValue(Rule rule,string name)
        {
@@ -151,6 +171,7 @@ namespace CoAppPackageMaker
 
 
         }
+
         public string SetNewSourceValue(string ruleName, string propertyName, IEnumerable<string> value)
        {
            var rules = _packageSource.AllRules.GetRulesByName(ruleName);
@@ -242,6 +263,19 @@ namespace CoAppPackageMaker
             return result;
         }
 
+
+        public List<string> ReadPackageCompositionParameters()
+        {
+            List<string> result = new List<string>();
+            var packageComposition = _packageSource.PackageCompositionRules;
+            foreach (Rule rule in packageComposition)
+            {
+                string ruleParameter = rule.Parameter;
+                result.Add(ruleParameter);
+            }
+
+            return result;
+        }
         public List<string> ReadManifestParameters()
         {
             List<string> result = new List<string>();
