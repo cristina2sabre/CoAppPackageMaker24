@@ -107,7 +107,9 @@
                             </Grid>
                         </TabItem>
                         <TabItem Header="Files" Name="tabItem8">
-                            <Views:Files  Margin="5,10,5,5"/>
+                            <DockPanel>
+                                <Views:Files DataContext="{Binding FilesViewModel}" Margin="5,10,5,5"/>                               
+                            </DockPanel>
                         </TabItem>
                         <TabItem Header="Package Composition" Name="tabItem9" >
                             <Grid>
@@ -136,7 +138,8 @@
                                 </Grid.RowDefinitions>
                                 <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:RequiresView Margin="5,10,5,5" DataContext="{Binding RequiresViewModel.SourceValueRequiresViewModel}"/>
+                                        <Views:EditCollectionsUC DataContext="{Binding EditCollectionViewModel}"/>
+                                        <!--<Views:RequiresView Margin="5,10,5,5" DataContext="{Binding RequiresViewModel.SourceValueRequiresViewModel}"/>-->
                                     </TabItem>
                                     <TabItem Header="Evaluated">
                                         <Views:RequiresView Margin="5,10,5,5" DataContext="{Binding RequiresViewModel}"/>

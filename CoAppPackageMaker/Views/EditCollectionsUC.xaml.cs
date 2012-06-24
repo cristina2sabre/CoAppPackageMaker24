@@ -11,22 +11,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker.Views
 {
     /// <summary>
-    /// Interaction logic for Files.xaml
+    /// Interaction logic for EditCollectionsUC.xaml
     /// </summary>
-    public partial class Files : UserControl
+    public partial class EditCollectionsUC : UserControl
     {
-        public Files()
+        public EditCollectionsUC()
         {
             InitializeComponent();
         }
-
-       
-
-     
     }
 }

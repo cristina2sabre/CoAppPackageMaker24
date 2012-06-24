@@ -101,7 +101,8 @@ namespace CoAppPackageMaker.ViewModels.Base
             _applicationRoleViewModel = new ApplicationRoleViewModel(reader);
             _assemblyRoleViewModel = new AssemblyRoleViewModel(reader);
             _packageCompositionViewModel = new PackageCompositionViewModel(reader);
-            _filesViewModel = new FilesViewModel(reader);
+            _filesViewModel = new FilesViewModel(reader,this);
+            _editCollectionViewModel=new EditCollectionViewModel(reader,this,RequiresViewModel);
 
             _allViewModels.Add(_packageViewModel);
 
@@ -282,8 +283,18 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
         }
 
-        
-        
+
+        private EditCollectionViewModel _editCollectionViewModel;
+
+        public EditCollectionViewModel EditCollectionViewModel
+        {
+            get { return _editCollectionViewModel; }
+            set
+            {
+                _editCollectionViewModel = value;
+                OnPropertyChanged(" EditCollectionViewModel");
+            }
+        }
         #endregion ViewModels
 
        

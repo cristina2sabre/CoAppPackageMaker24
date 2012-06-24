@@ -5,6 +5,7 @@ using System.Text;
 
 using System.Collections.ObjectModel;
 using CoApp.Packaging.Client;
+using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker.ViewModels
 {
@@ -17,7 +18,8 @@ namespace CoAppPackageMaker.ViewModels
 
         public RequiresViewModel (PackageReader reader)
         {
-            _requiredPackages = new ObservableCollection<string>(reader.GetRulesPropertyValues("requires", "package"));
+          
+          _requiredPackages = new ObservableCollection<string>(reader.GetRulesPropertyValues("requires", "package"));
             SourceValueRequiresViewModel = new RequiresViewModel()
                                                {
                                                     _requiredPackages = new ObservableCollection<string>(reader.GetRulesSourcePropertyValuesByName("requires", "package"))
@@ -28,15 +30,16 @@ namespace CoAppPackageMaker.ViewModels
 
         private ObservableCollection<string> _requiredPackages;
 
-        public ObservableCollection<string> RequiredPackages
-        {
-            get { return _requiredPackages; }
-            set
-            {
-                _requiredPackages = value;
-                OnPropertyChanged("RequiredPackages");
-            }
-        }
+        ///update the name back
+        //public ObservableCollection<string> FilesCollection
+        //{
+        //    get { return _requiredPackages; }
+        //    set
+        //    {
+        //        _requiredPackages = value;
+        //        OnPropertyChanged("FilesCollection");
+        //    }
+        //}
 
         private RequiresViewModel _sourceValueRequiresViewModel;
 

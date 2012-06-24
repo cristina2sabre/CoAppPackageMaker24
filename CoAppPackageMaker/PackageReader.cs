@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using CoApp.Developer.Toolkit.Scripting.Languages.PropertySheet;
 using CoApp.Packaging;
+using CoAppPackageMaker.ViewModels.Base;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker
@@ -47,6 +48,31 @@ namespace CoAppPackageMaker
            
             return result;
         }
+
+        public ObservableCollection<ItemViewModel> GetRulesSourcePropertyValuesByNameForRequired(string ruleName, string propertyName, MainWindowViewModel root)
+        {
+            var result = new ObservableCollection<ItemViewModel>();
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+            if (propertyRule != null)
+            {
+                foreach (string value in propertyRule.Values)
+                {
+                    var model = new ItemViewModel();
+                    var firstOrDefault = propertyRule.PropertyValues.FirstOrDefault();
+                    if (firstOrDefault != null)
+                        model.SourceValue = firstOrDefault.SourceValues.FirstOrDefault();
+                    model.Value = value;
+                    model.Root = root;
+                    result.Add(model);
+                    
+                }
+            }
+
+            return result;
+        }
+
+
+
 
         public string GetRulesSourcePropertyValuesByNameForSigning(string ruleName, string propertyName, string attributeName)
         {

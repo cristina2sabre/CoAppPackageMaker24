@@ -88,7 +88,9 @@
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\RuleViewModels\CompatibilityPolicyViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\DefineViewModel.cs" />
+    <Compile Include="ViewModels\RuleViewModels\EditCollectionViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\FilesViewModel.cs" />
+    <Compile Include="ViewModels\RuleViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\LicenseViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\DeveloperLibraryRoleViewModel.cs" />
@@ -112,6 +114,9 @@
     </Compile>
     <Compile Include="Views\DefineView.xaml.cs">
       <DependentUpon>DefineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditCollectionsUC.xaml.cs">
+      <DependentUpon>EditCollectionsUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Files.xaml.cs">
       <DependentUpon>Files.xaml</DependentUpon>
@@ -162,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DefineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditCollectionsUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
