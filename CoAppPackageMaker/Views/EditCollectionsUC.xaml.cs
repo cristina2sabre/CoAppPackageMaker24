@@ -19,9 +19,37 @@ namespace CoAppPackageMaker.Views
     /// </summary>
     public partial class EditCollectionsUC : UserControl
     {
+        public static DataTemplate ItemTemplate;
+        public static DataTemplate DisabledItemTemplate;
         public EditCollectionsUC()
         {
             InitializeComponent();
+            DisabledItemTemplate = FindResource("ItemTemplate") as DataTemplate;
+            ItemTemplate= FindResource("DisabledItemTemplate") as DataTemplate;
+            IsSourceValue = true;
+        }
+
+        public static readonly DependencyProperty IsSourceValueProperty =
+DependencyProperty.Register("IsSourceValue", typeof(bool), typeof(EditCollectionsUC), new UIPropertyMetadata(MyPropertyChangedHandler));
+
+        public bool IsSourceValue
+        {
+            get
+            {
+                return (bool)GetValue(IsSourceValueProperty);
+            }
+            set
+            {
+                SetValue(IsSourceValueProperty, value);
+            }
+        }
+
+
+        public static void MyPropertyChangedHandler(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+           
+            ((EditCollectionsUC)sender).FilesCollections.ItemTemplate = e.NewValue.ToString()=="True"? DisabledItemTemplate :ItemTemplate;
+           
         }
     }
 }

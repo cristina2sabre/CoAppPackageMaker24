@@ -11,49 +11,37 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
     public class EditCollectionViewModel:ExtraPropertiesViewModelBase
     {
-        private ObservableCollection<ItemViewModel> _filesCollection;
-        public ObservableCollection<ItemViewModel> FilesCollection
+        PackageReader _reader;
+        private ObservableCollection<ItemViewModel> _editableItems;
+        private ItemViewModel.Process _updateSource; 
+        public ObservableCollection<ItemViewModel> EditableItems
         {
-            get { return _filesCollection; }
+            get { return _editableItems; }
             set
             {
-               //DefaultChangeFactory.OnChanging(this, "FilesCollection", _filesCollection, value);
-                _filesCollection = value;
-                OnPropertyChanged("FilesCollection");
+               
+                _editableItems = value;
+                OnPropertyChanged("EditableItems");
             }
         }
 
-        public EditCollectionViewModel(PackageReader reader, MainWindowViewModel root, ExtraPropertiesViewModelBase f)
+        public EditCollectionViewModel(PackageReader reader, MainWindowViewModel root, ObservableCollection<ItemViewModel> collection)
         {
-           // reader.GetRulesSourcePropertyValuesByNameForRequired("requires", "package");
+            _reader = reader;
+            //how to update value and source value? 
+            //to pass the collection or viewModel() in order to ovveride update?
             Root = root;
-           // _filesCollection = new ObservableCollection<ItemViewModel>();
-            //foreach (string parameter in reader.GetRulesPropertyValues("requires", "package"))
-            //{
-            //   ItemViewModel itemViewModel = new ItemViewModel()
-            //    {
-            //      SourceValue = parameter,
-            //      Root = root,
-            //    };
-            //    _filesCollection.Add(itemViewModel);
-            //}
-            _filesCollection = reader.GetRulesSourcePropertyValuesByNameForRequired("requires", "package",root);
-            //SourceString = reader.GetRulesSourceStringPropertyValueByName("files");
-            _filesCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
+            _editableItems = collection;
+            _updateSource = this.EditableItems.FirstOrDefault().UpdateSource;
+            _editableItems.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
         }
 
         void FilesCollectionCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-          //  FilesCollection = sender as ObservableCollection<FilesItemViewModel>;
-           // DefaultChangeFactory.OnChanging(this, "FilesCollection", _filesCollection, sender as FilesItemViewModel);
-          
-            DefaultChangeFactory.OnCollectionChanged(this, "FilesCollection", FilesCollection, e);
-            OnPropertyChanged("FilesCollection");
+            DefaultChangeFactory.OnCollectionChanged(this, "EditableItems", EditableItems, e);
+            OnPropertyChanged("EditableItems");
         }
-
-       
-
-       
+      
         private ItemViewModel _selectedItem;
         public ItemViewModel SelectedItem
         {
@@ -68,8 +56,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         
         #region Event Handlers
 
-
-
         public ICommand RemoveCommand
         {
             get { return new RelayCommand(Remove, CanRemove); }
@@ -77,7 +63,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         public void Remove()
         {
-            this.FilesCollection.Remove(this.SelectedItem);
+            this.EditableItems.Remove(this.SelectedItem);
            
         }
       
@@ -92,15 +78,16 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
            {
                get { return new RelayCommand(Add, CanAdd); }
            }
+
            bool CanAdd()
            {
-               return this.FilesCollection!= null;
+               return this.EditableItems!= null;
 
            }
            public void Add()
            {
 
-               this.FilesCollection.Add(new ItemViewModel() { Root = this.Root });
+               this.EditableItems.Add(new ItemViewModel() { Root = this.Root, Reader = _reader, UpdateSource = _updateSource });
            }
     
         #endregion

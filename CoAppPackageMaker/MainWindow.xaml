@@ -7,7 +7,7 @@
         xmlns:Views="clr-namespace:CoAppPackageMaker.Views"
         xmlns:RuleViewModels="clr-namespace:CoAppPackageMaker.ViewModels.RuleViewModels" Title="CoAppMaker" 
      
-        Height="630" Width="675"
+        Height="695" Width="675"
         WindowStartupLocation="CenterScreen" >
     <Window.DataContext>
         <Base:MainWindowViewModel />
@@ -39,21 +39,21 @@
             </GroupBox>
         </DockPanel>
 
-        <TabControl Height="410" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="639" Grid.Row="1"  Margin="5" >
+        <TabControl Height="450" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="639" Grid.Row="1"  Margin="5" >
             <TabItem Header="Standard Rules" Name="tabItem1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0*" />
                         <RowDefinition Height="339*" />
                     </Grid.RowDefinitions>
-                    <TabControl Height="370" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControl2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">
+                    <TabControl Height="410" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControl2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">
                         <TabItem Header="Package" >
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:PackageView Margin="5,10,5,5" DataContext="{Binding PackageViewModel.SourcePackageViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </TabItem>
@@ -73,7 +73,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:MetadataView  Margin="5,10,5,5" DataContext="{Binding MetadataViewModel.SourceMetadataViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
@@ -93,12 +93,12 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:ManifestView  Margin="5,10,5,5" DataContext="{Binding ManifestViewModel.SourceManifestViewModel}"/>
+                                        <Views:ManifestView  Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:ManifestView Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
+                                        <Views:ManifestView  Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding ManifestViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -107,9 +107,26 @@
                             </Grid>
                         </TabItem>
                         <TabItem Header="Files" Name="tabItem8">
-                            <DockPanel>
+                            <!--<DockPanel>
                                 <Views:Files DataContext="{Binding FilesViewModel}" Margin="5,10,5,5"/>                               
-                            </DockPanel>
+                            </DockPanel>-->
+                          
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0*" />
+                                        <RowDefinition Height="359*" />
+                                    </Grid.RowDefinitions>
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                        <TabItem Header="Source Value" >
+                                            <Views:Files DataContext="{Binding FilesViewModel}" Margin="5,10,5,5"/>
+                                        </TabItem>
+                                      
+                                        <TabItem Header="Package" >
+                                        <TextBox Text="{Binding FilesViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                                        </TabItem>
+                                    </TabControl>
+                                </Grid>
+                          
                         </TabItem>
                         <TabItem Header="Package Composition" Name="tabItem9" >
                             <Grid>
@@ -117,7 +134,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:PackageComposition Margin="5,10,5,5" DataContext="{Binding PackageCompositionViewModel.SourcePackageCompositionViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </TabItem>
@@ -136,13 +153,13 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:EditCollectionsUC DataContext="{Binding EditCollectionViewModel}"/>
+                                        <Views:EditCollectionsUC DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" IsSourceValue="True"/>
                                         <!--<Views:RequiresView Margin="5,10,5,5" DataContext="{Binding RequiresViewModel.SourceValueRequiresViewModel}"/>-->
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:RequiresView Margin="5,10,5,5" DataContext="{Binding RequiresViewModel}"/>
+                                        <Views:EditCollectionsUC DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" IsSourceValue="False"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding RequiresViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -156,7 +173,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:SigningView Margin="5,10,5,5" DataContext="{Binding SigningViewModel.SourceSigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </TabItem>
@@ -176,7 +193,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <ListBox ItemTemplate="{StaticResource ResourceKey=DefineTemplateSource}" ItemsSource="{Binding DefineViewModel.DefineCollection}">
                                         </ListBox>
@@ -199,7 +216,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:LicenseView Margin="5,10,5,5" DataContext="{Binding LicenseViewModel.SourceValueLicenseViewModel}"/>
                                     </TabItem>
@@ -218,7 +235,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="340" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:CompatibilityPolicy Margin="5,10,5,5" DataContext="{Binding CompatibilityPolicy.SourceValueCompatibilityPolicyViewModel}"/>
                                     </TabItem>
@@ -236,21 +253,20 @@
                     </TabControl>
                 </Grid>
             </TabItem>
-            <TabItem Header="Package Roles rules" Name="tabItem2">
-               
+            <TabItem Header="Package Roles rules" Name="tabItem2">               
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0*" />
                             <RowDefinition Height="339*" />
                         </Grid.RowDefinitions>
-                        <TabControl Height="313" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControlr2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">              
+                    <TabControl Height="410" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControlr2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">              
                             <TabItem Header="Application" Name="tabItem17" >
                                 <Views:ApplicationView Margin="5,10,5,5"/>
                             </TabItem>
                             <TabItem Header="Assembly" Name="tabItem18" >
                                 <Views:AssemblyView Margin="5,10,5,5"/>
                             </TabItem>
-                        <TabItem Header="Developer library" Name="tabItem19" >
+                        <TabItem Header="Developer library library" Name="tabItem19" >
                             <!--<Views:AssemblyView Margin="5,10,5,5"/>-->
                             <TextBlock Text="to add :headers, libraries, docs" />
                         </TabItem>

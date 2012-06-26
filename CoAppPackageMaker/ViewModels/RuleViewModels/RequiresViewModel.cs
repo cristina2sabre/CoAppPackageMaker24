@@ -5,6 +5,7 @@ using System.Text;
 
 using System.Collections.ObjectModel;
 using CoApp.Packaging.Client;
+using CoAppPackageMaker.ViewModels.Base;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker.ViewModels
@@ -16,18 +17,33 @@ namespace CoAppPackageMaker.ViewModels
 
         }
 
-        public RequiresViewModel (PackageReader reader)
+        public RequiresViewModel (PackageReader reader, MainWindowViewModel mainWindowViewModel )
         {
-          
+
+            EditCollectionViewModel = new EditCollectionViewModel(reader, mainWindowViewModel,
+                                                                  reader.GetRulesSourcePropertyValuesByNameForRequired(
+                                                                      "requires", "package", mainWindowViewModel));
+
           _requiredPackages = new ObservableCollection<string>(reader.GetRulesPropertyValues("requires", "package"));
-            SourceValueRequiresViewModel = new RequiresViewModel()
-                                               {
-                                                    _requiredPackages = new ObservableCollection<string>(reader.GetRulesSourcePropertyValuesByName("requires", "package"))
-                                               };
+            //SourceValueRequiresViewModel = new RequiresViewModel()
+            //                                   {
+            //                                        _requiredPackages = new ObservableCollection<string>(reader.GetRulesSourcePropertyValuesByName("requires", "package"))
+            //                                   };
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName("requires");
         }
 
+
+        public EditCollectionViewModel _editCollectionViewModel;
+        public EditCollectionViewModel EditCollectionViewModel
+        {
+            get { return _editCollectionViewModel; }
+            set
+            {
+                _editCollectionViewModel = value;
+                OnPropertyChanged("EditCollectionViewModel");
+            }
+        }
         private ObservableCollection<string> _requiredPackages;
 
         ///update the name back

@@ -33,17 +33,18 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
            
             foreach (string parameter in reader.ReadFilesParameters())
             {
-               ObservableCollection<string> collection = new ObservableCollection<string>(reader.GetFilesIncludeList(parameter));
-
+             //  ObservableCollection<string> collection = new ObservableCollection<string>(reader.GetFilesIncludeList(parameter));
+               ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.FilesIncludeList(parameter, "include", root));
                 FilesItemViewModel model = new FilesItemViewModel()
                 {
                     FilesRoot = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "root"),
                     TrimPath = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "trim-path"),
-                    Include = collection,
-                   
+                    EditCollectionViewModel = new EditCollectionViewModel(reader, root, includeCollection),
+                  //  Include = collection,
                     Name = parameter,
                     Root = root,
                 };
+
                 _filesCollection.Add(model);
             }
            
@@ -53,16 +54,13 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         void FilesCollectionCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-          //  FilesCollection = sender as ObservableCollection<FilesItemViewModel>;
-           // DefaultChangeFactory.OnChanging(this, "FilesCollection", _filesCollection, sender as FilesItemViewModel);
-          
-            DefaultChangeFactory.OnCollectionChanged(this, "FilesCollection", FilesCollection, e);
+          DefaultChangeFactory.OnCollectionChanged(this, "FilesCollection", FilesCollection, e);
             OnPropertyChanged("FilesCollection");
         }
 
        
 
-        public class  FilesItemViewModel:ExtraPropertiesViewModelBase
+        public class   FilesItemViewModel:ExtraPropertiesViewModelBase
         {
           private string _filesRoot;
              public string FilesRoot
@@ -122,7 +120,19 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
                  }
              }
-          
+
+
+             public EditCollectionViewModel _editCollectionViewModel;
+
+             public EditCollectionViewModel EditCollectionViewModel
+             {
+                 get { return _editCollectionViewModel; }
+                 set
+                 {
+                     _editCollectionViewModel = value;
+                     OnPropertyChanged("EditCollectionViewModel");
+                 }
+             }
         }
 
         private FilesItemViewModel _selectedFile;

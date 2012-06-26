@@ -86,11 +86,11 @@ namespace CoAppPackageMaker.ViewModels.Base
             PackageViewModel.SourcePackageViewModel.Root = this;
             _metadataViewModel = new MetadataViewModel(reader);
             MetadataViewModel.SourceMetadataViewModel.Root = this;
-            _manifestViewModel = new ManifestViewModel(reader);
+            _manifestViewModel = new ManifestViewModel(reader,this);
             ManifestViewModel.SourceManifestViewModel.Root = this;
             _signingViewModel = new SigningViewModel(reader);
             SigningViewModel.SourceSigningViewModel.Root = this;
-            _requiresViewModel = new RequiresViewModel(reader);
+            _requiresViewModel = new RequiresViewModel(reader,this);
             _defineViewModel = new DefineViewModel(reader, this);
            // DefineViewModel.SourceDefineViewModel.Root = this;
          
@@ -102,7 +102,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             _assemblyRoleViewModel = new AssemblyRoleViewModel(reader);
             _packageCompositionViewModel = new PackageCompositionViewModel(reader);
             _filesViewModel = new FilesViewModel(reader,this);
-            _editCollectionViewModel=new EditCollectionViewModel(reader,this,RequiresViewModel);
+            //_editCollectionViewModel=new EditCollectionViewModel(reader,this,RequiresViewModel);
 
             _allViewModels.Add(_packageViewModel);
 
@@ -131,12 +131,6 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
             set
             {
-                // This line will log the property change with the undo framework.
-                //if (_packageViewModel!=null)
-                {
-           //  DefaultChangeFactory.OnChanging(this, "PackageViewModel", _packageViewModel, value);
-                }
-               
                 _packageViewModel = value;
                 OnPropertyChanged("PackageViewModel");
             }

@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:RuleViewModels="clr-namespace:CoAppPackageMaker.ViewModels.RuleViewModels" mc:Ignorable="d" 
+             xmlns:RuleViewModels="clr-namespace:CoAppPackageMaker.ViewModels.RuleViewModels"
+             xmlns:Views="clr-namespace:CoAppPackageMaker.Views" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     
     <UserControl.Resources>
@@ -31,7 +32,8 @@
                     <Label Content="Trim-Path" Grid.Row="2"  Margin="5"/>
                    
                     <TextBox Width="200"  Grid.Column="1" Grid.Row="0" Text="{Binding  FilesRoot, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-                    <ListView Width="200" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Include , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+                    <!--<ListView Width="200" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Include , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>-->
+                    <Views:EditCollectionsUC DataContext="{Binding  EditCollectionViewModel}" Grid.Column="1" Grid.Row="1" Width="200" Height="100"/>
                     <TextBox Width="200" Grid.Column="1" Grid.Row="2" Text="{Binding  TrimPath , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
                </Grid>
             </Expander>       

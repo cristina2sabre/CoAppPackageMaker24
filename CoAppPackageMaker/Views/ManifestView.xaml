@@ -2,14 +2,20 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Views="clr-namespace:CoAppPackageMaker.Views" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <DataTemplate x:Key="ManifestTemplate">
             <Expander  IsExpanded="False" Margin="5">
-                <Expander.Header>
+                <!--<Expander.Header>
                     <TextBlock FontWeight="Bold" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"></TextBlock>
+                </Expander.Header>-->
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Manifest" FontWeight="Bold"/>
+                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                    </StackPanel>
                 </Expander.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -26,10 +32,11 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Assembly" Grid.Row="0" Margin="5"/>
                     <Label Content="Include" Grid.Row="1" Margin="5"/>                
-
-                    <ListView Width="200"  Grid.Column="1" Grid.Row="0" ItemsSource="{Binding  Assembly, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-                    <ListView Width="200" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Include , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-                 
+<!--<Views:EditCollectionsUC DataContext="{Binding EditCollectionViewModel}"/>-->
+                    <!--<ListView Width="200"  Grid.Column="1" Grid.Row="0"  ItemsSource="{Binding  Assembly, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>-->
+                  
+                    <ListView Width="200" Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Include , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+                    <Views:EditCollectionsUC DataContext="{Binding  EditCollectionViewModel}" Grid.Column="1" Grid.Row="1" Width="200" Height="100" />
                 </Grid>
             </Expander>
 
@@ -39,8 +46,19 @@
 
 
     </UserControl.Resources>
-    <ListBox
-      ItemTemplate="{StaticResource ManifestTemplate}" ItemsSource="{Binding ManifestCollection}">
+   
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
+            <Button Width="20" Height="20" Margin="3"   Command="{Binding Path = RemoveCommand}" Content="-"/>
+            <Button Width="20" Height="20" Margin="3"  Command="{Binding Path = AddCommand}" Content="+"/>
+        </StackPanel>
+        <ListBox
+      ItemTemplate="{StaticResource ManifestTemplate}" ItemsSource="{Binding ManifestCollection}" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}">
 
-    </ListBox>
+        </ListBox>
+        <!--<ListBox Name="FilesCollections" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
+      ItemTemplate="{StaticResource FileTemplate}" ItemsSource="{Binding FilesCollection,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  >
+
+        </ListBox>-->
+    </DockPanel>
 </UserControl>

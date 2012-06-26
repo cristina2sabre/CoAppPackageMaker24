@@ -55,16 +55,21 @@ namespace CoAppPackageMaker
             PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
             if (propertyRule != null)
             {
-                foreach (string value in propertyRule.Values)
-                {
-                    var model = new ItemViewModel();
-                    var firstOrDefault = propertyRule.PropertyValues.FirstOrDefault();
-                    if (firstOrDefault != null)
-                        model.SourceValue = firstOrDefault.SourceValues.FirstOrDefault();
-                    model.Value = value;
-                    model.Root = root;
-                    result.Add(model);
-                    
+              foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
+                    {
+                        int i=0;
+                        foreach (string s in propertyValue.SourceValues)
+                        {                            
+                            var model = new ItemViewModel();
+                            model.Reader = this;
+                            model.UpdateSource = SetSourceRequireRules;
+                            model.SourceValue = s;
+                           // model.Value = propertyValue.Values.FirstOrDefault();
+                            model.Root = root;
+                            model.Index = i++;
+                           
+                            result.Add(model); 
+                        }
                 }
             }
 
@@ -72,9 +77,29 @@ namespace CoAppPackageMaker
         }
 
 
+       public string UpdateRequiredProperty(string ruleName, string propertyName,string newValue)
+       {
+           string result = String.Empty;
+           PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+           if (propertyRule != null)
+           {
+               
+               foreach (string value in propertyRule.Values)
+               {
+                   var model = new ItemViewModel();
+                   var firstOrDefault = propertyRule.PropertyValues.FirstOrDefault();
+                   if (firstOrDefault != null)
+                       model.SourceValue = firstOrDefault.SourceValues.FirstOrDefault();
+                   model.Value = value;
+                 
+
+               }
+           }
+           return result;
+       }
 
 
-        public string GetRulesSourcePropertyValuesByNameForSigning(string ruleName, string propertyName, string attributeName)
+       public string GetRulesSourcePropertyValuesByNameForSigning(string ruleName, string propertyName, string attributeName)
         {
             IEnumerable<string> result = new string[0];
             PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
@@ -139,6 +164,52 @@ namespace CoAppPackageMaker
             return String.Empty;
         }
 
+
+        public string SetSourceRequireRules( IEnumerable<string> value)
+        {
+            string result=String.Empty;
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName("requires").GetProperty("requires", "package");
+            if (propertyRule != null)
+            {
+                foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
+                {
+                    
+                    foreach (string s in propertyValue.SourceValues)
+                    {
+                        propertyValue.SourceValues = value;
+                        PropertyRule p = _packageSource.AllRules.GetRulesByName("requires").GetProperty("requires", "package");
+                        result = p.Values.First();
+                    }
+                }
+            }
+
+
+            return result;
+        }
+
+        public string SetSourceManifestRules(IEnumerable<string> value)
+        {
+            //to mofify !!!!!!!!!!!!is for required
+            string result = String.Empty;
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName("requires").GetProperty("requires", "package");
+            if (propertyRule != null)
+            {
+                foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
+                {
+
+                    foreach (string s in propertyValue.SourceValues)
+                    {
+                        propertyValue.SourceValues = value;
+                        PropertyRule p = _packageSource.AllRules.GetRulesByName("requires").GetProperty("requires", "package");
+                        result = p.Values.First();
+                    }
+                }
+            }
+
+
+            return result;
+        }
+
        public string PropertyRuleValue(Rule rule,string name)
        {
            PropertyRule w = rule[name];
@@ -184,8 +255,6 @@ namespace CoAppPackageMaker
                 PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
                 result=(propertyValue != null) ? propertyValue.SourceValues.FirstOrDefault() : String.Empty;
 
-              //  IEnumerable<string> resudlt = new string[0];
-              //  propertyValue.SourceValues =  resudlt;
             }
             return result;    
         }
@@ -345,7 +414,57 @@ namespace CoAppPackageMaker
             return result;
         }
 
-        public IEnumerable<string> GetManifestIncludeList2(string parameter, string propertyName)
+       public ObservableCollection<ItemViewModel> ManifestIncludeList(string parameter, string propertyName, MainWindowViewModel root)
+       {
+           var result = new ObservableCollection<ItemViewModel>();
+           IEnumerable<Rule> rules = _packageSource.ManifestRules;
+           IEnumerable<string> r = (rules != null) ? rules.GetRulesByParameter(parameter).GetPropertyValues(propertyName) : new string[0];
+         
+           {
+               foreach (string value in r)
+               {
+                   var model = new ItemViewModel();
+                   //var firstOrDefault = propertyRule.PropertyValues.FirstOrDefault();
+                   //if (firstOrDefault != null)
+                   //    model.SourceValue = firstOrDefault.SourceValues.FirstOrDefault();
+                   
+                   model.Reader = this;
+                 
+            //  model.UpdateSource = SetSourceRequireRules;
+             model.SourceValue = value;
+                   model.Root = root;
+                   result.Add(model);
+
+               }
+           }
+
+           return result;
+       }
+
+
+       public ObservableCollection<ItemViewModel> FilesIncludeList(string parameter, string propertyName, MainWindowViewModel root)
+       {
+           var result = new ObservableCollection<ItemViewModel>();
+           IEnumerable<Rule> rules = _packageSource.FileRules;
+           IEnumerable<string> r = (rules != null) ? rules.GetRulesByParameter(parameter).GetPropertyValues(propertyName) : new string[0];
+
+           {
+               foreach (string value in r)
+               {
+                   var model = new ItemViewModel();
+                   //var firstOrDefault = propertyRule.PropertyValues.FirstOrDefault();
+                   //if (firstOrDefault != null)
+                   //    model.SourceValue = firstOrDefault.SourceValues.FirstOrDefault();
+                   model.SourceValue = value;
+                   model.Root = root;
+                   result.Add(model);
+
+               }
+           }
+
+           return result;
+       }
+       public IEnumerable<string> GetManifestIncludeList2(string parameter, string propertyName)
         {
 
             IEnumerable<string> result = null;

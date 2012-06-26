@@ -11,15 +11,21 @@
                         <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
                     </StackPanel>              
         </DataTemplate>
+        <DataTemplate x:Key="DisabledItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
     <DockPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft" Visibility="{Binding MyCustom}">
             <Button Width="20" Height="20" Margin="3"   Command="{Binding Path = RemoveCommand}" Content="-"/>
             <Button Width="20" Height="20" Margin="3"  Command="{Binding Path = AddCommand}" Content="+"/>
-            <Label Content="Description?ex:Required Packeges" />
+            <!--<Label Content="Description?ex:Required Packeges" />-->
         </StackPanel>
-        <ListBox Name="FilesCollections" SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
-         ItemTemplate="{StaticResource ItemTemplate}" ItemsSource="{Binding FilesCollection,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}">
+        <ListBox  Name="FilesCollections" SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
+      ItemsSource="{Binding EditableItems,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" >
+            <!--ItemTemplate="{StaticResource ItemTemplate}"-->
         </ListBox>
     </DockPanel>
 </UserControl>
