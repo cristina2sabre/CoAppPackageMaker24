@@ -34,7 +34,7 @@
                     <Button  Width="20" Margin="5" Content="S"/>
                     <Button  Width="20" Margin="5" Content="U" Command="Undo"/>
                     <Button  Width="20" Margin="5" Content="R" Command="Redo"/>
-                    <Button  Width="35" Margin="5" Content="Reset"/>
+                    <Button  Width="35" Margin="5" Content="Reset" Command="{Binding Path=ResetCommand}"/>
                 </StackPanel>
             </GroupBox>
         </DockPanel>
@@ -261,11 +261,47 @@
                         </Grid.RowDefinitions>
                     <TabControl Height="410" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControlr2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">              
                             <TabItem Header="Application" Name="tabItem17" >
-                                <Views:ApplicationView Margin="5,10,5,5"/>
-                            </TabItem>
+                                
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0*" />
+                                    <RowDefinition Height="359*" />
+                                </Grid.RowDefinitions>
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                    <TabItem Header="Source Value" >
+                                        <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding ApplicationRoleViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Evaluated">
+                                        <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding ApplicationRoleViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Package" >
+
+                                        <TextBox Text="{Binding ApplicationRoleViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
+                        </TabItem>
+                        
                             <TabItem Header="Assembly" Name="tabItem18" >
-                                <Views:AssemblyView Margin="5,10,5,5"/>
-                            </TabItem>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0*" />
+                                    <RowDefinition Height="359*" />
+                                </Grid.RowDefinitions>
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                    <TabItem Header="Source Value" >
+                                        <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding AssemblyRoleViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Evaluated">
+                                        <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding AssemblyRoleViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Package" >
+
+                                        <TextBox Text="{Binding AssemblyRoleViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
+                        </TabItem>
                         <TabItem Header="Developer library library" Name="tabItem19" >
                             <!--<Views:AssemblyView Margin="5,10,5,5"/>-->
                             <TextBlock Text="to add :headers, libraries, docs" />

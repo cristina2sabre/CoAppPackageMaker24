@@ -16,7 +16,7 @@ namespace CoAppPackageMaker
 {
    public  class PackageReader
     {
-        private PackageSource _packageSource;
+        
         public  void Read(string pathToSourceFile)
         {
             try
@@ -30,8 +30,20 @@ namespace CoAppPackageMaker
             }
 
         }
+
+        public void Save(string  destinationFilename)
+       {
+           _packageSource.SavePackageFile(destinationFilename);
+       }
+
+       private PackageSource _packageSource;
+       public PackageSource PackageSource
+       {
+           get { return _packageSource; }
+          
+       }
+
        
-      
 
         public IEnumerable<string> GetRulesSourcePropertyValuesByName(string ruleName, string propertyName)
         {
@@ -64,7 +76,7 @@ namespace CoAppPackageMaker
                             model.Reader = this;
                             model.UpdateSource = SetSourceRequireRules;
                             model.SourceValue = s;
-                           // model.Value = propertyValue.Values.FirstOrDefault();
+                           // model.Value = no need to set-is evaluated in the sourcevalue;
                             model.Root = root;
                             model.Index = i++;
                            
@@ -76,6 +88,30 @@ namespace CoAppPackageMaker
             return result;
         }
 
+
+        public ObservableCollection<ItemViewModel> GetRulesSourcePropertyValuesByNameForSigning(string ruleName, string propertyName, MainWindowViewModel root)
+        {
+            var result = new ObservableCollection<ItemViewModel>();
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+            if (propertyRule != null)
+            {
+                foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
+                {
+                    int i = 0;
+                    foreach (string s in propertyValue.SourceValues)
+                    {
+                        var model = new ItemViewModel();
+                        model.Reader = this;
+                        model.SourceValue = s;
+                        model.Root = root;
+                        model.Index = i++;
+                        result.Add(model);
+                    }
+                }
+            }
+
+            return result;
+        }
 
        public string UpdateRequiredProperty(string ruleName, string propertyName,string newValue)
        {
@@ -345,11 +381,11 @@ namespace CoAppPackageMaker
             return result;
         }
 
-        public List<string> ReadFilesParameters()
+        public List<string> ReadParameters(string ruleName)
         {
             List<string> result=new List<string>();
-            var fileRules = _packageSource.FileRules;
-            foreach (Rule rule in fileRules)
+            var rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            foreach (Rule rule in rules)
             {
                 string ruleParameter = rule.Parameter;
                 result.Add(ruleParameter);  
@@ -359,43 +395,7 @@ namespace CoAppPackageMaker
         }
 
 
-        public List<string> ReadPackageCompositionParameters()
-        {
-            List<string> result = new List<string>();
-            var packageComposition = _packageSource.PackageCompositionRules;
-            foreach (Rule rule in packageComposition)
-            {
-                string ruleParameter = rule.Parameter;
-                result.Add(ruleParameter);
-            }
-
-            return result;
-        }
-        public List<string> ReadManifestParameters()
-        {
-            List<string> result = new List<string>();
-            var fileRules = _packageSource.ManifestRules;
-            foreach (Rule rule in fileRules)
-            {
-                string ruleParameter = rule.Parameter;
-                result.Add(ruleParameter);
-            }
-
-            return result;
-        }
-
-        public List<string> ReadSinging()
-        {
-            List<string> result = new List<string>();
-            var fileRules = _packageSource.DefineRules;
-            foreach (Rule rule in fileRules)
-            {
-                string ruleParameter = rule.Parameter;
-                result.Add(ruleParameter);
-            }
-
-            return result;
-        }
+       
 
         public string GetFilesRulesPropertyValueByParameterAndName(string parameter, string propertyName)
         {
@@ -424,14 +424,10 @@ namespace CoAppPackageMaker
                foreach (string value in r)
                {
                    var model = new ItemViewModel();
-                   //var firstOrDefault = propertyRule.PropertyValues.FirstOrDefault();
-                   //if (firstOrDefault != null)
-                   //    model.SourceValue = firstOrDefault.SourceValues.FirstOrDefault();
-                   
                    model.Reader = this;
                  
             //  model.UpdateSource = SetSourceRequireRules;
-             model.SourceValue = value;
+                   model.SourceValue = value;
                    model.Root = root;
                    result.Add(model);
 
@@ -441,6 +437,29 @@ namespace CoAppPackageMaker
            return result;
        }
 
+
+       public ObservableCollection<ItemViewModel> ApplicationIncludeList(string ruleName,string parameter, string propertyName, MainWindowViewModel root)
+       {
+           var result = new ObservableCollection<ItemViewModel>();
+           IEnumerable<Rule> rules = _packageSource.AllRules.GetRulesByName(ruleName);
+           IEnumerable<string> r = (rules != null) ? rules.GetRulesByParameter(parameter).GetPropertyValues(propertyName) : new string[0];
+
+           {
+               foreach (string value in r)
+               {
+                   var model = new ItemViewModel();
+                   model.Reader = this;
+
+                   //  model.UpdateSource = SetSourceRequireRules;
+                   model.SourceValue = value;
+                   model.Root = root;
+                   result.Add(model);
+
+               }
+           }
+
+           return result;
+       }
 
        public ObservableCollection<ItemViewModel> FilesIncludeList(string parameter, string propertyName, MainWindowViewModel root)
        {

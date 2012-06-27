@@ -88,18 +88,18 @@ namespace CoAppPackageMaker.ViewModels.Base
             MetadataViewModel.SourceMetadataViewModel.Root = this;
             _manifestViewModel = new ManifestViewModel(reader,this);
             ManifestViewModel.SourceManifestViewModel.Root = this;
-            _signingViewModel = new SigningViewModel(reader);
+            _signingViewModel = new SigningViewModel(reader,this);
             SigningViewModel.SourceSigningViewModel.Root = this;
             _requiresViewModel = new RequiresViewModel(reader,this);
             _defineViewModel = new DefineViewModel(reader, this);
            // DefineViewModel.SourceDefineViewModel.Root = this;
          
-            reader.ReadSinging();
+         
             _licenseViewModel = new LicenseViewModel(reader);
             _compatibilityPolicy = new CompatibilityPolicyViewModel(reader);
             _compatibilityPolicy.SourceValueCompatibilityPolicyViewModel.Root = this;
-            _applicationRoleViewModel = new ApplicationRoleViewModel(reader);
-            _assemblyRoleViewModel = new AssemblyRoleViewModel(reader);
+            _applicationRoleViewModel = new ApplicationRoleViewModel(reader,this);
+            _assemblyRoleViewModel = new AssemblyRoleViewModel(reader,this);
             _packageCompositionViewModel = new PackageCompositionViewModel(reader);
             _filesViewModel = new FilesViewModel(reader,this);
             //_editCollectionViewModel=new EditCollectionViewModel(reader,this,RequiresViewModel);
@@ -338,24 +338,17 @@ namespace CoAppPackageMaker.ViewModels.Base
 
          public ICommand ResetCommand
          {
-             get { throw new NotImplementedException(); }
+             get { return new RelayCommand(ResetExecute, CanResetExecute); }
          }
 
          public ICommand NewCommand
          {
              get { return new RelayCommand(NewExecute, CanNewExecute); }
          }
+        
+        
 
-         public ICommand UndoCommand
-         {
-             get { throw new NotImplementedException(); }
-         }
-
-         public ICommand RedoCommand
-         {
-             get { throw new NotImplementedException(); }
-         }
-
+       
 
 #endregion
 
@@ -386,7 +379,30 @@ namespace CoAppPackageMaker.ViewModels.Base
             
          }
 
+        void ResetExecute()
+        {
+            if (CanResetExecute())
+            {
+                try
+                {
+                    UndoService.Current.Clear();
+                    LoadData();
+                    // ResetForm();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
 
+
+        bool CanResetExecute()
+        {
+            return
+                    UndoService.Current[this].CanUndo; 
+
+        }
          void NewExecute()
          {
              if (CanNewExecute())

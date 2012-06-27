@@ -34,7 +34,7 @@ namespace CoAppPackageMaker.ViewModels
             Root = root;
             _manifestCollection = new ObservableCollection<ManifestItemViewModel>();
 
-            foreach (string parameter in reader.ReadManifestParameters())
+            foreach (string parameter in reader.ReadParameters("manifest"))
             {
                 ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.ManifestIncludeList(parameter, "include", root));
                // ObservableCollection<ItemViewModel> assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GetManifestIncludeList(parameter, "assembly"));
@@ -50,25 +50,22 @@ namespace CoAppPackageMaker.ViewModels
                 _manifestCollection.Add(model);
             }
 
-            {
+            
                 _sourceManifestViewModel = new ManifestViewModel();
                 SourceManifestViewModel._manifestCollection = new ObservableCollection<ManifestItemViewModel>();
 
-                foreach (string parameter in reader.ReadManifestParameters())
+                foreach (string parameter in reader.ReadParameters("manifest"))
                 {
                   
                     ObservableCollection<string> includeCollection = new ObservableCollection<string>(reader.GetManifestIncludeList2("manifest", "include"));
                     ObservableCollection<string> assemblyCollection = new ObservableCollection<string>(reader.GetManifestIncludeList2("manifest", "assembly"));
-                    ManifestItemViewModel model = new ManifestItemViewModel()
-                    {
-                        
-                  
-                    };
+                    ManifestItemViewModel model = new ManifestItemViewModel();
+                   
                     SourceManifestViewModel._manifestCollection.Add(model);
                 }
 
                 
-            }
+           
 
           
            

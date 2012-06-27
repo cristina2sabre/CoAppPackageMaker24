@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
@@ -18,22 +19,20 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         }
 
-        public SigningViewModel(PackageReader reader)
+        public SigningViewModel(PackageReader reader, MainWindowViewModel mainWindowViewModel)
         {
             _reader = reader;
-
-
-            // ObservableCollection<string> values = new ObservableCollection<string>();
-            // ObservableCollection<string> values2 = new ObservableCollection<string>(reader.GetRulesPropertyValues("assembly", "include")); la fel pt application
-
             ReplaceSignature = _reader.GetRulesPropertyValueByName(Signing, "replace-signature") == "true";
-            Include = new ObservableCollection<string>(_reader.GetRulesPropertyValues(Signing, "include"));
+            EditCollectionViewModel = new EditCollectionViewModel(reader, mainWindowViewModel,
+                                                                  reader.GetRulesSourcePropertyValuesByNameForSigning(
+                                                                      Signing, "include", mainWindowViewModel));
 
             CompanyAttribute = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "company");
             DescriptionAttribute = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "description");
             ProductNameAttribute = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "product-name");
             ProductVersion = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "product-version");
             FileVersionAttribute = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "file-version");
+           
             IsEditable = false;
             IsReadOnly = true;
 
@@ -43,9 +42,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                                              ReplaceSignature =
                                                  _reader.GetRulesSourcePropertyValueByName(Signing, "replace-signature") ==
                                                  "true",
-                                             Include =
-                                                 new ObservableCollection<string>(
-                                                 _reader.GetRulesSourcePropertyValuesByName(Signing, "include")),
                                              CompanyAttribute =
                                                  reader.GetRulesSourcePropertyValuesByNameForSigning(Signing,
                                                                                                      "attributes",
@@ -69,7 +65,10 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                                              IsEditable = true,
                                              IsReadOnly = false,
 
-
+                                             //EditCollectionViewModel = new EditCollectionViewModel(reader, mainWindowViewModel,
+                                             //                     reader.GetRulesSourcePropertyValuesByNameForSigning(
+                                             //                         Signing, "include", mainWindowViewModel))
+                                             EditCollectionViewModel = this.EditCollectionViewModel
                                          };
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName(Signing);
@@ -77,6 +76,16 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
 
         #region Properties
+        private EditCollectionViewModel _editCollectionViewModel;
+        public EditCollectionViewModel EditCollectionViewModel
+        {
+            get { return _editCollectionViewModel; }
+            set
+            {
+                _editCollectionViewModel = value;
+                OnPropertyChanged("EditCollectionViewModel");
+            }
+        }
 
         private SigningViewModel _sourceSigningViewModel;
 
@@ -170,17 +179,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
-        private ObservableCollection<string> _include;
-
-        public ObservableCollection<string> Include
-        {
-            get { return _include; }
-            set
-            {
-                _include = value;
-                OnPropertyChanged("Include");
-            }
-        }
+      
 
         #endregion
 
@@ -210,6 +209,9 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                 case "FileVersionAttribute":
                     newValues = new[] { ((SigningViewModel)sender).FileVersionAttribute };
                     FileVersionAttribute = _reader.SetNewSourceValueSigning(Signing, "attributes", "file-version", newValues);
+                    break;
+                case "ReplaceSignature":
+                    ReplaceSignature= ((SigningViewModel)sender).ReplaceSignature;
                     break;
 
 

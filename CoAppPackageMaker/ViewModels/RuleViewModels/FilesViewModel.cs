@@ -31,7 +31,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             Root = root;
             _filesCollection = new ObservableCollection<FilesItemViewModel>();
            
-            foreach (string parameter in reader.ReadFilesParameters())
+            foreach (string parameter in reader.ReadParameters("files"))
             {
              //  ObservableCollection<string> collection = new ObservableCollection<string>(reader.GetFilesIncludeList(parameter));
                ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.FilesIncludeList(parameter, "include", root));

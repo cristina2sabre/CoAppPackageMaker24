@@ -28,11 +28,14 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         public EditCollectionViewModel(PackageReader reader, MainWindowViewModel root, ObservableCollection<ItemViewModel> collection)
         {
             _reader = reader;
-            //how to update value and source value? 
-            //to pass the collection or viewModel() in order to ovveride update?
+            
             Root = root;
             _editableItems = collection;
-            _updateSource = this.EditableItems.FirstOrDefault().UpdateSource;
+            if(this.EditableItems.Count>0)
+            {
+                _updateSource = this.EditableItems.FirstOrDefault().UpdateSource;
+            }
+            
             _editableItems.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
         }
 
