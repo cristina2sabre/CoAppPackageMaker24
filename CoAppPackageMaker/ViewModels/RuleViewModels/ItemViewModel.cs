@@ -10,7 +10,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
     {
 
         //type
-        public delegate string Process(IEnumerable<string> sEnumerable);
+        public delegate string Process(string parameter,IEnumerable<string> sEnumerable);
 
         //property
         public  Process UpdateSource { get; set; }
@@ -26,6 +26,18 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                 OnPropertyChanged("Index");
             }
         }
+
+        private string _label = "NewLabel";
+        public string Label
+        {
+            get { return _label; }
+            set
+            {
+                _label = value;
+                OnPropertyChanged("Label");
+            }
+        }
+
         
         private string _value="new";
         public string Value
@@ -55,7 +67,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                     {
                       //!!!!!!!!!!!!!!!!!WRONG-only for requires-ovveride needed
                       //  Value = _reader.SetSourceRequireRules( new[] { (_sourceValue) });
-                      if(UpdateSource!=null){ Value = UpdateSource(new[] { (_sourceValue) });}
+                      if(UpdateSource!=null){ Value = UpdateSource(this.Label,new[] { (_sourceValue) });}
                        
                  }
 

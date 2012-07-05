@@ -181,7 +181,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
            public void Add()
            {
               
-               this.FilesCollection.Add(new FilesItemViewModel() { Root = this.Root });
+               this.FilesCollection.Add(new FilesItemViewModel() { Root = this.Root,EditCollectionViewModel = new EditCollectionViewModel(null,Root,new ObservableCollection<ItemViewModel>()) });
            }
     
         #endregion

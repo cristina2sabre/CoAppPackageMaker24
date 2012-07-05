@@ -30,7 +30,7 @@ namespace CoAppPackageMaker.ViewModels.Base
         private FilesViewModel _filesViewModel;
         private ManifestViewModel _manifestViewModel;
         private ObservableCollection<ExtraPropertiesViewModelBase> _allViewModels =new ObservableCollection<ExtraPropertiesViewModelBase>();
-
+      private PackageReader _reader;
         public ObservableCollection<ExtraPropertiesViewModelBase> AllViewModels
         {
             get { return _allViewModels; }
@@ -64,9 +64,9 @@ namespace CoAppPackageMaker.ViewModels.Base
 
             //}
 
-          //  PathToFile = "D:\\P\\COPKG\\test2.autopkg";
+        //  PathToFile = "D:\\P\\COPKG\\test2.autopkg";
            // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-           PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+          PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
             if (PathToFile != null && File.Exists(PathToFile))
             {
                 LoadData();
@@ -78,30 +78,31 @@ namespace CoAppPackageMaker.ViewModels.Base
         private void LoadData()
         {
             
-            PackageReader reader = new PackageReader();
-            reader.Read(PathToFile);
+           _reader = new PackageReader();
+           _reader.Read(PathToFile);
 
-            PackageViewModel = new PackageViewModel(reader);
+           PackageViewModel = new PackageViewModel(_reader);
              //{ Root = this }
             PackageViewModel.SourcePackageViewModel.Root = this;
-            _metadataViewModel = new MetadataViewModel(reader);
+            MetadataViewModel = new MetadataViewModel(_reader);
             MetadataViewModel.SourceMetadataViewModel.Root = this;
-            _manifestViewModel = new ManifestViewModel(reader,this);
+            ManifestViewModel = new ManifestViewModel(_reader, this);
             ManifestViewModel.SourceManifestViewModel.Root = this;
-            _signingViewModel = new SigningViewModel(reader,this);
+            SigningViewModel = new SigningViewModel(_reader, this);
             SigningViewModel.SourceSigningViewModel.Root = this;
-            _requiresViewModel = new RequiresViewModel(reader,this);
-            _defineViewModel = new DefineViewModel(reader, this);
+            RequiresViewModel = new RequiresViewModel(_reader, this);
+            DefineViewModel = new DefineViewModel(_reader, this);
            // DefineViewModel.SourceDefineViewModel.Root = this;
-         
-         
-            _licenseViewModel = new LicenseViewModel(reader);
-            _compatibilityPolicy = new CompatibilityPolicyViewModel(reader);
-            _compatibilityPolicy.SourceValueCompatibilityPolicyViewModel.Root = this;
-            _applicationRoleViewModel = new ApplicationRoleViewModel(reader,this);
-            _assemblyRoleViewModel = new AssemblyRoleViewModel(reader,this);
-            _packageCompositionViewModel = new PackageCompositionViewModel(reader);
-            _filesViewModel = new FilesViewModel(reader,this);
+
+
+            LicenseViewModel = new LicenseViewModel(_reader);
+            LicenseViewModel.SourceValueLicenseViewModel.Root = this;
+            CompatibilityPolicy = new CompatibilityPolicyViewModel(_reader);
+            CompatibilityPolicy.SourceValueCompatibilityPolicyViewModel.Root = this;
+            ApplicationRoleViewModel = new ApplicationRoleViewModel(_reader, this);
+            AssemblyRoleViewModel = new AssemblyRoleViewModel(_reader, this);
+            PackageCompositionViewModel = new PackageCompositionViewModel(_reader);
+            FilesViewModel = new FilesViewModel(_reader, this);
             //_editCollectionViewModel=new EditCollectionViewModel(reader,this,RequiresViewModel);
 
             _allViewModels.Add(_packageViewModel);
@@ -333,7 +334,7 @@ namespace CoAppPackageMaker.ViewModels.Base
 
         public ICommand SaveCommand
          {
-             get { throw new NotImplementedException(); }
+             get { return new RelayCommand(SaveExecute, CanSaveExecute); }
          }
 
          public ICommand ResetCommand
@@ -401,6 +402,33 @@ namespace CoAppPackageMaker.ViewModels.Base
         {
             return
                     UndoService.Current[this].CanUndo; 
+
+        }
+
+
+
+
+        void SaveExecute()
+        {
+            if (CanResetExecute())
+            {
+                try
+                {
+                    this._reader.Save("D:\\P\\COPKG\\test2.autopkg");
+                    // ResetForm();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+
+        bool CanSaveExecute()
+        {
+            return
+                    UndoService.Current[this].CanUndo;
 
         }
          void NewExecute()

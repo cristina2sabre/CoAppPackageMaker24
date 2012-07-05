@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker.Views
 {
@@ -19,24 +20,29 @@ namespace CoAppPackageMaker.Views
     /// </summary>
     public partial class EditCollectionsUC : UserControl
     {
-        public static DataTemplate ItemTemplate;
-        public static DataTemplate DisabledItemTemplate;
+        public static DataTemplate ValueTemplate;
+        public static DataTemplate SourceValueTemplate;
+        public static DataTemplate DefineValueTemplate;
+        public static DataTemplate DefineSourceValueTemplate;
+        //for raise change in enum -never used
+        public static DataTemplate DefineSourceValueTemplate23;
         public EditCollectionsUC()
         {
             InitializeComponent();
-            DisabledItemTemplate = FindResource("ItemTemplate") as DataTemplate;
-            ItemTemplate= FindResource("DisabledItemTemplate") as DataTemplate;
-            IsSourceValue = true;
+            ValueTemplate = FindResource("ValueTemplate") as DataTemplate;
+            SourceValueTemplate = FindResource("SourceValueTemplate") as DataTemplate;
+            DefineValueTemplate = FindResource("DefineValueTemplate") as DataTemplate;
+            DefineSourceValueTemplate = FindResource("DefineSourceValueTemplate") as DataTemplate;
         }
 
         public static readonly DependencyProperty IsSourceValueProperty =
-DependencyProperty.Register("IsSourceValue", typeof(bool), typeof(EditCollectionsUC), new UIPropertyMetadata(MyPropertyChangedHandler));
+DependencyProperty.Register("IsSourceValue", typeof(SelectTemplate), typeof(EditCollectionsUC), new UIPropertyMetadata(MyPropertyChangedHandler));
 
-        public bool IsSourceValue
+        public SelectTemplate IsSourceValue
         {
             get
             {
-                return (bool)GetValue(IsSourceValueProperty);
+                return (SelectTemplate)GetValue(IsSourceValueProperty);
             }
             set
             {
@@ -44,12 +50,47 @@ DependencyProperty.Register("IsSourceValue", typeof(bool), typeof(EditCollection
             }
         }
 
+        public enum SelectTemplate
+        {
+            DefineSourceValueTemplate23,
+            SourceValueTemplate,
+            ValueTemplate,
+            DefineSourceValueTemplate,
+            DefineValueTemplate,
+            
+            
+            
+        }
 
+       
         public static void MyPropertyChangedHandler(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-           
-            ((EditCollectionsUC)sender).FilesCollections.ItemTemplate = e.NewValue.ToString()=="True"? DisabledItemTemplate :ItemTemplate;
-           
+          
+                switch (e.NewValue.ToString())
+            {
+                case "SourceValueTemplate":
+                    ((EditCollectionsUC)sender).FilesCollections.ItemTemplate = SourceValueTemplate;
+                    break;
+                case "ValueTemplate":
+                    ((EditCollectionsUC)sender).FilesCollections.ItemTemplate = ValueTemplate;
+                    break;
+                case "DefineSourceValueTemplate":
+                    ((EditCollectionsUC)sender).FilesCollections.ItemTemplate = DefineSourceValueTemplate;
+                  
+                    break;
+                case "DefineValueTemplate":
+                    ((EditCollectionsUC)sender).FilesCollections.ItemTemplate = DefineValueTemplate;
+                  
+                    break;
+                //default:
+                //    ((EditCollectionsUC)sender).FilesCollections.ItemTemplate = ItemTemplate;
+                //    break;
+         
+            }
         }
+
+        
     }
+
+   
 }

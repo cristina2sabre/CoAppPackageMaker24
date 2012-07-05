@@ -31,7 +31,7 @@
            
             <GroupBox Margin="5" HorizontalAlignment="Right" >
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
-                    <Button  Width="20" Margin="5" Content="S"/>
+                    <Button  Width="20" Margin="5" Content="S" Command="{Binding Path=SaveCommand}"/>
                     <Button  Width="20" Margin="5" Content="U" Command="Undo"/>
                     <Button  Width="20" Margin="5" Content="R" Command="Redo"/>
                     <Button  Width="35" Margin="5" Content="Reset" Command="{Binding Path=ResetCommand}"/>
@@ -155,11 +155,10 @@
                                 </Grid.RowDefinitions>
                                 <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:EditCollectionsUC DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" IsSourceValue="True"/>
-                                        <!--<Views:RequiresView Margin="5,10,5,5" DataContext="{Binding RequiresViewModel.SourceValueRequiresViewModel}"/>-->
+                                        <Views:EditCollectionsUC DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" IsSourceValue="SourceValueTemplate"/>                                      
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:EditCollectionsUC DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" IsSourceValue="False"/>
+                                        <Views:EditCollectionsUC DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" IsSourceValue="ValueTemplate"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding RequiresViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -195,14 +194,10 @@
                                 </Grid.RowDefinitions>
                                 <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <ListBox ItemTemplate="{StaticResource ResourceKey=DefineTemplateSource}" ItemsSource="{Binding DefineViewModel.DefineCollection}">
-                                        </ListBox>
-                                        <!--<Views:DefineView Margin="5,10,5,5" DataContext="{Binding DefineViewModel.SourceDefineViewModel}"/>-->
+                                        <Views:EditCollectionsUC  DataContext="{Binding DefineViewModel.EditCollectionViewModel}" IsSourceValue="DefineSourceValueTemplate"/>                                      
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <ListBox ItemTemplate="{StaticResource DefineTemplateEvaluated}" ItemsSource="{Binding DefineViewModel.DefineCollection}">
-                                        </ListBox>
-                                        <!--<Views:DefineView Margin="5,10,5,5" DataContext="{Binding DefineViewModel}"/>-->
+                                        <Views:EditCollectionsUC DataContext="{Binding DefineViewModel.EditCollectionViewModel}" IsSourceValue="DefineValueTemplate"/>                                       
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding DefineViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>

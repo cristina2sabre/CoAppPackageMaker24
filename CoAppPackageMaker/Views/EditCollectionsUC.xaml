@@ -6,19 +6,37 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <DataTemplate x:Key="ItemTemplate">                     
-                    <StackPanel Orientation="Horizontal">                       
-                        <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
-                    </StackPanel>              
-        </DataTemplate>
-        <DataTemplate x:Key="DisabledItemTemplate">
+        <DataTemplate x:Key="SourceTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Width="170" ></TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="DefineValueTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Width="170" ></TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"></TextBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ValueTemplate">
+            <StackPanel Orientation="Horizontal">             
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"></TextBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="DefineSourceValueTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Width="170" ></TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="SourceValueTemplate">
+            <StackPanel Orientation="Horizontal">               
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
     <DockPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft" Visibility="{Binding MyCustom}">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
             <Button Width="20" Height="20" Margin="3"   Command="{Binding Path = RemoveCommand}" Content="-"/>
             <Button Width="20" Height="20" Margin="3"  Command="{Binding Path = AddCommand}" Content="+"/>
             <!--<Label Content="Description?ex:Required Packeges" />-->

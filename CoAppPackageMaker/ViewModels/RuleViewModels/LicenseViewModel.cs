@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
@@ -42,6 +43,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _license; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "License", _license, value);
                 _license = value;
                 OnPropertyChanged("License");
             }
@@ -53,6 +55,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _licenseUrl; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "LicenseUrl", _licenseUrl, value);
                 _licenseUrl = value;
                 OnPropertyChanged("LicenseUrl");
             }
@@ -65,6 +68,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _licenseType; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "LicenseType", _licenseType, value);
                 _licenseType = value;
                 OnPropertyChanged("LicenseType");
             }

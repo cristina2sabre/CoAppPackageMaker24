@@ -36,33 +36,35 @@ namespace CoAppPackageMaker.ViewModels
 
             foreach (string parameter in reader.ReadParameters("manifest"))
             {
-                ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.ManifestIncludeList(parameter, "include", root));
-               // ObservableCollection<ItemViewModel> assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GetManifestIncludeList(parameter, "assembly"));
-                //ObservableCollection<string> includeCollection = new ObservableCollection<string>(reader.GetManifestIncludeList(parameter, "include"));
-                //ObservableCollection<string> assemblyCollection = new ObservableCollection<string>(reader.GetManifestIncludeList(parameter, "assembly"));
-                ManifestItemViewModel model = new ManifestItemViewModel()
+               var includeCollection = new ObservableCollection<ItemViewModel>(reader.ManifestIncludeList(parameter, "include", root));
+                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.ManifestIncludeList(parameter, "assembly", root));
+                
+              
+                var model = new ManifestItemViewModel()
                 {
-                    EditCollectionViewModel = new EditCollectionViewModel(reader, root, includeCollection),
+                    AssemblyCollection = new EditCollectionViewModel(reader, root, assemblyCollection),
+                    IncludeCollection = new EditCollectionViewModel(reader, root, includeCollection),
                     Name = parameter,
                     Root = root,
               
                 };
                 _manifestCollection.Add(model);
+                
             }
 
-            
-                _sourceManifestViewModel = new ManifestViewModel();
-                SourceManifestViewModel._manifestCollection = new ObservableCollection<ManifestItemViewModel>();
 
-                foreach (string parameter in reader.ReadParameters("manifest"))
-                {
-                  
-                    ObservableCollection<string> includeCollection = new ObservableCollection<string>(reader.GetManifestIncludeList2("manifest", "include"));
-                    ObservableCollection<string> assemblyCollection = new ObservableCollection<string>(reader.GetManifestIncludeList2("manifest", "assembly"));
-                    ManifestItemViewModel model = new ManifestItemViewModel();
-                   
-                    SourceManifestViewModel._manifestCollection.Add(model);
-                }
+            _sourceManifestViewModel = new ManifestViewModel();
+            SourceManifestViewModel._manifestCollection = new ObservableCollection<ManifestItemViewModel>();
+
+            foreach (string parameter in reader.ReadParameters("manifest"))
+            {
+
+                ObservableCollection<string> includeCollection = new ObservableCollection<string>(reader.GetManifestIncludeList2("manifest", "include"));
+                ObservableCollection<string> assemblyCollection = new ObservableCollection<string>(reader.GetManifestIncludeList2("manifest", "assembly"));
+                ManifestItemViewModel model = new ManifestItemViewModel();
+
+                SourceManifestViewModel._manifestCollection.Add(model);
+            }
 
                 
            
@@ -93,17 +95,28 @@ namespace CoAppPackageMaker.ViewModels
 
         public class ManifestItemViewModel : ExtraPropertiesViewModelBase
         {
-            public EditCollectionViewModel _editCollectionViewModel;
-            public EditCollectionViewModel EditCollectionViewModel
+            private EditCollectionViewModel _includeCollection;
+            public EditCollectionViewModel IncludeCollection
             {
-                get { return _editCollectionViewModel; }
+                get { return _includeCollection; }
                 set
                 {
-                    _editCollectionViewModel = value;
-                    OnPropertyChanged("EditCollectionViewModel");
+                    _includeCollection = value;
+                    OnPropertyChanged("IncludeCollection");
                 }
             }
 
+
+            private EditCollectionViewModel _assemblyCollection;
+            public EditCollectionViewModel AssemblyCollection
+            {
+                get { return _assemblyCollection; }
+                set
+                {
+                    _assemblyCollection = value;
+                    OnPropertyChanged("AssemblyCollection");
+                }
+            }
           
 
             private string _name = "[]";
@@ -175,7 +188,7 @@ namespace CoAppPackageMaker.ViewModels
         public void Add()
         {
 
-            this.ManifestCollection.Add(new ManifestItemViewModel() { Root = this.Root ,EditCollectionViewModel = new EditCollectionViewModel(null,Root,new ObservableCollection<ItemViewModel>())});
+            this.ManifestCollection.Add(new ManifestItemViewModel() { Root = this.Root, IncludeCollection = new EditCollectionViewModel(null, Root, new ObservableCollection<ItemViewModel>()), AssemblyCollection = new EditCollectionViewModel(null, Root, new ObservableCollection<ItemViewModel>()) });
         }
 
         #endregion
