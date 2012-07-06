@@ -30,8 +30,8 @@
         <Label Content="Feed" Grid.Row="4"  Margin="5"/>
         <Label Content="Location" Grid.Row="5"  Margin="5"/>
         <Label Content="Publisher" Grid.Row="6"  Margin="5"/>
-        <TextBox Name="PackageName" Grid.Column="1" Grid.Row="0"  Text="{local:FocusBinding Path= Name}" Margin="5" IsEnabled="{Binding IsEditable}" local:FocusExtension.HighlightTextOnFocus="True" />
-        <TextBox Name="PackageDisplayName" Grid.Column="1"   Grid.Row="1" Text="{local:FocusBinding Path= DisplayName}" Margin="5" IsEnabled="{Binding IsEditable}"  />
+        <TextBox Name="PackageName" Grid.Column="1" Grid.Row="0"  Text="{Binding Name}" Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Name="PackageDisplayName" Grid.Column="1"   Grid.Row="1" Text="{Binding DisplayName}" Margin="5" IsEnabled="{Binding IsEditable}"  />
         <TextBox Name="PackageArchitecture" Grid.Column="1" Grid.Row="2" Text="{Binding Architecture, Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
         <TextBox Name="PackageVersion" Grid.Column="1" Grid.Row="3" Text="{Binding Version, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
         <TextBox Name="PackageFeed" Grid.Column="1" Grid.Row="4" Text="{Binding Feed, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>

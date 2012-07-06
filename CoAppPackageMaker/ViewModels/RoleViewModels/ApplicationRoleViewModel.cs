@@ -14,7 +14,7 @@ using MonitoredUndo;
 //Frequently an application package will depend upon many assembly packages, which must be listed in a requires rule and referenced by way of manifest rules.
 namespace CoAppPackageMaker.ViewModels
 {
-    public class ApplicationRoleViewModel:ExtraPropertiesViewModelBase
+    public class ApplicationRoleViewModel:ExtraPropertiesForCollectionsViewModelBase
     {
         //private string _upper;
 
@@ -26,22 +26,22 @@ namespace CoAppPackageMaker.ViewModels
 
         
         private  string Label = "Application";
-        public ApplicationRoleViewModel(PackageReader reader, MainWindowViewModel root)
+        public ApplicationRoleViewModel(PackageReader reader)
             {
-                Root = root;
+              
               
                 _applicationCollection = new ObservableCollection<ApplicationItemViewModel>();
 
                 foreach (string parameter in reader.ReadParameters("application"))
                 {
-                    ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.ApplicationIncludeList("application", parameter, "include", root));
+                    ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.ApplicationIncludeList("application", parameter, "include"));
                   
                     ApplicationItemViewModel model = new ApplicationItemViewModel()
                     {
                           Label = "Application",
-                        EditCollectionViewModel = new EditCollectionViewModel(reader, root, includeCollection),
+                        EditCollectionViewModel = new EditCollectionViewModel(reader,  includeCollection),
                         Name = parameter,
-                        Root = root,
+                       // Root = root,
 
                     };
                     _applicationCollection.Add(model);
@@ -51,7 +51,7 @@ namespace CoAppPackageMaker.ViewModels
                 _applicationCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
             }
 
-        public class ApplicationItemViewModel : ExtraPropertiesViewModelBase
+        public class ApplicationItemViewModel : ExtraPropertiesForCollectionsViewModelBase
         {
             public EditCollectionViewModel _editCollectionViewModel;
             public EditCollectionViewModel EditCollectionViewModel
@@ -171,7 +171,7 @@ namespace CoAppPackageMaker.ViewModels
         public virtual void Add()
         {
 
-            this.ApplicationCollection.Add(new ApplicationRoleViewModel.ApplicationItemViewModel() { Label = "Application", Root = this.Root, EditCollectionViewModel = new EditCollectionViewModel(null, Root, new ObservableCollection<ItemViewModel>()) });
+            this.ApplicationCollection.Add(new ApplicationRoleViewModel.ApplicationItemViewModel() { Label = "Application",  EditCollectionViewModel = new EditCollectionViewModel(null,  new ObservableCollection<ItemViewModel>()) });
         }
 
         #endregion

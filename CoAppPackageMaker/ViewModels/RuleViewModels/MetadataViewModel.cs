@@ -10,24 +10,10 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public class MetadataViewModel : ExtraPropertiesViewModelBase, ISupportsUndo, IFocusMover
+    public class MetadataViewModel : ExtraPropertiesViewModelBase
     {
 
-        #region IFocusMover Members
-
-        public event EventHandler<MoveFocusEventArgs> MoveFocus;
-
-        void RaiseMoveFocus(string focusedProperty)
-        {
-            var handler = this.MoveFocus;
-            if (handler != null)
-            {
-                var args = new MoveFocusEventArgs(focusedProperty);
-                handler(this, args);
-            }
-        }
-
-        #endregion
+    
         private PackageReader _reader;
         private const string Metadata = "metadata";
         public  MetadataViewModel()
@@ -59,7 +45,8 @@ namespace CoAppPackageMaker.ViewModels
                                               BugTracker = reader.GetRulesSourcePropertyValueByName(Metadata, "bug-tracker"),
                                               Stability = reader.GetRulesSourcePropertyValueByName(Metadata, "stability"),
                                               Licenses = reader.GetRulesSourcePropertyValueByName(Metadata, "licenses"),
-                                              IsEditable = true
+                                              IsEditable = true,
+                                              IsSource = true,
                                           };
 
             SourceMetadataViewModel.PropertyChanged += EvaluatedChanged;
@@ -75,7 +62,7 @@ namespace CoAppPackageMaker.ViewModels
                 _summary = value;
                 OnPropertyChanged("Summary");
                // IsFocused = true;
-                RaiseMoveFocus("Summary");
+              
 
             }
 
@@ -168,6 +155,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+       
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
 

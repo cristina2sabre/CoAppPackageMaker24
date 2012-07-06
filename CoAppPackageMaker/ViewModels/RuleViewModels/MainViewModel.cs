@@ -19,6 +19,24 @@ namespace CoAppPackageMaker.ViewModels.Base
 {
   public  class MainWindowViewModel:ViewModelBase, ISupportsUndo
     {
+       private static MainWindowViewModel _instance=new MainWindowViewModel();
+       public static MainWindowViewModel Instance
+       {
+           get { return _instance; }
+         
+       }
+
+     
+
+       private MainWindowViewModel()
+       {
+           PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+           if (PathToFile != null && File.Exists(PathToFile))
+           {
+               LoadData();
+           }
+       }
+      
         private string _ruleNameSelectedItem;
         private ObservableCollection<string> _ruleNames;
         private ObservableCollection<string> _roleNames;
@@ -29,7 +47,7 @@ namespace CoAppPackageMaker.ViewModels.Base
         private PackageCompositionViewModel _packageCompositionViewModel;
         private FilesViewModel _filesViewModel;
         private ManifestViewModel _manifestViewModel;
-        private ObservableCollection<ExtraPropertiesViewModelBase> _allViewModels =new ObservableCollection<ExtraPropertiesViewModelBase>();
+        private ObservableCollection<ExtraPropertiesForCollectionsViewModelBase> _allViewModels =new ObservableCollection<ExtraPropertiesForCollectionsViewModelBase>();
         private PackageReader _reader;
 
         private List<List<string>> SearchAll(string definePropertyName)
@@ -38,7 +56,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             return allProp.ToList();
         }
 
-        public ObservableCollection<ExtraPropertiesViewModelBase> AllViewModels
+        public ObservableCollection<ExtraPropertiesForCollectionsViewModelBase> AllViewModels
         {
             get { return _allViewModels; }
             set
@@ -49,38 +67,38 @@ namespace CoAppPackageMaker.ViewModels.Base
         }
 
 
-        public MainWindowViewModel()
-        {
-            //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
-            //  PackageReader reader = new PackageReader();
-            //  reader.Read(PathToFile);
+        //public MainWindowViewModel()
+        //{
+        //    //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+        //    //  PackageReader reader = new PackageReader();
+        //    //  reader.Read(PathToFile);
 
-            //  _ruleNames = reader.Rules;
-            //  Dictionary<string, IFactory> dic = new Dictionary<string, IFactory>();
-            //  dic.Add("package", new PackageViewModelFactory());
-            //  dic.Add("files",new FilesViewModelFactory());
-            //  foreach (string str in _ruleNames)
-            //  {
-            //      if (dic.ContainsKey(str))
-            //      {
-            //          object instance = (dic[str].CreateInstance(reader));
-            //          string name = instance.GetType().Name;
-            //          var p = GetType().GetProperty(name);
-            //          p.SetValue(this, instance, null);
-            //      }
+        //    //  _ruleNames = reader.Rules;
+        //    //  Dictionary<string, IFactory> dic = new Dictionary<string, IFactory>();
+        //    //  dic.Add("package", new PackageViewModelFactory());
+        //    //  dic.Add("files",new FilesViewModelFactory());
+        //    //  foreach (string str in _ruleNames)
+        //    //  {
+        //    //      if (dic.ContainsKey(str))
+        //    //      {
+        //    //          object instance = (dic[str].CreateInstance(reader));
+        //    //          string name = instance.GetType().Name;
+        //    //          var p = GetType().GetProperty(name);
+        //    //          p.SetValue(this, instance, null);
+        //    //      }
 
-            //}
+        //    //}
 
-        //  PathToFile = "D:\\P\\COPKG\\test2.autopkg";
-           // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-          PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
-            if (PathToFile != null && File.Exists(PathToFile))
-            {
-                LoadData();
-            }
+        ////  PathToFile = "D:\\P\\COPKG\\test2.autopkg";
+        //   // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
+        //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+        //    if (PathToFile != null && File.Exists(PathToFile))
+        //    {
+        //        LoadData();
+        //    }
 
 
-        }
+        //}
 
         private void LoadData()
         {
@@ -89,31 +107,18 @@ namespace CoAppPackageMaker.ViewModels.Base
            _reader.Read(PathToFile);
 
             PackageViewModel = new PackageViewModel(_reader);
-            PackageViewModel.SourcePackageViewModel.Root = this;
-
             MetadataViewModel = new MetadataViewModel(_reader);
-            MetadataViewModel.SourceMetadataViewModel.Root = this;
-
-            ManifestViewModel = new ManifestViewModel(_reader, this);
-            RequiresViewModel = new RequiresViewModel(_reader, this);
-            DefineViewModel = new DefineViewModel(_reader, this);
-
-            SigningViewModel = new SigningViewModel(_reader, this);
-            SigningViewModel.SourceSigningViewModel.Root = this;
-
+            ManifestViewModel = new ManifestViewModel(_reader);
+            RequiresViewModel = new RequiresViewModel(_reader);
+            DefineViewModel = new DefineViewModel(_reader);
+            SigningViewModel = new SigningViewModel(_reader);
             LicenseViewModel = new LicenseViewModel(_reader);
-            LicenseViewModel.SourceValueLicenseViewModel.Root = this;
-
             CompatibilityPolicy = new CompatibilityPolicyViewModel(_reader);
-            CompatibilityPolicy.SourceValueCompatibilityPolicyViewModel.Root = this;
-
-            ApplicationRoleViewModel = new ApplicationRoleViewModel(_reader, this);
-            AssemblyRoleViewModel = new AssemblyRoleViewModel(_reader, this);
-
-            PackageCompositionViewModel = new PackageCompositionViewModel(_reader);
-            FilesViewModel = new FilesViewModel(_reader, this);
-           
-            _allViewModels.Add(PackageViewModel);
+            ApplicationRoleViewModel = new ApplicationRoleViewModel(_reader);
+            AssemblyRoleViewModel = new AssemblyRoleViewModel(_reader);
+            FilesViewModel = new FilesViewModel(_reader);
+            //PackageCompositionViewModel = new PackageCompositionViewModel(_reader);
+            //_allViewModels.Add(PackageViewModel);
 
         }
 
@@ -493,7 +498,7 @@ namespace CoAppPackageMaker.ViewModels.Base
 
          public object GetUndoRoot()
          {
-             return this;
+             return MainWindowViewModel.Instance;
          }
 
          #endregion

@@ -7,7 +7,7 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public abstract class ExtraPropertiesViewModelBase : ViewModelBase, ISupportsUndo
+    public abstract class ExtraPropertiesForCollectionsViewModelBase : ViewModelBase,ISupportsUndo
     {
         private string _helpTip;
         private bool _isRequired=false;
@@ -57,32 +57,20 @@ namespace CoAppPackageMaker.ViewModels
 
         public bool IsReadOnly { get; set; }
 
-        private MainWindowViewModel _root;
-        public MainWindowViewModel Root
+      
+      virtual  public object GetUndoRoot()
         {
-            get { return _root; }
-            set
+            if (MainWindowViewModel.Instance != null) { return MainWindowViewModel.Instance; }
+            else
             {
-                if (value == _root)
-                    return;
-
-                // This line will log the property change with the undo framework.
-                DefaultChangeFactory.OnChanging(this, "Root", _root, value);
-
-                _root = value;
-                OnPropertyChanged("Root");
+                return null;
             }
+
+
         }
 
-        #region ISupportsUndo Members
-
-        public object GetUndoRoot()
-        {
-            return this.Root;
-        }
-
-        #endregion
-
+    
+       
         public List<string> Search(string toSearch)
         {
             List<string> result = new List<string>(4);
@@ -94,6 +82,30 @@ namespace CoAppPackageMaker.ViewModels
                 }
             }
             return result;
+        }
+    }
+
+    public abstract class ExtraPropertiesViewModelBase : ExtraPropertiesForCollectionsViewModelBase
+    {
+        override public object GetUndoRoot()
+        {
+            if (this.IsSource == true)
+            {
+                if (MainWindowViewModel.Instance != null) { return MainWindowViewModel.Instance; }
+                return null;
+            }
+            return null;
+        }
+
+        private bool _isSource = false;
+        public bool IsSource
+        {
+            get { return _isSource; }
+            set
+            {
+                _isSource = value;
+                OnPropertyChanged("IsSource");
+            }
         }
     }
 }

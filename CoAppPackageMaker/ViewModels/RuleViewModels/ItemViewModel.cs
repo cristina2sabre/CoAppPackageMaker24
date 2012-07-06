@@ -6,7 +6,7 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
-    public class ItemViewModel : ExtraPropertiesViewModelBase
+    public class ItemViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
 
         //type

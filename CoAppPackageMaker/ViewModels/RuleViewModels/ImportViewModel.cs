@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace CoAppPackageMaker.ViewModels
 {
-   public class ImportViewModel : ExtraPropertiesViewModelBase
+   public class ImportViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
         private ObservableCollection<string> _imports;
 

@@ -19,13 +19,13 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         }
 
-        public SigningViewModel(PackageReader reader, MainWindowViewModel mainWindowViewModel)
+        public SigningViewModel(PackageReader reader)
         {
             _reader = reader;
             ReplaceSignature = _reader.GetRulesPropertyValueByName(Signing, "replace-signature") == "true";
-            EditCollectionViewModel = new EditCollectionViewModel(reader, mainWindowViewModel,
+            EditCollectionViewModel = new EditCollectionViewModel(reader, 
                                                                   reader.GetRulesSourcePropertyValuesByNameForSigning(
-                                                                      Signing, "include", mainWindowViewModel));
+                                                                      Signing, "include"));
 
             CompanyAttribute = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "company");
             DescriptionAttribute = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "description");
@@ -64,7 +64,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                                                                                                      "file-version"),
                                              IsEditable = true,
                                              IsReadOnly = false,
-
+                                             IsSource = true,
                                              //EditCollectionViewModel = new EditCollectionViewModel(reader, mainWindowViewModel,
                                              //                     reader.GetRulesSourcePropertyValuesByNameForSigning(
                                              //                         Signing, "include", mainWindowViewModel))
@@ -76,6 +76,9 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
 
         #region Properties
+
+       
+
         private EditCollectionViewModel _editCollectionViewModel;
         public EditCollectionViewModel EditCollectionViewModel
         {

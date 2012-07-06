@@ -10,7 +10,7 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-     public class ManifestViewModel : ExtraPropertiesViewModelBase
+     public class ManifestViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
 
         private ObservableCollection<ManifestItemViewModel> _manifestCollection;
@@ -29,24 +29,22 @@ namespace CoAppPackageMaker.ViewModels
         {
         }
 
-        public ManifestViewModel(PackageReader reader, MainWindowViewModel root)
+        public ManifestViewModel(PackageReader reader)
         {
-            Root = root;
+        
             _manifestCollection = new ObservableCollection<ManifestItemViewModel>();
 
             foreach (string parameter in reader.ReadParameters("manifest"))
             {
-               var includeCollection = new ObservableCollection<ItemViewModel>(reader.ManifestIncludeList(parameter, "include", root));
-                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.ManifestIncludeList(parameter, "assembly", root));
+               var includeCollection = new ObservableCollection<ItemViewModel>(reader.ManifestIncludeList(parameter, "include"));
+                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.ManifestIncludeList(parameter, "assembly"));
                 
               
                 var model = new ManifestItemViewModel()
                 {
-                    AssemblyCollection = new EditCollectionViewModel(reader, root, assemblyCollection),
-                    IncludeCollection = new EditCollectionViewModel(reader, root, includeCollection),
+                    AssemblyCollection = new EditCollectionViewModel(reader,  assemblyCollection),
+                    IncludeCollection = new EditCollectionViewModel(reader,  includeCollection),
                     Name = parameter,
-                    Root = root,
-              
                 };
                 _manifestCollection.Add(model);
                 
@@ -63,7 +61,7 @@ namespace CoAppPackageMaker.ViewModels
             OnPropertyChanged("ManifestCollection");
         }
 
-        public class ManifestItemViewModel : ExtraPropertiesViewModelBase
+        public class ManifestItemViewModel : ExtraPropertiesForCollectionsViewModelBase
         {
             private EditCollectionViewModel _includeCollection;
             public EditCollectionViewModel IncludeCollection
@@ -158,7 +156,7 @@ namespace CoAppPackageMaker.ViewModels
         public void Add()
         {
 
-            this.ManifestCollection.Add(new ManifestItemViewModel() { Root = this.Root, IncludeCollection = new EditCollectionViewModel(null, Root, new ObservableCollection<ItemViewModel>()), AssemblyCollection = new EditCollectionViewModel(null, Root, new ObservableCollection<ItemViewModel>()) });
+            this.ManifestCollection.Add(new ManifestItemViewModel() {  IncludeCollection = new EditCollectionViewModel(null,  new ObservableCollection<ItemViewModel>()), AssemblyCollection = new EditCollectionViewModel(null,  new ObservableCollection<ItemViewModel>()) });
         }
 
         #endregion

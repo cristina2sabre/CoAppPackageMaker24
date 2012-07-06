@@ -10,14 +10,14 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
-    public class DefineViewModel : ExtraPropertiesViewModelBase
+    public class DefineViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
 
 
-        public DefineViewModel(PackageReader reader, MainWindowViewModel mainWindowViewModel)
+        public DefineViewModel(PackageReader reader)
         {
 
-            EditCollectionViewModel = new EditCollectionViewModel(reader, mainWindowViewModel, reader.GetDefineRules(mainWindowViewModel));
+            EditCollectionViewModel = new EditCollectionViewModel(reader,  reader.GetDefineRules());
             //_reader = reader;
             //Root = root;
             //_defineCollection = reader.GetDefineRules(this);
@@ -35,7 +35,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
-        public class DefineItemViewModel : ExtraPropertiesViewModelBase
+        public class DefineItemViewModel : ExtraPropertiesForCollectionsViewModelBase
         {
 
           

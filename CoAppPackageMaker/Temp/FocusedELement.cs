@@ -14,7 +14,6 @@ namespace CoAppPackageMaker.Temp
     //http://blogs.msdn.com/b/luc/archive/2010/08/05/silverlight-wpf-debugging-determining-the-focused-element.aspx
     public class DebugFocusedElementProxy : FrameworkElement, INotifyPropertyChanged
     {
-        private string _FocusedElementDescription;
         public string FocusedElementDescription
         {
             get
@@ -32,13 +31,13 @@ namespace CoAppPackageMaker.Temp
             }
         }
 
-        private UIElement _FocusedElement;
+        private UIElement _focusedElement;
         public UIElement FocusedElement
         {
-            get { return _FocusedElement; }
+            get { return _focusedElement; }
             set
             {
-                _FocusedElement = value;
+                _focusedElement = value;
                 OnNotifyPropertyChanged("FocusedElement");
                 OnNotifyPropertyChanged("FocusedElementDescription");
                 UpdateHepTip();

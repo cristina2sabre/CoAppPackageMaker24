@@ -10,10 +10,10 @@
      
         Height="695" Width="675"
         WindowStartupLocation="CenterScreen" >
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <Base:MainWindowViewModel />
         
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Window.CommandBindings>
         <CommandBinding Command="Undo" Executed="Undo_Executed" CanExecute="Undo_CanExecute" />
         <CommandBinding Command="Redo" Executed="Redo_Executed" CanExecute="Redo_CanExecute" />

@@ -4,7 +4,7 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-   public class CompatibilityPolicyViewModel:ExtraPropertiesViewModelBase
+   public class CompatibilityPolicyViewModel:ExtraPropertiesForCollectionsViewModelBase
     {
        private PackageReader _reader;
        private const string CompatibilityPolicy = "compatability-policy";

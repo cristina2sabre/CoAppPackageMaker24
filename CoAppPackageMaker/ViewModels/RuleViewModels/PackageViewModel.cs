@@ -12,7 +12,7 @@ using CoAppPackageMaker.Temp;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public class PackageViewModel : ExtraPropertiesViewModelBase,IFocusMover
+    public class PackageViewModel : ExtraPropertiesViewModelBase
     {
         private PackageReader _reader;
         private const string Package = "package";
@@ -29,7 +29,7 @@ namespace CoAppPackageMaker.ViewModels
 
             SourcePackageViewModel=new PackageViewModel()
                                      {
-                                       
+                
             Name = reader.GetRulesSourcePropertyValueByName(Package, "name"),
             DisplayName = reader.GetRulesSourcePropertyValueByName(Package, "display-name"),
             Architecture = reader.GetRulesSourcePropertyValueByName(Package, "arch"),
@@ -38,8 +38,7 @@ namespace CoAppPackageMaker.ViewModels
             Publisher = reader.GetRulesSourcePropertyValueByName(Package, "publisher"),
             Version = reader.GetRulesSourcePropertyValueByName(Package, "version"),
             IsEditable = true,
-
-
+            IsSource = true,
                                      };
 
             Name = reader.GetRulesPropertyValueByName(Package, "name");
@@ -66,18 +65,24 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+      
+
+        
+      
+
         private string _name;
         public string Name
         {
             get { return _name; }
             set
             {
-               DefaultChangeFactory.OnChanging(this, "Name", _name, value);
+               
+                DefaultChangeFactory.OnChanging(this, "Name", _name, value);
                _name = value;
               
               
                OnPropertyChanged("Name");
-               this.RaiseMoveFocus("Name");
+               
 
             }
         }
@@ -115,9 +120,8 @@ namespace CoAppPackageMaker.ViewModels
             {
                 DefaultChangeFactory.OnChanging(this, "DisplayName", _displayName, value);
                 _displayName = value;
-               
                 OnPropertyChanged("DisplayName");
-                this.RaiseMoveFocus("DisplayName");
+               
             }
         }
 
@@ -197,24 +201,6 @@ namespace CoAppPackageMaker.ViewModels
 
             }
         }
-
-
-
-        #region IFocusMover Members
-
-        public event EventHandler<MoveFocusEventArgs> MoveFocus;
-
-        void RaiseMoveFocus(string focusedProperty)
-        {
-            var handler = this.MoveFocus;
-            if (handler != null)
-            {
-                var args = new MoveFocusEventArgs(focusedProperty);
-                handler(this, args);
-            }
-        }
-
-        #endregion
     }
 
     public class PackageViewModelFactory : IFactory

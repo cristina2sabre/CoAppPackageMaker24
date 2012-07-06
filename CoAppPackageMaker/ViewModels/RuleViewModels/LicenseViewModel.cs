@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
-    public class LicenseViewModel:ExtraPropertiesViewModelBase
+    public class LicenseViewModel : ExtraPropertiesViewModelBase
 {
         public LicenseViewModel ()
         {
@@ -31,11 +32,14 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                                                    LicenseUrl =
                                                        reader.GetRulesSourcePropertyValueByName(license, "license-url"),
                                                    IsEditable = true,
+                                                   IsSource = true,
                                                };
             SourceString = reader.GetRulesSourceStringPropertyValueByName(license);
             SourceValueLicenseViewModel.PropertyChanged += EvaluatedChanged;
 
         }
+
+       
 
         private string _license;
         public string License

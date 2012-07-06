@@ -12,7 +12,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
 {
   
-    public class FilesViewModel:ExtraPropertiesViewModelBase
+    public class FilesViewModel:ExtraPropertiesForCollectionsViewModelBase
     {
         private ObservableCollection<FilesItemViewModel> _filesCollection;
         public ObservableCollection<FilesItemViewModel> FilesCollection
@@ -26,23 +26,23 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
         
-        public FilesViewModel(PackageReader reader, MainWindowViewModel root)
+        public FilesViewModel(PackageReader reader)
         {
-            Root = root;
+            //Root = root;
             _filesCollection = new ObservableCollection<FilesItemViewModel>();
            
             foreach (string parameter in reader.ReadParameters("files"))
             {
              //  ObservableCollection<string> collection = new ObservableCollection<string>(reader.GetFilesIncludeList(parameter));
-               ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.FilesIncludeList(parameter, "include", root));
+               ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.FilesIncludeList(parameter, "include"));
                 FilesItemViewModel model = new FilesItemViewModel()
                 {
                     FilesRoot = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "root"),
                     TrimPath = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "trim-path"),
-                    EditCollectionViewModel = new EditCollectionViewModel(reader, root, includeCollection),
+                    EditCollectionViewModel = new EditCollectionViewModel(reader,  includeCollection),
                   //  Include = collection,
                     Name = parameter,
-                    Root = root,
+                    //Root = root,
                 };
 
                 _filesCollection.Add(model);
@@ -60,7 +60,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
        
 
-        public class   FilesItemViewModel:ExtraPropertiesViewModelBase
+        public class   FilesItemViewModel:ExtraPropertiesForCollectionsViewModelBase
         {
           private string _filesRoot;
              public string FilesRoot
@@ -181,7 +181,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
            public void Add()
            {
               
-               this.FilesCollection.Add(new FilesItemViewModel() { Root = this.Root,EditCollectionViewModel = new EditCollectionViewModel(null,Root,new ObservableCollection<ItemViewModel>()) });
+               this.FilesCollection.Add(new FilesItemViewModel() { EditCollectionViewModel = new EditCollectionViewModel(null,new ObservableCollection<ItemViewModel>()) });
            }
     
         #endregion
@@ -193,7 +193,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         public object CreateInstance(PackageReader reader)
         {
            
-            FilesViewModel model = new FilesViewModel(reader, null);
+            FilesViewModel model = new FilesViewModel(reader);
             
             return model;
 

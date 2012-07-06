@@ -10,7 +10,7 @@ namespace CoAppPackageMaker.ViewModels
     //This role handles installing headers, link-libraries, and developer docs for a library.
     //While it is possible to have both an 'assembly' and a 'developer-library' role declared in the same package,
     //doing so is considered very bad form, as it means the developer libraries will always be included when an end-user just needs to use the dll
-    class DeveloperLibraryRoleViewModel:ExtraPropertiesViewModelBase
+    class DeveloperLibraryRoleViewModel:ExtraPropertiesForCollectionsViewModelBase
     {
 
          private  ObservableCollection<string> _libraries;
