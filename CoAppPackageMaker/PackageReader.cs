@@ -78,12 +78,8 @@ namespace CoAppPackageMaker
                       model.Reader = this;
                       model.UpdateSource = SetSourceDefineRules;
                       model.SourceValue = firstOrDefault.SourceValues.FirstOrDefault();
-                     //  model.Value = propertyRule.Value;
-                       // model.Value = no need to set-is evaluated in the sourcevalue;
+                      //  model.Value = propertyRule.Value;//no need to set-is evaluated in the sourcevalue;
                       model.Root = root;
-                     
-
-                      
                    }
 
                     result.Add(model);
@@ -102,7 +98,7 @@ namespace CoAppPackageMaker
             {
               foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
                     {
-                        int i=0;
+                       
                         foreach (string s in propertyValue.SourceValues)
                         {                            
                             var model = new ItemViewModel();
@@ -111,8 +107,6 @@ namespace CoAppPackageMaker
                             model.SourceValue = s;
                            // model.Value = no need to set-is evaluated in the sourcevalue;
                             model.Root = root;
-                            model.Index = i++;
-                           
                             result.Add(model); 
                         }
                 }
@@ -130,14 +124,13 @@ namespace CoAppPackageMaker
             {
                 foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
                 {
-                    int i = 0;
+                  
                     foreach (string s in propertyValue.SourceValues)
                     {
                         var model = new ItemViewModel();
                         model.Reader = this;
                         model.SourceValue = s;
                         model.Root = root;
-                        model.Index = i++;
                         result.Add(model);
                     }
                 }
@@ -152,16 +145,13 @@ namespace CoAppPackageMaker
            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
            if (propertyRule != null)
            {
-               
                foreach (string value in propertyRule.Values)
                {
                    var model = new ItemViewModel();
                    var firstOrDefault = propertyRule.PropertyValues.FirstOrDefault();
                    if (firstOrDefault != null)
-                       model.SourceValue = firstOrDefault.SourceValues.FirstOrDefault();
+                   model.SourceValue = firstOrDefault.SourceValues.FirstOrDefault();
                    model.Value = value;
-                 
-
                }
            }
            return result;
@@ -209,13 +199,14 @@ namespace CoAppPackageMaker
             return result;
             
        }
+      
 
-        public string SetSourceDefineRules(string propertyName, IEnumerable<string> value)
+       public string SetSourceDefineRules(string propertyName, IEnumerable<string> value)
         {
 
             foreach (Rule rule in _packageSource.DefineRules)
             {
-
+                
                 PropertyRule propertyRule = rule[propertyName];
 
                 if (propertyRule != null)
@@ -225,10 +216,16 @@ namespace CoAppPackageMaker
                     if (propertyValue != null)
                     {
                         propertyValue.SourceValues = value;
+                        // SearchAll(propertyName); from MainViewModel
                         return propertyRule.Value;
                     }
 
                 }
+                else
+                {
+                    // _packageSource.DefineRules -how to add
+                }
+
             }
             return String.Empty;
         }
@@ -256,7 +253,7 @@ namespace CoAppPackageMaker
             return result;
         }
 
-        public string SetSourceManifestRules(IEnumerable<string> value)
+        public string SetSourceManifestRules(string  ruleName, IEnumerable<string> value)
         {
             //to mofify !!!!!!!!!!!!is for required
             string result = String.Empty;
@@ -458,12 +455,10 @@ namespace CoAppPackageMaker
                {
                    var model = new ItemViewModel();
                    model.Reader = this;
-
-               //  model.UpdateSource = SetSourceManifestRules;
+                  // model.UpdateSource = SetSourceManifestRules;
                    model.SourceValue = value;
                    model.Root = root;
                    result.Add(model);
-
                }
            }
 

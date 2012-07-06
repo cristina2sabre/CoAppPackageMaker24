@@ -4,13 +4,30 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Security.Policy;
+using CoAppPackageMaker.Temp;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public class MetadataViewModel : ExtraPropertiesViewModelBase,ISupportsUndo
+    public class MetadataViewModel : ExtraPropertiesViewModelBase, ISupportsUndo, IFocusMover
     {
+
+        #region IFocusMover Members
+
+        public event EventHandler<MoveFocusEventArgs> MoveFocus;
+
+        void RaiseMoveFocus(string focusedProperty)
+        {
+            var handler = this.MoveFocus;
+            if (handler != null)
+            {
+                var args = new MoveFocusEventArgs(focusedProperty);
+                handler(this, args);
+            }
+        }
+
+        #endregion
         private PackageReader _reader;
         private const string Metadata = "metadata";
         public  MetadataViewModel()
@@ -57,7 +74,8 @@ namespace CoAppPackageMaker.ViewModels
                 DefaultChangeFactory.OnChanging(this, "Summary", _summary, value);
                 _summary = value;
                 OnPropertyChanged("Summary");
-                IsFocused = true;
+               // IsFocused = true;
+                RaiseMoveFocus("Summary");
 
             }
 

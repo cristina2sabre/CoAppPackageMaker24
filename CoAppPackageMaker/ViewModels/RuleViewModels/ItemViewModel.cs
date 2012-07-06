@@ -14,25 +14,14 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         //property
         public  Process UpdateSource { get; set; }
-
-        private int _index;
-        public int Index
-        {
-            get { return _index; }
-            set
-            {
-
-                _index = value;
-                OnPropertyChanged("Index");
-            }
-        }
-
+       
         private string _label = "NewLabel";
         public string Label
         {
             get { return _label; }
             set
             {
+                DefaultChangeFactory.OnChanging(this, "Label", _label, value);
                 _label = value;
                 OnPropertyChanged("Label");
             }

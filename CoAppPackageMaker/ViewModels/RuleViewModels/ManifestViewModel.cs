@@ -51,26 +51,7 @@ namespace CoAppPackageMaker.ViewModels
                 _manifestCollection.Add(model);
                 
             }
-
-
-            _sourceManifestViewModel = new ManifestViewModel();
-            SourceManifestViewModel._manifestCollection = new ObservableCollection<ManifestItemViewModel>();
-
-            foreach (string parameter in reader.ReadParameters("manifest"))
-            {
-
-                ObservableCollection<string> includeCollection = new ObservableCollection<string>(reader.GetManifestIncludeList2("manifest", "include"));
-                ObservableCollection<string> assemblyCollection = new ObservableCollection<string>(reader.GetManifestIncludeList2("manifest", "assembly"));
-                ManifestItemViewModel model = new ManifestItemViewModel();
-
-                SourceManifestViewModel._manifestCollection.Add(model);
-            }
-
-                
-           
-
           
-           
            
              SourceString = reader.GetRulesSourceStringPropertyValueByName("manifest");
              _manifestCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
@@ -80,17 +61,6 @@ namespace CoAppPackageMaker.ViewModels
         {
             DefaultChangeFactory.OnCollectionChanged(this, "ManifestCollection", ManifestCollection, e);
             OnPropertyChanged("ManifestCollection");
-        }
-
-        private ManifestViewModel _sourceManifestViewModel;
-        public ManifestViewModel SourceManifestViewModel
-        {
-            get { return _sourceManifestViewModel; }
-            set
-            {
-                _sourceManifestViewModel = value;
-                OnPropertyChanged("SourceManifestViewModel");
-            }
         }
 
         public class ManifestItemViewModel : ExtraPropertiesViewModelBase

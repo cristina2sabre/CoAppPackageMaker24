@@ -23,5 +23,10 @@ namespace CoAppPackageMaker.Views
         {
             InitializeComponent();
         }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

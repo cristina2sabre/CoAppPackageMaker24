@@ -10,7 +10,7 @@ namespace CoAppPackageMaker.ViewModels
     public abstract class ExtraPropertiesViewModelBase : ViewModelBase, ISupportsUndo
     {
         private string _helpTip;
-        private bool _isRequired;
+        private bool _isRequired=false;
 
         public string HelpTip
         {
@@ -83,6 +83,17 @@ namespace CoAppPackageMaker.ViewModels
 
         #endregion
 
-       
+        public List<string> Search(string toSearch)
+        {
+            List<string> result = new List<string>(4);
+            foreach (var prop in this.GetType().GetProperties())
+            {
+                if (prop.GetValue(this, null).ToString().Contains(toSearch))
+                {
+                    result.Add(prop.Name);
+                }
+            }
+            return result;
+        }
     }
 }

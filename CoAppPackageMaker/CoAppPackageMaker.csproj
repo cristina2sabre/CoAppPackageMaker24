@@ -82,6 +82,8 @@
     </ApplicationDefinition>
     <Compile Include="PackageReader.cs" />
     <Compile Include="Temp\Class1.cs" />
+    <Compile Include="Temp\FocusedELement.cs" />
+    <Compile Include="Temp\IFocus.cs" />
     <Compile Include="Temp\MockPackageSource.cs" />
     <Compile Include="ViewModels\RoleViewModels\ApplicationRoleViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\AssemblyRoleViewModel.cs" />
@@ -112,9 +114,6 @@
     <Compile Include="Views\CompatibilityPolicy.xaml.cs">
       <DependentUpon>CompatibilityPolicy.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DefineView.xaml.cs">
-      <DependentUpon>DefineView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\EditCollectionsUC.xaml.cs">
       <DependentUpon>EditCollectionsUC.xaml</DependentUpon>
     </Compile>
@@ -135,9 +134,6 @@
     </Compile>
     <Compile Include="Views\PackageView.xaml.cs">
       <DependentUpon>PackageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RequiresView.xaml.cs">
-      <DependentUpon>RequiresView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SigningView.xaml.cs">
       <DependentUpon>SigningView.xaml</DependentUpon>
@@ -166,10 +162,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DefineView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\EditCollectionsUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,10 +187,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PackageView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RequiresView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

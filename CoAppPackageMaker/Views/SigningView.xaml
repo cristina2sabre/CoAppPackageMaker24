@@ -37,6 +37,6 @@
         <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding  FileVersionAttribute , Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
         <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding  ReplaceSignature , Mode=TwoWay}"  Margin="5,11,5,5" IsEnabled="{Binding IsEditable}"/>
         <!--<ListBox Grid.Column="1" Grid.Row="7" ItemsSource="{Binding Include}" Margin="5" IsEnabled="{Binding IsEditable}"/>-->
-        <Views:EditCollectionsUC Grid.Column="1" Grid.Row="7" DataContext="{Binding EditCollectionViewModel}" Height="85"  Margin="5" IsSourceValue="SourceValueTemplate"/>
+        <Views:EditCollectionsUC Grid.Column="1" Grid.Row="7" DataContext="{Binding EditCollectionViewModel}" Height="85"  Margin="5" ListTemplate="SourceValueTemplate"/>
     </Grid>
 </UserControl>

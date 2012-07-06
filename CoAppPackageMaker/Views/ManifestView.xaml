@@ -27,8 +27,8 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Assembly" Grid.Row="0" Margin="5"/>
                     <Label Content="Include" Grid.Row="1" Margin="5"/>
-                    <Views:EditCollectionsUC  Width="200" Grid.Column="1" Grid.Row="0" DataContext="{Binding  AssemblyCollection}" Height="100"  Margin="5" IsSourceValue="SourceValueTemplate"/>
-                    <Views:EditCollectionsUC DataContext="{Binding  IncludeCollection}" Grid.Column="1" Grid.Row="1" Width="200" Height="100"  Margin="5" IsSourceValue="SourceValueTemplate"/>
+                    <Views:EditCollectionsUC  Width="200" Grid.Column="1" Grid.Row="0" DataContext="{Binding  AssemblyCollection}" Height="100"  Margin="5" ListTemplate="SourceValueTemplate"/>
+                    <Views:EditCollectionsUC DataContext="{Binding  IncludeCollection}" Grid.Column="1" Grid.Row="1" Width="200" Height="100"  Margin="5" ListTemplate="SourceValueTemplate"/>
                 </Grid>
             </Expander>
         </DataTemplate>

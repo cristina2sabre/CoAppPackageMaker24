@@ -27,8 +27,8 @@
                     </Grid.ColumnDefinitions>
                   
                     <Label Content="Include" Grid.Row="1" Margin="5"/>
-                  
-                    <Views:EditCollectionsUC DataContext="{Binding  EditCollectionViewModel}" Grid.Column="1" Grid.Row="1" Width="200" Height="100" />
+
+                    <Views:EditCollectionsUC DataContext="{Binding  EditCollectionViewModel}" Grid.Column="1" Grid.Row="1" Width="200" Height="100"  ListTemplate="SourceValueTemplate"/>
                 </Grid>
             </Expander>
         </DataTemplate>

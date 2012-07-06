@@ -30,7 +30,14 @@ namespace CoAppPackageMaker.ViewModels.Base
         private FilesViewModel _filesViewModel;
         private ManifestViewModel _manifestViewModel;
         private ObservableCollection<ExtraPropertiesViewModelBase> _allViewModels =new ObservableCollection<ExtraPropertiesViewModelBase>();
-      private PackageReader _reader;
+        private PackageReader _reader;
+
+        private List<List<string>> SearchAll(string definePropertyName)
+        {
+            var allProp = AllViewModels.Select(item => item.Search("definePropertyName"));
+            return allProp.ToList();
+        }
+
         public ObservableCollection<ExtraPropertiesViewModelBase> AllViewModels
         {
             get { return _allViewModels; }
@@ -81,31 +88,32 @@ namespace CoAppPackageMaker.ViewModels.Base
            _reader = new PackageReader();
            _reader.Read(PathToFile);
 
-           PackageViewModel = new PackageViewModel(_reader);
-             //{ Root = this }
+            PackageViewModel = new PackageViewModel(_reader);
             PackageViewModel.SourcePackageViewModel.Root = this;
+
             MetadataViewModel = new MetadataViewModel(_reader);
             MetadataViewModel.SourceMetadataViewModel.Root = this;
+
             ManifestViewModel = new ManifestViewModel(_reader, this);
-            ManifestViewModel.SourceManifestViewModel.Root = this;
-            SigningViewModel = new SigningViewModel(_reader, this);
-            SigningViewModel.SourceSigningViewModel.Root = this;
             RequiresViewModel = new RequiresViewModel(_reader, this);
             DefineViewModel = new DefineViewModel(_reader, this);
-           // DefineViewModel.SourceDefineViewModel.Root = this;
 
+            SigningViewModel = new SigningViewModel(_reader, this);
+            SigningViewModel.SourceSigningViewModel.Root = this;
 
             LicenseViewModel = new LicenseViewModel(_reader);
             LicenseViewModel.SourceValueLicenseViewModel.Root = this;
+
             CompatibilityPolicy = new CompatibilityPolicyViewModel(_reader);
             CompatibilityPolicy.SourceValueCompatibilityPolicyViewModel.Root = this;
+
             ApplicationRoleViewModel = new ApplicationRoleViewModel(_reader, this);
             AssemblyRoleViewModel = new AssemblyRoleViewModel(_reader, this);
+
             PackageCompositionViewModel = new PackageCompositionViewModel(_reader);
             FilesViewModel = new FilesViewModel(_reader, this);
-            //_editCollectionViewModel=new EditCollectionViewModel(reader,this,RequiresViewModel);
-
-            _allViewModels.Add(_packageViewModel);
+           
+            _allViewModels.Add(PackageViewModel);
 
         }
 
@@ -323,7 +331,31 @@ namespace CoAppPackageMaker.ViewModels.Base
                  OnPropertyChanged("RuleNameSelectedItem");
              }
          }
- 
+
+      //private UIElement _focusedElement;
+      //public UIElement FocusedElement
+      //{
+      //    get { return _focusedElement; }
+      //    set
+      //    {
+      //        _focusedElement = value;
+      //        OnPropertyChanged("FocusedElement");
+      //    }
+      //}
+
+      
+      private string _helpTip="HelloWorld";
+      public string HelpTip
+      {
+          get { return _helpTip; }
+          set
+          {
+              _helpTip = value;
+              OnPropertyChanged("HelpTip");
+          }
+      }
+
+      
         
          #region Commands
 

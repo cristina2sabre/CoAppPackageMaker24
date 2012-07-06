@@ -8,10 +8,11 @@ using System.Text;
 using System.Security.Policy;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
+using CoAppPackageMaker.Temp;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public class PackageViewModel : ExtraPropertiesViewModelBase
+    public class PackageViewModel : ExtraPropertiesViewModelBase,IFocusMover
     {
         private PackageReader _reader;
         private const string Package = "package";
@@ -73,8 +74,11 @@ namespace CoAppPackageMaker.ViewModels
             {
                DefaultChangeFactory.OnChanging(this, "Name", _name, value);
                _name = value;
-               OnPropertyChanged("Name");
               
+              
+               OnPropertyChanged("Name");
+               this.RaiseMoveFocus("Name");
+
             }
         }
 
@@ -111,7 +115,9 @@ namespace CoAppPackageMaker.ViewModels
             {
                 DefaultChangeFactory.OnChanging(this, "DisplayName", _displayName, value);
                 _displayName = value;
+               
                 OnPropertyChanged("DisplayName");
+                this.RaiseMoveFocus("DisplayName");
             }
         }
 
@@ -192,7 +198,23 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        
+
+
+        #region IFocusMover Members
+
+        public event EventHandler<MoveFocusEventArgs> MoveFocus;
+
+        void RaiseMoveFocus(string focusedProperty)
+        {
+            var handler = this.MoveFocus;
+            if (handler != null)
+            {
+                var args = new MoveFocusEventArgs(focusedProperty);
+                handler(this, args);
+            }
+        }
+
+        #endregion
     }
 
     public class PackageViewModelFactory : IFactory

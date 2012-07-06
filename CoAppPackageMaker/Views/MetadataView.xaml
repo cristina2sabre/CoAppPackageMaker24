@@ -27,7 +27,7 @@
         <Label Content="Bug-tracker" Grid.Row="3"  Margin="5"/>
         <Label Content="Stability" Grid.Row="4"  Margin="5"/>
         <Label Content="Licenses" Grid.Row="5"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Summary , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}"  Margin="5" IsEnabled="{Binding IsEditable}" Temp:FocusExtension.IsFocused="{Binding IsFocused, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Temp:FocusBinding Path= Summary}" Temp:FocusExtension.IsFocused="{Binding IsFocused, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Description , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True,UpdateSourceTrigger=LostFocus}"  Margin="5" TextWrapping="Wrap" MaxHeight="75" ScrollViewer.VerticalScrollBarVisibility="Visible" IsEnabled="{Binding IsEditable}"/>
         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding  AuthorVersion , Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
         <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding  BugTracker , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>

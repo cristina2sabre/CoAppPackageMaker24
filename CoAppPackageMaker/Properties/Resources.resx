@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,33 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="PackageArchitecture" xml:space="preserve">
+    <value>The binary architecture of the contents of the package. It is not permitted to have multiple binary architectures in the same package.</value>
+  </data>
+  <data name="PackageDisplayName" xml:space="preserve">
+    <value>A cosmetic name for the product being packaged.</value>
+  </data>
+  <data name="PackageFeed" xml:space="preserve">
+    <value>One or more URLs of feed locations that may be consulted when looking for a package upgrade.</value>
+  </data>
+  <data name="PackageLocation" xml:space="preserve">
+    <value>One or more URLs that will return the package file. The URL must not be a referencing webpage, as this is the URL that the package manager will attempt to fetch the package from directly.</value>
+  </data>
+  <data name="PackageName" xml:space="preserve">
+    <value>The full name of the package, without any version, platform or public key information.</value>
+  </data>
+  <data name="PackagePublisher" xml:space="preserve">
+    <value>An identity-reference that contains the name, email and web address of the person or organization that created this package. This is not necessarily the author, of which should be listed in the metadata/contributors property.</value>
+  </data>
+  <data name="PackageVersion" xml:space="preserve">
+    <value>The four-digit-version of the package. (ie, 1.2.3.4)</value>
+  </data>
+  <data name="TabPackage" xml:space="preserve">
+    <value>The package rule contains the manditory data for creating a package.</value>
+  </data>
 </root>
