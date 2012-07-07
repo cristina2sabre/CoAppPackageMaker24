@@ -17,7 +17,7 @@ namespace CoAppPackageMaker.ViewModels
         {
 
             EditCollectionViewModel = new EditCollectionViewModel(reader,
-                                                                  reader.GetRulesSourcePropertyValuesByNameForRequired(
+                                                                  reader.GetRulesSourceValuesByNameForEditableCollections(
                                                                       "requires", "package"));
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName("requires");

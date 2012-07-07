@@ -61,6 +61,114 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CompatibilityPolicyMaximum {
+            get {
+                return ResourceManager.GetString("CompatibilityPolicyMaximum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CompatibilityPolicyMinimum {
+            get {
+                return ResourceManager.GetString("CompatibilityPolicyMinimum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CompatibilityPolicyVersions {
+            get {
+                return ResourceManager.GetString("CompatibilityPolicyVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string LicenceType {
+            get {
+                return ResourceManager.GetString("LicenceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string License {
+            get {
+                return ResourceManager.GetString("License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string LicenseUrl {
+            get {
+                return ResourceManager.GetString("LicenseUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string MetadataAuthorVersion {
+            get {
+                return ResourceManager.GetString("MetadataAuthorVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string MetadataBugTracker {
+            get {
+                return ResourceManager.GetString("MetadataBugTracker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string MetadataDescription {
+            get {
+                return ResourceManager.GetString("MetadataDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string MetadataLicenses {
+            get {
+                return ResourceManager.GetString("MetadataLicenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string MetadataStability {
+            get {
+                return ResourceManager.GetString("MetadataStability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string MetadataSummary {
+            get {
+                return ResourceManager.GetString("MetadataSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The binary architecture of the contents of the package. It is not permitted to have multiple binary architectures in the same package..
         /// </summary>
         internal static string PackageArchitecture {
@@ -124,11 +232,128 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string SigningCompany {
+            get {
+                return ResourceManager.GetString("SigningCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string SigningDescription {
+            get {
+                return ResourceManager.GetString("SigningDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string SigningFileVersionAttribute {
+            get {
+                return ResourceManager.GetString("SigningFileVersionAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string SigningProductNameAttribute {
+            get {
+                return ResourceManager.GetString("SigningProductNameAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string SigningProductVersion {
+            get {
+                return ResourceManager.GetString("SigningProductVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string SigningReplaceSignature {
+            get {
+                return ResourceManager.GetString("SigningReplaceSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string SingningInclude {
+            get {
+                return ResourceManager.GetString("SingningInclude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string TabCompatibilityPolicy {
+            get {
+                return ResourceManager.GetString("TabCompatibilityPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string TabDefine {
+            get {
+                return ResourceManager.GetString("TabDefine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string TabLicense {
+            get {
+                return ResourceManager.GetString("TabLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string TabMetadata {
+            get {
+                return ResourceManager.GetString("TabMetadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The package rule contains the manditory data for creating a package..
         /// </summary>
         internal static string TabPackage {
             get {
                 return ResourceManager.GetString("TabPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string TabRequires {
+            get {
+                return ResourceManager.GetString("TabRequires", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string TabSigning {
+            get {
+                return ResourceManager.GetString("TabSigning", resourceCulture);
             }
         }
     }

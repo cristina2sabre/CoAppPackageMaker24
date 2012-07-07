@@ -31,19 +31,15 @@ namespace CoAppPackageMaker.ViewModels
 
         public ManifestViewModel(PackageReader reader)
         {
-        
             _manifestCollection = new ObservableCollection<ManifestItemViewModel>();
-
             foreach (string parameter in reader.ReadParameters("manifest"))
             {
-               var includeCollection = new ObservableCollection<ItemViewModel>(reader.ManifestIncludeList(parameter, "include"));
-                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.ManifestIncludeList(parameter, "assembly"));
-                
-              
+                var includeCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "include"));
+                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "assembly"));
                 var model = new ManifestItemViewModel()
                 {
-                    AssemblyCollection = new EditCollectionViewModel(reader,  assemblyCollection),
-                    IncludeCollection = new EditCollectionViewModel(reader,  includeCollection),
+                    AssemblyCollection = new EditCollectionViewModel(reader, assemblyCollection),
+                    IncludeCollection = new EditCollectionViewModel(reader, includeCollection),
                     Name = parameter,
                 };
                 _manifestCollection.Add(model);
@@ -55,64 +51,14 @@ namespace CoAppPackageMaker.ViewModels
              _manifestCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
 
         }
+
         void FilesCollectionCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             DefaultChangeFactory.OnCollectionChanged(this, "ManifestCollection", ManifestCollection, e);
             OnPropertyChanged("ManifestCollection");
         }
-
-        public class ManifestItemViewModel : ExtraPropertiesForCollectionsViewModelBase
-        {
-            private EditCollectionViewModel _includeCollection;
-            public EditCollectionViewModel IncludeCollection
-            {
-                get { return _includeCollection; }
-                set
-                {
-                    _includeCollection = value;
-                    OnPropertyChanged("IncludeCollection");
-                }
-            }
-
-
-            private EditCollectionViewModel _assemblyCollection;
-            public EditCollectionViewModel AssemblyCollection
-            {
-                get { return _assemblyCollection; }
-                set
-                {
-                    _assemblyCollection = value;
-                    OnPropertyChanged("AssemblyCollection");
-                }
-            }
-          
-
-            private string _name = "[]";
-            public string Name
-            {
-                get { return _name; }
-                set
-                {
-
-                    if (value != null)
-                    {
-                        DefaultChangeFactory.OnChanging(this, "Name", _name, value);
-                        _name = value.StartsWith("[") && value.EndsWith("]") ? value : String.Format("[{0}]", value);
-                    }
-                    else
-                    {
-                        _name = String.Format("[{0}]", value);
-                    }
-
-                    OnPropertyChanged("Name");
-
-                }
-            }
-
-        }
-
-
-        public ManifestItemViewModel _selectedFile;
+         
+        private ManifestItemViewModel _selectedFile;
         public ManifestItemViewModel SelectedFile
         {
             get { return _selectedFile; }
@@ -122,9 +68,8 @@ namespace CoAppPackageMaker.ViewModels
                 OnPropertyChanged("SelectedFile");
             }
         }
+
         #region Event Handlers
-
-
 
         public ICommand RemoveCommand
         {
@@ -160,5 +105,57 @@ namespace CoAppPackageMaker.ViewModels
         }
 
         #endregion
+
+
+        public class ManifestItemViewModel : ExtraPropertiesForCollectionsViewModelBase
+        {
+            private EditCollectionViewModel _includeCollection;
+            public EditCollectionViewModel IncludeCollection
+            {
+                get { return _includeCollection; }
+                set
+                {
+                    _includeCollection = value;
+                    OnPropertyChanged("IncludeCollection");
+                }
+            }
+
+
+            private EditCollectionViewModel _assemblyCollection;
+            public EditCollectionViewModel AssemblyCollection
+            {
+                get { return _assemblyCollection; }
+                set
+                {
+                    _assemblyCollection = value;
+                    OnPropertyChanged("AssemblyCollection");
+                }
+            }
+
+
+            private string _name = "[]";
+            public string Name
+            {
+                get { return _name; }
+                set
+                {
+
+                    if (value != null)
+                    {
+                        DefaultChangeFactory.OnChanging(this, "Name", _name, value);
+                        _name = value.StartsWith("[") && value.EndsWith("]") ? value : String.Format("[{0}]", value);
+                    }
+                    else
+                    {
+                        _name = String.Format("[{0}]", value);
+                    }
+
+                    OnPropertyChanged("Name");
+
+                }
+            }
+
+        }
+
     }
 }

@@ -117,6 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LicenceType" xml:space="preserve">
+    <value />
+  </data>
+  <data name="License" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LicenseUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MetadataAuthorVersion" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MetadataBugTracker" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MetadataDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MetadataLicenses" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MetadataStability" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MetadataSummary" xml:space="preserve">
+    <value />
+  </data>
   <data name="PackageArchitecture" xml:space="preserve">
     <value>The binary architecture of the contents of the package. It is not permitted to have multiple binary architectures in the same package.</value>
   </data>
@@ -138,7 +165,55 @@
   <data name="PackageVersion" xml:space="preserve">
     <value>The four-digit-version of the package. (ie, 1.2.3.4)</value>
   </data>
+  <data name="TabLicense" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabMetadata" xml:space="preserve">
+    <value />
+  </data>
   <data name="TabPackage" xml:space="preserve">
     <value>The package rule contains the manditory data for creating a package.</value>
+  </data>
+  <data name="CompatibilityPolicyMaximum" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CompatibilityPolicyMinimum" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CompatibilityPolicyVersions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabCompatibilityPolicy" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SigningCompany" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SigningDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SigningFileVersionAttribute" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SigningProductNameAttribute" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SigningProductVersion" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SigningReplaceSignature" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SingningInclude" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabSigning" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabRequires" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabDefine" xml:space="preserve">
+    <value />
   </data>
 </root>

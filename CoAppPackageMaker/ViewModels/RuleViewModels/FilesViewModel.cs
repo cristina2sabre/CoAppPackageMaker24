@@ -28,21 +28,16 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         
         public FilesViewModel(PackageReader reader)
         {
-            //Root = root;
             _filesCollection = new ObservableCollection<FilesItemViewModel>();
-           
             foreach (string parameter in reader.ReadParameters("files"))
             {
-             //  ObservableCollection<string> collection = new ObservableCollection<string>(reader.GetFilesIncludeList(parameter));
-               ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.FilesIncludeList(parameter, "include"));
+                ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("files", parameter, "include"));
                 FilesItemViewModel model = new FilesItemViewModel()
                 {
                     FilesRoot = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "root"),
                     TrimPath = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "trim-path"),
                     EditCollectionViewModel = new EditCollectionViewModel(reader,  includeCollection),
-                  //  Include = collection,
                     Name = parameter,
-                    //Root = root,
                 };
 
                 _filesCollection.Add(model);

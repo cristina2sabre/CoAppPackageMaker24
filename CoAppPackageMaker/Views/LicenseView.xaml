@@ -16,15 +16,13 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        
         <Label Content="License" Grid.Row="0" Margin="5"/>
         <Label Content="License-Url" Grid.Row="1" Margin="5"/>
         <Label Content="License-Type" Grid.Row="2" Margin="5"/>
 
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding License , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" IsEnabled="{Binding IsEditable}"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding LicenseUrl , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" IsEnabled="{Binding IsEditable}" Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding LicenseType , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" IsEnabled="{Binding IsEditable}" Margin="5"/>
-
-
-
+        <TextBox Name="License" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding License}" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Name="LicenseUrl" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding LicenseUrl}" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Name="LicenceType" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding LicenseType}" IsEnabled="{Binding IsEditable}"/>
     </Grid>
 </UserControl>

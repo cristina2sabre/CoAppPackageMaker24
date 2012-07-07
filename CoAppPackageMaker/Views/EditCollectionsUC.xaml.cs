@@ -35,7 +35,7 @@ namespace CoAppPackageMaker.Views
         }
 
         public static readonly DependencyProperty IsSourceValueProperty =
-DependencyProperty.Register("ListTemplate", typeof(SelectTemplate), typeof(EditCollectionsUC), new UIPropertyMetadata(MyPropertyChangedHandler));
+DependencyProperty.RegisterAttached("ListTemplate", typeof(SelectTemplate), typeof(EditCollectionsUC), new UIPropertyMetadata(MyPropertyChangedHandler));
 
         public SelectTemplate ListTemplate
         {

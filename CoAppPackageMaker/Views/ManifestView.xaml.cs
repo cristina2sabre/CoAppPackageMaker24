@@ -22,6 +22,14 @@ namespace CoAppPackageMaker.Views
         public ManifestView()
         {
             InitializeComponent();
+            Loaded += MyLoadedRoutedEventHandler;
+        }
+
+        void MyLoadedRoutedEventHandler(Object sender, RoutedEventArgs e)
+        {
+            //used for selecting template based on IsEnabled property - Source or Value
+            this.ListBoxManifestCollection.ItemTemplate = (DataTemplate)(this.IsEnabled ? FindResource("ManifestTemplate") : FindResource("ManifestTemplateValue"));
+            Loaded -= MyLoadedRoutedEventHandler;
         }
     }
 }

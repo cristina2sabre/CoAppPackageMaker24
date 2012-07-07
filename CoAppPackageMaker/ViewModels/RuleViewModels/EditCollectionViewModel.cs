@@ -11,9 +11,10 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
     public class EditCollectionViewModel:ExtraPropertiesForCollectionsViewModelBase
     {
-        PackageReader _reader;
+        readonly PackageReader _reader;
+        private ItemViewModel.Process _updateSource;
+
         private ObservableCollection<ItemViewModel> _editableItems;
-        private ItemViewModel.Process _updateSource; 
         public ObservableCollection<ItemViewModel> EditableItems
         {
             get { return _editableItems; }

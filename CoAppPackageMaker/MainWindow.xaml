@@ -71,7 +71,7 @@
                             </Grid>
                         </TabItem>
                        
-                        <TabItem Header="Metadata" Name="tabItem5">
+                        <TabItem Header="Metadata" Name="TabMetadata">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -99,10 +99,10 @@
                                 </Grid.RowDefinitions>
                                 <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:ManifestView  Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
+                                        <Views:ManifestView IsEnabled="True" Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:ManifestView  Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
+                                        <Views:ManifestView IsEnabled="False" Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding ManifestViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -147,7 +147,7 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Requires" Name="tabItem10" >
+                        <TabItem Header="Requires" Name="TabRequires" >
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -155,10 +155,10 @@
                                 </Grid.RowDefinitions>
                                 <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:EditCollectionsUC DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="SourceValueTemplate"/>                                      
+                                        <Views:EditCollectionsUC IsEnabled="True" DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="SourceValueTemplate"/>                                      
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:EditCollectionsUC DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="ValueTemplate"/>
+                                        <Views:EditCollectionsUC IsEnabled="False" DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="ValueTemplate"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding RequiresViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -166,7 +166,7 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Signing" Name="tabItem11" >                          
+                        <TabItem Header="Signing" Name="TabSigning" >                          
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -174,10 +174,10 @@
                                 </Grid.RowDefinitions>
                                 <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:SigningView Margin="5,10,5,5" DataContext="{Binding SigningViewModel.SourceSigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        <Views:SigningView  IsEnabled="True"  Margin="5,10,5,5" DataContext="{Binding SigningViewModel.SourceSigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:SigningView Margin="5,10,5,5" DataContext="{Binding  SigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Views:SigningView IsEnabled="False" Margin="5,10,5,5" DataContext="{Binding  SigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBlock Text="{Binding SigningViewModel.SourceString}"/>
@@ -186,7 +186,7 @@
                             </Grid>
                         </TabItem>
 
-                        <TabItem Header="Define" Name="tabItem12" >
+                        <TabItem Header="Define" Name="TabDefine">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -194,10 +194,10 @@
                                 </Grid.RowDefinitions>
                                 <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
-                                        <Views:EditCollectionsUC  DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineSourceValueTemplate"/>                                      
+                                        <Views:EditCollectionsUC IsEnabled="True"  DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineSourceValueTemplate"/>                                      
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:EditCollectionsUC DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineValueTemplate"/>                                       
+                                        <Views:EditCollectionsUC IsEnabled="False" DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineValueTemplate"/>                                       
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding DefineViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -205,7 +205,7 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="License" Name="tabItem13" >
+                        <TabItem Header="License" Name="TabLicense" >
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -224,7 +224,7 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Compatibility Policy" Name="tabItem14" >
+                        <TabItem Header="Compatibility Policy" Name="TabCompatibilityPolicy" >
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -242,9 +242,7 @@
                                     </TabItem>
                                 </TabControl>
                             </Grid>
-                        </TabItem>
-                        <TabItem Header="Publisher Rules" Name="tabItem15" >
-                        </TabItem>
+                        </TabItem>                       
                     </TabControl>
                 </Grid>
             </TabItem>

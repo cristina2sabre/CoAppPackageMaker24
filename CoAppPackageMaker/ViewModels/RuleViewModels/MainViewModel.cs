@@ -337,29 +337,7 @@ namespace CoAppPackageMaker.ViewModels.Base
              }
          }
 
-      //private UIElement _focusedElement;
-      //public UIElement FocusedElement
-      //{
-      //    get { return _focusedElement; }
-      //    set
-      //    {
-      //        _focusedElement = value;
-      //        OnPropertyChanged("FocusedElement");
-      //    }
-      //}
-
       
-      private string _helpTip="HelloWorld";
-      public string HelpTip
-      {
-          get { return _helpTip; }
-          set
-          {
-              _helpTip = value;
-              OnPropertyChanged("HelpTip");
-          }
-      }
-
       
         
          #region Commands
@@ -423,7 +401,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             {
                 try
                 {
-                    UndoService.Current.Clear();
+                    UndoService.Current[this].Clear();
                     LoadData();
                     // ResetForm();
                 }

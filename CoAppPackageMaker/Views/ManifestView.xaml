@@ -32,6 +32,32 @@
                 </Grid>
             </Expander>
         </DataTemplate>
+        <DataTemplate x:Key="ManifestTemplateValue">
+            <Expander  IsExpanded="True" Margin="5">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Manifest" FontWeight="Bold"/>
+                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                    </StackPanel>
+                </Expander.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Assembly" Grid.Row="0" Margin="5"/>
+                    <Label Content="Include" Grid.Row="1" Margin="5"/>
+                    <Views:EditCollectionsUC  Width="200" Grid.Column="1" Grid.Row="0" DataContext="{Binding  AssemblyCollection}" Height="100"  Margin="5" ListTemplate="SourceValueTemplate"/>
+                    <Views:EditCollectionsUC DataContext="{Binding  IncludeCollection}" Grid.Column="1" Grid.Row="1" Width="200" Height="100"  Margin="5" ListTemplate="ValueTemplate"/>
+                </Grid>
+            </Expander>
+        </DataTemplate>
     </UserControl.Resources>
    
     <DockPanel>
@@ -39,8 +65,8 @@
             <Button Width="20" Height="20" Margin="3"   Command="{Binding Path = RemoveCommand}" Content="-"/>
             <Button Width="20" Height="20" Margin="3"  Command="{Binding Path = AddCommand}" Content="+"/>
         </StackPanel>
-        <ListBox
-      ItemTemplate="{StaticResource ManifestTemplate}" ItemsSource="{Binding ManifestCollection}" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}">
+        <ListBox Name="ListBoxManifestCollection"
+            ItemsSource="{Binding ManifestCollection}" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}">
         </ListBox>       
     </DockPanel>
 </UserControl>

@@ -58,7 +58,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                       //  Value = _reader.SetSourceRequireRules( new[] { (_sourceValue) });
                       if(UpdateSource!=null){ Value = UpdateSource(this.Label,new[] { (_sourceValue) });}
                        
-                 }
+                    }
 
                 }
             }

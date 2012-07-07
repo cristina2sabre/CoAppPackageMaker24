@@ -14,7 +14,7 @@ namespace CoAppPackageMaker.ViewModels
 {
     public class PackageViewModel : ExtraPropertiesViewModelBase
     {
-        private PackageReader _reader;
+        private readonly PackageReader _reader;
         private const string Package = "package";
   
         public PackageViewModel()
@@ -25,11 +25,8 @@ namespace CoAppPackageMaker.ViewModels
         public PackageViewModel(PackageReader reader)
         {
             _reader = reader;
-          
-
             SourcePackageViewModel=new PackageViewModel()
                                      {
-                
             Name = reader.GetRulesSourcePropertyValueByName(Package, "name"),
             DisplayName = reader.GetRulesSourcePropertyValueByName(Package, "display-name"),
             Architecture = reader.GetRulesSourcePropertyValueByName(Package, "arch"),
@@ -48,9 +45,9 @@ namespace CoAppPackageMaker.ViewModels
             Location = reader.GetRulesPropertyValueByName(Package, "location");
             Publisher = reader.GetRulesPropertyValueByName(Package, "publisher");
             Version = reader.GetRulesPropertyValueByName(Package, "version");
-            SourceString = reader.GetRulesSourceStringPropertyValueByName(Package);
             IsEditable = false;
 
+            SourceString = reader.GetRulesSourceStringPropertyValueByName(Package);
             SourcePackageViewModel.PropertyChanged += EvaluatedChanged;
         }
 
@@ -65,10 +62,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-      
-
-        
-      
+        #region Properties
 
         private string _name;
         public string Name
@@ -76,14 +70,9 @@ namespace CoAppPackageMaker.ViewModels
             get { return _name; }
             set
             {
-               
                 DefaultChangeFactory.OnChanging(this, "Name", _name, value);
-               _name = value;
-              
-              
-               OnPropertyChanged("Name");
-               
-
+                _name = value;
+                OnPropertyChanged("Name");
             }
         }
 
@@ -96,7 +85,6 @@ namespace CoAppPackageMaker.ViewModels
                 DefaultChangeFactory.OnChanging(this, "Version", _version, value);
                 _version = value;
                 OnPropertyChanged("Version");
-             
             }
         }
 
@@ -121,7 +109,6 @@ namespace CoAppPackageMaker.ViewModels
                 DefaultChangeFactory.OnChanging(this, "DisplayName", _displayName, value);
                 _displayName = value;
                 OnPropertyChanged("DisplayName");
-               
             }
         }
 
@@ -161,9 +148,11 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        #endregion
+
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
-            {
+            
                 IEnumerable<string> newValues;
                 switch (args.PropertyName)
                 {
@@ -196,11 +185,11 @@ namespace CoAppPackageMaker.ViewModels
                         newValues = new[] { ((PackageViewModel)sender).Publisher };
                         Publisher = _reader.SetNewSourceValue(Package, "publisher", newValues);
                         break;
-
                 }
 
+                SourceString = _reader.GetRulesSourceStringPropertyValueByName(Package);
             }
-        }
+        
     }
 
     public class PackageViewModelFactory : IFactory
