@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public abstract class ExtraPropertiesForCollectionsViewModelBase : ViewModelBase,ISupportsUndo
+
+    public abstract class ExtraPropertiesViewModelBase : ViewModelBase, ISupportsUndo, ISupportUndoNotification
+
     {
         private string _helpTip;
         private bool _isRequired=false;
@@ -58,13 +61,28 @@ namespace CoAppPackageMaker.ViewModels
         public bool IsReadOnly { get; set; }
 
       
-      virtual  public object GetUndoRoot()
+     
+
+
+        private int _undoCounter;
+
+        public int UndoCounter
         {
-            if (MainWindowViewModel.Instance != null) { return MainWindowViewModel.Instance; }
-            else
+            get { return _undoCounter; }
+        }
+
+        
+
+      
+
+        virtual public object GetUndoRoot()
+        {
+            if (this.IsSource == true)
             {
+                if (MainWindowViewModel.Instance != null) { return MainWindowViewModel.Instance; }
                 return null;
             }
+            return null;
 
 
         }
@@ -72,6 +90,7 @@ namespace CoAppPackageMaker.ViewModels
     
        
         public List<string> Search(string toSearch)
+
         {
             List<string> result = new List<string>(4);
             foreach (var prop in this.GetType().GetProperties())
@@ -83,19 +102,6 @@ namespace CoAppPackageMaker.ViewModels
             }
             return result;
         }
-    }
-
-    public abstract class ExtraPropertiesViewModelBase : ExtraPropertiesForCollectionsViewModelBase
-    {
-        override public object GetUndoRoot()
-        {
-            if (this.IsSource == true)
-            {
-                if (MainWindowViewModel.Instance != null) { return MainWindowViewModel.Instance; }
-                return null;
-            }
-            return null;
-        }
 
         private bool _isSource = false;
         public bool IsSource
@@ -106,6 +112,19 @@ namespace CoAppPackageMaker.ViewModels
                 _isSource = value;
                 OnPropertyChanged("IsSource");
             }
+
         }
+           public void UndoHappened(Change change)
+        {
+            Interlocked.Increment(ref _undoCounter);
+            OnPropertyChanged("UndoCounter");
+        }
+
+           public void RedoHappened(Change change)
+           {
+               Interlocked.Increment(ref _undoCounter);
+               OnPropertyChanged("UndoCounter");
+           }
     }
+   
 }

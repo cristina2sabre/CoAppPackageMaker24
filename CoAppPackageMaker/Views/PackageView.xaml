@@ -4,7 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"          
              xmlns:Base="clr-namespace:CoAppPackageMaker.ViewModels.Base"
-             xmlns:local="clr-namespace:CoAppPackageMaker.Temp" mc:Ignorable="d" 
+
+             xmlns:Support="clr-namespace:CoAppPackageMaker.Support" mc:Ignorable="d" 
+
+             xmlns:local="clr-namespace:CoAppPackageMaker.Temp" 
+
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -30,12 +34,26 @@
         <Label Content="Feed" Grid.Row="4"  Margin="5"/>
         <Label Content="Location" Grid.Row="5"  Margin="5"/>
         <Label Content="Publisher" Grid.Row="6"  Margin="5"/>
-        <TextBox Name="PackageName" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Name}"  IsEnabled="{Binding IsEditable}"/>
+
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"   Margin="5" IsEnabled="{Binding IsEditable}" IsUndoEnabled="False"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DisplayName, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True,UpdateSourceTrigger=LostFocus}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Architecture, Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Version, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Feed, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Location, Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding Publisher, Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+
+
+
+
+
+            <TextBox Name="PackageName" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Name}"  IsEnabled="{Binding IsEditable}"  Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
         <TextBox Name="PackageDisplayName" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding DisplayName}" IsEnabled="{Binding IsEditable}"  />
         <TextBox Name="PackageArchitecture" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding Architecture}" IsEnabled="{Binding IsEditable}"/>
         <TextBox Name="PackageVersion" Grid.Column="1" Grid.Row="3"  Margin="5" Text="{Binding Version}" IsEnabled="{Binding IsEditable}"/>
         <TextBox Name="PackageFeed" Grid.Column="1" Grid.Row="4"  Margin="5" Text="{Binding Feed}" IsEnabled="{Binding IsEditable}"/>
         <TextBox Name="PackageLocation" Grid.Column="1" Grid.Row="5"  Margin="5" Text="{Binding Location}" IsEnabled="{Binding IsEditable}"/>
         <TextBox Name="PackagePublisher" Grid.Column="1" Grid.Row="6" Margin="5" Text="{Binding Publisher}" IsEnabled="{Binding IsEditable}"/>
+
     </Grid>
 </UserControl>

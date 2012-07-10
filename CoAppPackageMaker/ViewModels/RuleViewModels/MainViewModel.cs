@@ -67,38 +67,7 @@ namespace CoAppPackageMaker.ViewModels.Base
         }
 
 
-        //public MainWindowViewModel()
-        //{
-        //    //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
-        //    //  PackageReader reader = new PackageReader();
-        //    //  reader.Read(PathToFile);
 
-        //    //  _ruleNames = reader.Rules;
-        //    //  Dictionary<string, IFactory> dic = new Dictionary<string, IFactory>();
-        //    //  dic.Add("package", new PackageViewModelFactory());
-        //    //  dic.Add("files",new FilesViewModelFactory());
-        //    //  foreach (string str in _ruleNames)
-        //    //  {
-        //    //      if (dic.ContainsKey(str))
-        //    //      {
-        //    //          object instance = (dic[str].CreateInstance(reader));
-        //    //          string name = instance.GetType().Name;
-        //    //          var p = GetType().GetProperty(name);
-        //    //          p.SetValue(this, instance, null);
-        //    //      }
-
-        //    //}
-
-        ////  PathToFile = "D:\\P\\COPKG\\test2.autopkg";
-        //   // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-        //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
-        //    if (PathToFile != null && File.Exists(PathToFile))
-        //    {
-        //        LoadData();
-        //    }
-
-
-        //}
 
         private void LoadData()
         {
