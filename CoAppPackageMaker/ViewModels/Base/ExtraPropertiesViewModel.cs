@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public abstract class ExtraPropertiesViewModelBase : ViewModelBase, ISupportsUndo
+    public abstract class ExtraPropertiesViewModelBase : ViewModelBase, ISupportsUndo, ISupportUndoNotification
     {
         private string _helpTip;
         private bool _isRequired;
@@ -74,6 +75,15 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        private int _undoCounter;
+
+        public int UndoCounter
+        {
+            get { return _undoCounter; }
+        }
+
+        
+
         #region ISupportsUndo Members
 
         public object GetUndoRoot()
@@ -83,6 +93,16 @@ namespace CoAppPackageMaker.ViewModels
 
         #endregion
 
-       
+        public void UndoHappened(Change change)
+        {
+            Interlocked.Increment(ref _undoCounter);
+            OnPropertyChanged("UndoCounter");
+        }
+
+        public void RedoHappened(Change change)
+        {
+            Interlocked.Increment(ref _undoCounter);
+            OnPropertyChanged("UndoCounter");
+        }
     }
 }

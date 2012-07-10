@@ -5,7 +5,9 @@
         xmlns:ViewModels="clr-namespace:CoAppPackageMaker.ViewModels"
         xmlns:Model="clr-namespace:CoApp.Packaging.Common.Model;assembly=CoApp.Client"
         xmlns:Views="clr-namespace:CoAppPackageMaker.Views"
-        xmlns:RuleViewModels="clr-namespace:CoAppPackageMaker.ViewModels.RuleViewModels" Title="CoAppMaker" 
+        xmlns:RuleViewModels="clr-namespace:CoAppPackageMaker.ViewModels.RuleViewModels"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:Support="clr-namespace:CoAppPackageMaker.Support" Title="CoAppMaker" 
      
         Height="695" Width="675"
         WindowStartupLocation="CenterScreen" >
@@ -41,6 +43,9 @@
 
         <TabControl Height="450" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="639" Grid.Row="1"  Margin="5" >
             <TabItem Header="Standard Rules" Name="tabItem1">
+                <i:Interaction.Behaviors>
+                    <Support:FocusReceiveBehavior/>
+                </i:Interaction.Behaviors>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0*" />
@@ -48,6 +53,9 @@
                     </Grid.RowDefinitions>
                     <TabControl Height="410" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControl2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">
                         <TabItem Header="Package" >
+                            <i:Interaction.Behaviors>
+                                <Support:FocusReceiveBehavior/>
+                            </i:Interaction.Behaviors>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -68,6 +76,9 @@
                         </TabItem>
                        
                         <TabItem Header="Metadata" Name="tabItem5">
+                            <i:Interaction.Behaviors>
+                                <Support:FocusReceiveBehavior/>
+                            </i:Interaction.Behaviors>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />

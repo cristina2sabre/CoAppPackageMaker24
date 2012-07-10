@@ -66,7 +66,8 @@ namespace CoAppPackageMaker.ViewModels.Base
 
         //  PathToFile = "D:\\P\\COPKG\\test2.autopkg";
            // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-          PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+         // PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+            PathToFile = @"C:\Users\Eric\Desktop\glib\COPKG\glib.autopkg";
             if (PathToFile != null && File.Exists(PathToFile))
             {
                 LoadData();

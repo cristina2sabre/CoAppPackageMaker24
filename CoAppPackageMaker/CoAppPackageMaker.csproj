@@ -36,30 +36,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CoApp.Client, Version=1.2.0.409, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp-1.2.0.409-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Client.dll</HintPath>
+    <Reference Include="CoApp.Client, Version=1.2.0.443, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\ProgramData\ReferenceAssemblies\any\CoApp.Client.dll</HintPath>
     </Reference>
-    <Reference Include="CoApp.Developer.Toolkit, Version=1.2.0.272, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.272-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Developer.Toolkit.dll</HintPath>
+    <Reference Include="CoApp.Developer.Toolkit, Version=1.2.0.316, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\ProgramData\ReferenceAssemblies\any\CoApp.Developer.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="CoApp.Packaging, Version=1.2.0.272, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.272-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Packaging.dll</HintPath>
     </Reference>
-    <Reference Include="CoApp.Toolkit, Version=1.2.0.409, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp-1.2.0.409-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Toolkit.dll</HintPath>
+    <Reference Include="CoApp.Toolkit, Version=1.2.0.443, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\ProgramData\ReferenceAssemblies\any\CoApp.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="MonitoredUndo, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\muf-14979\src\MonitoredUndo\bin\Debug\MonitoredUndo.dll</HintPath>
+    <Reference Include="MonitoredUndo">
+      <HintPath>.\MonitoredUndo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -69,7 +66,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="UndoRedoFramework.Core">
-      <HintPath>..\..\..\..\Downloads\wpfundoredo-44675\Main\UndoRedoFramework\UndoRedoFramework.Core\bin\Debug\UndoRedoFramework.Core.dll</HintPath>
+      <HintPath>.\UndoRedoFramework.Core.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -81,6 +78,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="PackageReader.cs" />
+    <Compile Include="Support\Focus.cs" />
+    <Compile Include="Support\FocusRecieveBehavior.cs" />
     <Compile Include="Temp\Class1.cs" />
     <Compile Include="Temp\MockPackageSource.cs" />
     <Compile Include="ViewModels\RoleViewModels\ApplicationRoleViewModel.cs" />

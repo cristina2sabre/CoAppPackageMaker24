@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Base="clr-namespace:CoAppPackageMaker.ViewModels.Base"
              xmlns:ViewModels="clr-namespace:CoAppPackageMaker.ViewModels"
-             xmlns:Temp="clr-namespace:CoAppPackageMaker.Temp" mc:Ignorable="d" 
+             xmlns:Temp="clr-namespace:CoAppPackageMaker.Temp" xmlns:Support="clr-namespace:CoAppPackageMaker.Support"
+             mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid d:DataContext="{d:DesignInstance Base:MainWindowViewModel}">
         <Grid.RowDefinitions>
@@ -27,12 +28,12 @@
         <Label Content="Bug-tracker" Grid.Row="3"  Margin="5"/>
         <Label Content="Stability" Grid.Row="4"  Margin="5"/>
         <Label Content="Licenses" Grid.Row="5"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Summary , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}"  Margin="5" IsEnabled="{Binding IsEditable}" Temp:FocusExtension.IsFocused="{Binding IsFocused, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Description , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True,UpdateSourceTrigger=LostFocus}"  Margin="5" TextWrapping="Wrap" MaxHeight="75" ScrollViewer.VerticalScrollBarVisibility="Visible" IsEnabled="{Binding IsEditable}"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding  AuthorVersion , Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
-        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding  BugTracker , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding  Stability , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
-        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding  Licenses , Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Summary , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}"  Margin="5" IsEnabled="{Binding IsEditable}" Temp:FocusExtension.IsFocused="{Binding IsFocused, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Description , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True,UpdateSourceTrigger=LostFocus}"  Margin="5" TextWrapping="Wrap" MaxHeight="75" ScrollViewer.VerticalScrollBarVisibility="Visible" IsEnabled="{Binding IsEditable}"  Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding  AuthorVersion , Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"  Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding  BugTracker , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding  Stability , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding  Licenses , Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
 
 
 

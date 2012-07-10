@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"          
-             xmlns:Base="clr-namespace:CoAppPackageMaker.ViewModels.Base" mc:Ignorable="d" 
+             xmlns:Base="clr-namespace:CoAppPackageMaker.ViewModels.Base"
+             xmlns:Support="clr-namespace:CoAppPackageMaker.Support" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
     <Grid>
@@ -28,7 +29,7 @@
         <Label Content="Feed" Grid.Row="4"  Margin="5"/>
         <Label Content="Location" Grid.Row="5"  Margin="5"/>
         <Label Content="Publisher" Grid.Row="6"  Margin="5"/>
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"   Margin="5" IsEnabled="{Binding IsEditable}" IsUndoEnabled="False"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"   Margin="5" IsEnabled="{Binding IsEditable}" IsUndoEnabled="False" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DisplayName, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True,UpdateSourceTrigger=LostFocus}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Architecture, Mode=TwoWay}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
         <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Version, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5" IsEnabled="{Binding IsEditable}"/>
