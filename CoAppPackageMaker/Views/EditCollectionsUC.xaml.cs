@@ -24,8 +24,7 @@ namespace CoAppPackageMaker.Views
         public static DataTemplate SourceValueTemplate;
         public static DataTemplate DefineValueTemplate;
         public static DataTemplate DefineSourceValueTemplate;
-        //for raise change in enum -never used
-        public static DataTemplate DefineSourceValueTemplate23;
+       
         public EditCollectionsUC()
         {
             InitializeComponent();
@@ -36,9 +35,9 @@ namespace CoAppPackageMaker.Views
         }
 
         public static readonly DependencyProperty IsSourceValueProperty =
-DependencyProperty.Register("IsSourceValue", typeof(SelectTemplate), typeof(EditCollectionsUC), new UIPropertyMetadata(MyPropertyChangedHandler));
+DependencyProperty.RegisterAttached("ListTemplate", typeof(SelectTemplate), typeof(EditCollectionsUC), new UIPropertyMetadata(MyPropertyChangedHandler));
 
-        public SelectTemplate IsSourceValue
+        public SelectTemplate ListTemplate
         {
             get
             {
@@ -52,13 +51,11 @@ DependencyProperty.Register("IsSourceValue", typeof(SelectTemplate), typeof(Edit
 
         public enum SelectTemplate
         {
-            DefineSourceValueTemplate23,
+            Template,//for raise change in enum -never used
             SourceValueTemplate,
             ValueTemplate,
             DefineSourceValueTemplate,
             DefineValueTemplate,
-            
-            
             
         }
 
@@ -82,9 +79,6 @@ DependencyProperty.Register("IsSourceValue", typeof(SelectTemplate), typeof(Edit
                     ((EditCollectionsUC)sender).FilesCollections.ItemTemplate = DefineValueTemplate;
                   
                     break;
-                //default:
-                //    ((EditCollectionsUC)sender).FilesCollections.ItemTemplate = ItemTemplate;
-                //    break;
          
             }
         }

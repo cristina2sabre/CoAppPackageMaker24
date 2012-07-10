@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
-    public class LicenseViewModel:ExtraPropertiesViewModelBase
+    public class LicenseViewModel : ExtraPropertiesViewModelBase
 {
+        private readonly PackageReader _reader;
+        private const string LicenseString = "license";
         public LicenseViewModel ()
         {
 
@@ -16,26 +19,30 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         public LicenseViewModel(PackageReader reader)
         {
-            string license = "license";
 
-            License = reader.GetRulesPropertyValueByName(license, "license");
-            LicenseType = reader.GetRulesPropertyValueByName(license, "license-type");
-            LicenseUrl = reader.GetRulesPropertyValueByName(license, "license-url");
+            _reader = reader;
+            License = reader.GetRulesPropertyValueByName(LicenseString, "license");
+            LicenseType = reader.GetRulesPropertyValueByName(LicenseString, "license-type");
+            LicenseUrl = reader.GetRulesPropertyValueByName(LicenseString, "license-url");
 
             _sourceValueLicenseViewModel = new LicenseViewModel()
                                                {
                                                    License =
-                                                       reader.GetRulesSourcePropertyValueByName(license, "license"),
+                                                       reader.GetRulesSourcePropertyValueByName(LicenseString, "license"),
                                                    LicenseType =
-                                                       reader.GetRulesSourcePropertyValueByName(license, "license-type"),
+                                                       reader.GetRulesSourcePropertyValueByName(LicenseString, "license-type"),
                                                    LicenseUrl =
-                                                       reader.GetRulesSourcePropertyValueByName(license, "license-url"),
+                                                       reader.GetRulesSourcePropertyValueByName(LicenseString, "license-url"),
                                                    IsEditable = true,
+                                                   IsSource = true,
                                                };
-            SourceString = reader.GetRulesSourceStringPropertyValueByName(license);
+
+            SourceString = reader.GetRulesSourceStringPropertyValueByName(LicenseString);
             SourceValueLicenseViewModel.PropertyChanged += EvaluatedChanged;
 
         }
+
+        #region Properties
 
         private string _license;
         public string License
@@ -74,6 +81,8 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
+        #endregion
+
         private LicenseViewModel _sourceValueLicenseViewModel;
         public LicenseViewModel SourceValueLicenseViewModel
         {
@@ -88,23 +97,29 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
-            {
-                   switch(args.PropertyName)
-                   {
-                       case "License":
-                           License = ((LicenseViewModel)sender).License;
-                           break;
-                       case "LicenseType":
-                           LicenseType = ((LicenseViewModel) sender).LicenseType;
-                           break;
-                       case "LicenseUrl":
-                           LicenseUrl = ((LicenseViewModel)sender).LicenseUrl;
-                           break;
-
-                   }
             
+           IEnumerable<string> newValues;
+                switch (args.PropertyName)
+                {
+                   case "License":
+                        //reevaluate
+                        newValues= new[]{((LicenseViewModel) sender).License};
+                        License = _reader.SetNewSourceValue(LicenseString, "license", newValues);
+                        break;
+                    case "LicenseType":
+                        newValues = new[] {((LicenseViewModel) sender).LicenseType};
+                        LicenseType = _reader.SetNewSourceValue(LicenseString, "license-type", newValues);
+                        break;
+                    case "LicenseUrl":
+                        newValues = new[] { ((LicenseViewModel) sender).LicenseUrl };
+                        LicenseUrl = _reader.SetNewSourceValue(LicenseString, "license-url", newValues);
+                        break;
+                 
+                }
+
+                SourceString = _reader.GetRulesSourceStringPropertyValueByName(LicenseString);
             }
      
         }
 }
-}
+

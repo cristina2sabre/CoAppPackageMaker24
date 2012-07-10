@@ -10,15 +10,15 @@ using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public class RequiresViewModel : ExtraPropertiesViewModelBase
+    public class RequiresViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
        
-        public RequiresViewModel (PackageReader reader, MainWindowViewModel mainWindowViewModel )
+        public RequiresViewModel (PackageReader reader)
         {
 
-            EditCollectionViewModel = new EditCollectionViewModel(reader, mainWindowViewModel,
-                                                                  reader.GetRulesSourcePropertyValuesByNameForRequired(
-                                                                      "requires", "package", mainWindowViewModel));
+            EditCollectionViewModel = new EditCollectionViewModel(reader,
+                                                                  reader.GetRulesSourceValuesByNameForEditableCollections(
+                                                                      "requires", "package"));
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName("requires");
         }

@@ -4,9 +4,9 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-   public class CompatibilityPolicyViewModel:ExtraPropertiesViewModelBase
+    public class CompatibilityPolicyViewModel : ExtraPropertiesViewModelBase
     {
-       private PackageReader _reader;
+       private readonly PackageReader _reader;
        private const string CompatibilityPolicy = "compatability-policy";
        public CompatibilityPolicyViewModel()
        {
@@ -20,20 +20,23 @@ namespace CoAppPackageMaker.ViewModels
            Maximum = reader.GetRulesPropertyValueByName(CompatibilityPolicy, "maximum");
            Versions = reader.GetRulesPropertyValueByName(CompatibilityPolicy, "versions");
            IsEditable = false;
+
            SourceValueCompatibilityPolicyViewModel = new CompatibilityPolicyViewModel()
                                                        {
                                                             Minimum = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "minimum"),
-                Maximum = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "maximum"),
-                Versions = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "versions"),
-                IsEditable = true
+                                                            Maximum = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "maximum"),
+                                                            Versions = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "versions"),
+                                                            IsEditable = true,
+                                                            IsSource = true,
                                                        };
 
            SourceString = reader.GetRulesSourceStringPropertyValueByName(CompatibilityPolicy);
-
            SourceValueCompatibilityPolicyViewModel.PropertyChanged += EvaluatedChanged;
 
            
        }
+
+       #region Properties
 
        private string _minimum;
        public string Minimum
@@ -71,6 +74,8 @@ namespace CoAppPackageMaker.ViewModels
            }
        }
 
+       #endregion
+
        private CompatibilityPolicyViewModel _sourceValueCompatibilityPolicyViewModel;
        public CompatibilityPolicyViewModel SourceValueCompatibilityPolicyViewModel
        {
@@ -89,19 +94,21 @@ namespace CoAppPackageMaker.ViewModels
                switch (args.PropertyName)
                {
                    case "Minimum":
-                        
                         newValues= new[]{((CompatibilityPolicyViewModel)sender).Minimum};
                         Minimum = _reader.SetNewSourceValue(CompatibilityPolicy, "minimum", newValues);
-                       break;
+                        break;
                    case "Maximum":
-                       Maximum = ((CompatibilityPolicyViewModel)sender).Maximum;
+                       newValues = new[] { ((CompatibilityPolicyViewModel)sender).Maximum };
+                       Maximum = _reader.SetNewSourceValue(CompatibilityPolicy, "maximum", newValues);
                        break;
                    case "Versions":
-                       Versions = ((CompatibilityPolicyViewModel)sender).Versions;
+                       newValues = new[] { ((CompatibilityPolicyViewModel)sender).Versions };
+                       Versions = _reader.SetNewSourceValue(CompatibilityPolicy, "versions", newValues);
                        break;
 
                }
 
+               SourceString = _reader.GetRulesSourceStringPropertyValueByName(CompatibilityPolicy);
            }
 
        }

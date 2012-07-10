@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CoAppPackageMaker.Views
 {
@@ -19,9 +9,19 @@ namespace CoAppPackageMaker.Views
     /// </summary>
     public partial class SigningView : UserControl
     {
+
         public SigningView()
         {
             InitializeComponent();
+            Loaded += MyLoadedRoutedEventHandler;
         }
+        
+        void MyLoadedRoutedEventHandler(Object sender, RoutedEventArgs e)
+        {
+            //used for selecting template based on IsEnabled property - Source or Value
+          this.SingningInclude.ListTemplate = this.IsEnabled ? EditCollectionsUC.SelectTemplate.SourceValueTemplate : EditCollectionsUC.SelectTemplate.ValueTemplate;
+          Loaded -= MyLoadedRoutedEventHandler;
+        }
+       
     }
 }

@@ -8,10 +8,12 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
+
     public abstract class ExtraPropertiesViewModelBase : ViewModelBase, ISupportsUndo, ISupportUndoNotification
+
     {
         private string _helpTip;
-        private bool _isRequired;
+        private bool _isRequired=false;
 
         public string HelpTip
         {
@@ -58,22 +60,9 @@ namespace CoAppPackageMaker.ViewModels
 
         public bool IsReadOnly { get; set; }
 
-        private MainWindowViewModel _root;
-        public MainWindowViewModel Root
-        {
-            get { return _root; }
-            set
-            {
-                if (value == _root)
-                    return;
+      
+     
 
-                // This line will log the property change with the undo framework.
-                DefaultChangeFactory.OnChanging(this, "Root", _root, value);
-
-                _root = value;
-                OnPropertyChanged("Root");
-            }
-        }
 
         private int _undoCounter;
 
@@ -84,25 +73,58 @@ namespace CoAppPackageMaker.ViewModels
 
         
 
-        #region ISupportsUndo Members
+      
 
-        public object GetUndoRoot()
+        virtual public object GetUndoRoot()
         {
-            return this.Root;
+            if (this.IsSource == true)
+            {
+                if (MainWindowViewModel.Instance != null) { return MainWindowViewModel.Instance; }
+                return null;
+            }
+            return null;
+
+
         }
 
-        #endregion
+    
+       
+        public List<string> Search(string toSearch)
 
-        public void UndoHappened(Change change)
+        {
+            List<string> result = new List<string>(4);
+            foreach (var prop in this.GetType().GetProperties())
+            {
+                if (prop.GetValue(this, null).ToString().Contains(toSearch))
+                {
+                    result.Add(prop.Name);
+                }
+            }
+            return result;
+        }
+
+        private bool _isSource = false;
+        public bool IsSource
+        {
+            get { return _isSource; }
+            set
+            {
+                _isSource = value;
+                OnPropertyChanged("IsSource");
+            }
+
+        }
+           public void UndoHappened(Change change)
         {
             Interlocked.Increment(ref _undoCounter);
             OnPropertyChanged("UndoCounter");
         }
 
-        public void RedoHappened(Change change)
-        {
-            Interlocked.Increment(ref _undoCounter);
-            OnPropertyChanged("UndoCounter");
-        }
+           public void RedoHappened(Change change)
+           {
+               Interlocked.Increment(ref _undoCounter);
+               OnPropertyChanged("UndoCounter");
+           }
     }
+   
 }

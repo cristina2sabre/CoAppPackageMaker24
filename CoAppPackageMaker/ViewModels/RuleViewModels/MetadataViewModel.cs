@@ -4,14 +4,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Security.Policy;
+using CoAppPackageMaker.Temp;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public class MetadataViewModel : ExtraPropertiesViewModelBase,ISupportsUndo
+    public class MetadataViewModel : ExtraPropertiesViewModelBase
     {
-        private PackageReader _reader;
+        private readonly PackageReader _reader;
         private const string Metadata = "metadata";
         public  MetadataViewModel()
         {
@@ -20,9 +21,7 @@ namespace CoAppPackageMaker.ViewModels
         public MetadataViewModel(PackageReader reader)
         {
             _reader = reader;
-           
           
-            {
                 Summary = reader.GetRulesPropertyValueByName(Metadata, "summary");
                 Description = reader.GetRulesPropertyValueByName(Metadata, "description");
                 AuthorVersion = reader.GetRulesPropertyValueByName(Metadata, "author-version");
@@ -30,10 +29,7 @@ namespace CoAppPackageMaker.ViewModels
                 Stability = reader.GetRulesPropertyValueByName(Metadata, "stability");
                 Licenses = reader.GetRulesPropertyValueByName(Metadata, "licenses");
                 IsEditable = false;
-                SourceString = reader.GetRulesSourceStringPropertyValueByName(Metadata);
-                IsFocused = true;
-
-            };
+          
             SourceMetadataViewModel = new MetadataViewModel()
                                           {
                                               Summary = reader.GetRulesSourcePropertyValueByName(Metadata, "summary"),
@@ -42,11 +38,15 @@ namespace CoAppPackageMaker.ViewModels
                                               BugTracker = reader.GetRulesSourcePropertyValueByName(Metadata, "bug-tracker"),
                                               Stability = reader.GetRulesSourcePropertyValueByName(Metadata, "stability"),
                                               Licenses = reader.GetRulesSourcePropertyValueByName(Metadata, "licenses"),
-                                              IsEditable = true
+                                              IsEditable = true,
+                                              IsSource = true,
                                           };
 
+            SourceString = reader.GetRulesSourceStringPropertyValueByName(Metadata);
             SourceMetadataViewModel.PropertyChanged += EvaluatedChanged;
         }
+
+        #region Properties
 
         private string _summary;
         public String Summary
@@ -57,28 +57,10 @@ namespace CoAppPackageMaker.ViewModels
                 DefaultChangeFactory.OnChanging(this, "Summary", _summary, value);
                 _summary = value;
                 OnPropertyChanged("Summary");
-                IsFocused = true;
-
-            }
-
-        }
-
-        private bool _isFocused = false;
-        public bool IsFocused
-        {
-            get
-            {
-                return _isFocused;
-            }
-            set
-            {
-                _isFocused = false;
-                _isFocused = value;
-
-                OnPropertyChanged("IsFocused");
             }
         }
 
+      
         private string _description;
         public String Description
         {
@@ -139,6 +121,8 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+        #endregion
+
         private MetadataViewModel _sourceMetadataViewModel;
         public MetadataViewModel SourceMetadataViewModel
         {
@@ -150,6 +134,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
+       
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
 
@@ -183,13 +168,8 @@ namespace CoAppPackageMaker.ViewModels
                         break;
 
                 }
-
-      
-    }
-
-       
-
-       
+                SourceString = _reader.GetRulesSourceStringPropertyValueByName(Metadata); 
+    }     
 
     }
 }

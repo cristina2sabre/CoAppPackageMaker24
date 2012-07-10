@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
     public class SigningViewModel : ExtraPropertiesViewModelBase
     {
-        private PackageReader _reader;
+        private readonly PackageReader _reader;
         private const string Signing = "signing";
 
         public SigningViewModel()
@@ -19,56 +14,51 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         }
 
-        public SigningViewModel(PackageReader reader, MainWindowViewModel mainWindowViewModel)
+     
+
+        public SigningViewModel(PackageReader reader)
         {
             _reader = reader;
             ReplaceSignature = _reader.GetRulesPropertyValueByName(Signing, "replace-signature") == "true";
-            EditCollectionViewModel = new EditCollectionViewModel(reader, mainWindowViewModel,
-                                                                  reader.GetRulesSourcePropertyValuesByNameForSigning(
-                                                                      Signing, "include", mainWindowViewModel));
-
-            CompanyAttribute = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "company");
-            DescriptionAttribute = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "description");
-            ProductNameAttribute = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "product-name");
-            ProductVersion = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "product-version");
-            FileVersionAttribute = reader.GetRulesPropertyValuesByNameForSigning(Signing, "attributes", "file-version");
-           
+            CompanyAttribute = reader.GetRulesByNameForSigning(Signing, "attributes", "company",false);
+            DescriptionAttribute = reader.GetRulesByNameForSigning(Signing, "attributes", "description",false);
+            ProductNameAttribute = reader.GetRulesByNameForSigning(Signing, "attributes", "product-name",false);
+            ProductVersion = reader.GetRulesByNameForSigning(Signing, "attributes", "product-version",false);
+            FileVersionAttribute = reader.GetRulesByNameForSigning(Signing, "attributes", "file-version",false);
+            EditCollectionViewModel = new EditCollectionViewModel(reader, reader.GetRulesSourceValuesByNameForEditableCollections(Signing, "include"));
             IsEditable = false;
             IsReadOnly = true;
 
             SourceSigningViewModel = new SigningViewModel()
                                          {
-
                                              ReplaceSignature =
                                                  _reader.GetRulesSourcePropertyValueByName(Signing, "replace-signature") ==
                                                  "true",
                                              CompanyAttribute =
-                                                 reader.GetRulesSourcePropertyValuesByNameForSigning(Signing,
-                                                                                                     "attributes",
-                                                                                                     "company"),
+                                                 reader.GetRulesByNameForSigning(Signing,
+                                                                                 "attributes",
+                                                                                 "company", true),
                                              DescriptionAttribute =
-                                                 reader.GetRulesSourcePropertyValuesByNameForSigning(Signing,
-                                                                                                     "attributes",
-                                                                                                     "description"),
+                                                 reader.GetRulesByNameForSigning(Signing,
+                                                                                 "attributes",
+                                                                                 "description", true),
                                              ProductNameAttribute =
-                                                 reader.GetRulesSourcePropertyValuesByNameForSigning(Signing,
-                                                                                                     "attributes",
-                                                                                                     "product-name"),
+                                                 reader.GetRulesByNameForSigning(Signing,
+                                                                                 "attributes",
+                                                                                 "product-name", true),
                                              ProductVersion =
-                                                 reader.GetRulesSourcePropertyValuesByNameForSigning(Signing,
-                                                                                                     "attributes",
-                                                                                                     "product-version"),
+                                                 reader.GetRulesByNameForSigning(Signing,
+                                                                                 "attributes",
+                                                                                 "product-version", true),
                                              FileVersionAttribute =
-                                                 reader.GetRulesSourcePropertyValuesByNameForSigning(Signing,
-                                                                                                     "attributes",
-                                                                                                     "file-version"),
+                                                 reader.GetRulesByNameForSigning(Signing,
+                                                                                 "attributes",
+                                                                                 "file-version", true),
+                                             EditCollectionViewModel = this.EditCollectionViewModel,
                                              IsEditable = true,
                                              IsReadOnly = false,
+                                             IsSource = true,
 
-                                             //EditCollectionViewModel = new EditCollectionViewModel(reader, mainWindowViewModel,
-                                             //                     reader.GetRulesSourcePropertyValuesByNameForSigning(
-                                             //                         Signing, "include", mainWindowViewModel))
-                                             EditCollectionViewModel = this.EditCollectionViewModel
                                          };
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName(Signing);
@@ -76,19 +66,8 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
 
         #region Properties
-        private EditCollectionViewModel _editCollectionViewModel;
-        public EditCollectionViewModel EditCollectionViewModel
-        {
-            get { return _editCollectionViewModel; }
-            set
-            {
-                _editCollectionViewModel = value;
-                OnPropertyChanged("EditCollectionViewModel");
-            }
-        }
 
         private SigningViewModel _sourceSigningViewModel;
-
         public SigningViewModel SourceSigningViewModel
         {
             get { return _sourceSigningViewModel; }
@@ -100,7 +79,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
 
         private string _companyAttribute;
-
         public string CompanyAttribute
         {
             get { return _companyAttribute; }
@@ -114,7 +92,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
 
         private string _descriptionAttribute;
-
         public string DescriptionAttribute
         {
             get { return _descriptionAttribute; }
@@ -128,7 +105,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
 
         private string _productNameAttribute;
-
         public string ProductNameAttribute
         {
             get { return _productNameAttribute; }
@@ -141,7 +117,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
 
         private string _productVersionAttribute;
-
         public string ProductVersion
         {
             get { return _productVersionAttribute; }
@@ -154,7 +129,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
 
         private string _fileVersionAttribute;
-
         public string FileVersionAttribute
         {
             get { return _fileVersionAttribute; }
@@ -167,7 +141,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
 
         private bool _replaceSignature;
-
         public bool ReplaceSignature
         {
             get { return _replaceSignature; }
@@ -178,14 +151,25 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                 OnPropertyChanged("ReplaceSignature");
             }
         }
-
-      
-
+        
         #endregion
 
+        private EditCollectionViewModel _editCollectionViewModel;
+        public EditCollectionViewModel EditCollectionViewModel
+        {
+            get { return _editCollectionViewModel; }
+            set
+            {
+                _editCollectionViewModel = value;
+                OnPropertyChanged("EditCollectionViewModel");
+            }
+        }
+
+     
+
+        
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
-
             IEnumerable<string> newValues;
             switch (args.PropertyName)
             {
@@ -213,10 +197,9 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                 case "ReplaceSignature":
                     ReplaceSignature= ((SigningViewModel)sender).ReplaceSignature;
                     break;
-
-
             }
 
+            SourceString = _reader.GetRulesSourceStringPropertyValueByName(Signing);
         }
     }
 }

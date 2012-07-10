@@ -9,11 +9,12 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
-    public class EditCollectionViewModel:ExtraPropertiesViewModelBase
+    public class EditCollectionViewModel:ExtraPropertiesForCollectionsViewModelBase
     {
-        PackageReader _reader;
+        readonly PackageReader _reader;
+        private ItemViewModel.Process _updateSource;
+
         private ObservableCollection<ItemViewModel> _editableItems;
-        private ItemViewModel.Process _updateSource; 
         public ObservableCollection<ItemViewModel> EditableItems
         {
             get { return _editableItems; }
@@ -25,11 +26,11 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
-        public EditCollectionViewModel(PackageReader reader, MainWindowViewModel root, ObservableCollection<ItemViewModel> collection)
+        public EditCollectionViewModel(PackageReader reader, ObservableCollection<ItemViewModel> collection)
         {
             _reader = reader;
             
-            Root = root;
+           // Root = root;
             _editableItems = collection;
             if(this.EditableItems.Count>0)
             {
@@ -90,7 +91,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
            public void Add()
            {
 
-               this.EditableItems.Add(new ItemViewModel() { Root = this.Root, Reader = _reader, UpdateSource = _updateSource });
+               this.EditableItems.Add(new ItemViewModel() { Reader = _reader, UpdateSource = _updateSource });
            }
     
         #endregion

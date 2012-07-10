@@ -25,19 +25,18 @@ namespace CoAppPackageMaker
         public MainWindow()
         {
             InitializeComponent();
-           
+            this.DataContext = MainWindowViewModel.Instance;
         }
 
 
         #region View Model Accessor
-
-        private MainWindowViewModel VM
+        //to avoid calls to getInstance for Undo/Redo canExecute
+        private static MainWindowViewModel _vM;
+        private static MainWindowViewModel VM
         {
-            get
-            {
-                return DataContext as MainWindowViewModel;
-            }
+            get { return _vM ?? (_vM = MainWindowViewModel.Instance); }
         }
+
         #endregion
 
         /// <summary>
@@ -54,6 +53,7 @@ namespace CoAppPackageMaker
         {
             // Tell the UI whether Undo is available.
             var catalog = VM;
+            if (catalog != null)
             e.CanExecute = UndoService.Current[catalog].CanUndo;
          
         }
@@ -62,6 +62,7 @@ namespace CoAppPackageMaker
         {
             // Tell the UI whether Redo is available.
             var catalog = VM;
+            if(catalog!=null)
             e.CanExecute = UndoService.Current[catalog].CanRedo;
           
         }
@@ -76,16 +77,16 @@ namespace CoAppPackageMaker
             // document, but in a larger system the root would probably be your
             // domain model.
 
-         var root = VM;
+            var root = VM;
 
            if (null != root)
-                UndoService.Current[VM].Undo();
+                UndoService.Current[root].Undo();
            
         }
 
         private void Redo_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-           
+
             var root = VM;
             if (null != root)
                 UndoService.Current[root].Redo();
