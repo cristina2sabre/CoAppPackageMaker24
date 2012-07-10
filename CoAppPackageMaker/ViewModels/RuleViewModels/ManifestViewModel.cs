@@ -10,7 +10,7 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-     public class ManifestViewModel : ExtraPropertiesForCollectionsViewModelBase
+    public class ManifestViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
 
         private ObservableCollection<ManifestItemViewModel> _manifestCollection;
@@ -34,12 +34,13 @@ namespace CoAppPackageMaker.ViewModels
             _manifestCollection = new ObservableCollection<ManifestItemViewModel>();
             foreach (string parameter in reader.ReadParameters("manifest"))
             {
-                var includeCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "include"));
-                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "assembly"));
+               // var includeCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "include"));
+              //  var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "assembly"));
+                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GETMiFINAL(parameter, null));
                 var model = new ManifestItemViewModel()
                 {
                     AssemblyCollection = new EditCollectionViewModel(reader, assemblyCollection),
-                    IncludeCollection = new EditCollectionViewModel(reader, includeCollection),
+                   // IncludeCollection = new EditCollectionViewModel(reader, includeCollection),
                     Name = parameter,
                 };
                 _manifestCollection.Add(model);

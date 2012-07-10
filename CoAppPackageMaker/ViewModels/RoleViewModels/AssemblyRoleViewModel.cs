@@ -17,20 +17,19 @@ namespace CoAppPackageMaker.ViewModels
         {
            // Root = root;
            
-            ApplicationCollection = new ObservableCollection<ApplicationItemViewModel>();
+            ApplicationCollection = new ObservableCollection<RoleItemViewModel>();
 
             foreach (string parameter in reader.ReadParameters("assembly"))
             {
                 ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.ApplicationIncludeList("assembly", parameter, "include"));
 
-                ApplicationItemViewModel model = new ApplicationItemViewModel()
+                RoleItemViewModel model = new RoleItemViewModel()
                 {
                    Label = "Assembly",
                     EditCollectionViewModel = new EditCollectionViewModel(reader,  includeCollection),
                     Name = parameter,
-                   // Root = root,
-
                 };
+
                 ApplicationCollection.Add(model);
             }
 
@@ -41,7 +40,7 @@ namespace CoAppPackageMaker.ViewModels
         public override void Add()
         {
 
-            this.ApplicationCollection.Add(new ApplicationRoleViewModel.ApplicationItemViewModel() { Label = "Assembly",  EditCollectionViewModel = new EditCollectionViewModel(null,  new ObservableCollection<ItemViewModel>()) });
+            this.ApplicationCollection.Add(new ApplicationRoleViewModel.RoleItemViewModel() { Label = "Assembly",  EditCollectionViewModel = new EditCollectionViewModel(null,  new ObservableCollection<ItemViewModel>()) });
         }
     }
 }

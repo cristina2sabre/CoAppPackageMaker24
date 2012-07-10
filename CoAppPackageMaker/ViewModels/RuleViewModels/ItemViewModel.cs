@@ -27,6 +27,29 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
+        private string _parameter;
+        public string Parameter
+        {
+            get { return _parameter; }
+            set
+            {
+                _parameter = value;
+                OnPropertyChanged("Parameter");
+            }
+        }
+
+        
+        private int _index;
+        public int Index
+        {
+            get { return _index; }
+            set
+            {
+                _index = value;
+                OnPropertyChanged("Index");
+            }
+        }
+
         
         private string _value="new";
         public string Value

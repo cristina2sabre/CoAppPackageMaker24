@@ -19,7 +19,8 @@ namespace CoAppPackageMaker.ViewModels.Base
 {
   public  class MainWindowViewModel:ViewModelBase, ISupportsUndo
     {
-       private static MainWindowViewModel _instance=new MainWindowViewModel();
+        //http://msdn.microsoft.com/en-us/library/ff650316.aspx
+      private readonly static MainWindowViewModel _instance = new MainWindowViewModel();
        public static MainWindowViewModel Instance
        {
            get { return _instance; }
@@ -370,8 +371,9 @@ namespace CoAppPackageMaker.ViewModels.Base
             {
                 try
                 {
-                    UndoService.Current[this].Clear();
+                    
                     LoadData();
+                    UndoService.Current[this].Clear();
                     // ResetForm();
                 }
                 catch (Exception ex)

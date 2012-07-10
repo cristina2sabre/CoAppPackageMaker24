@@ -16,42 +16,33 @@ namespace CoAppPackageMaker.ViewModels
 {
     public class ApplicationRoleViewModel:ExtraPropertiesForCollectionsViewModelBase
     {
-        //private string _upper;
-
-        //public string Label
-        //{
-        //    get { return _upper; }
-           
-        //}
-
-        
-        private  string Label = "Application";
         public ApplicationRoleViewModel(PackageReader reader)
+        {
+
+            _applicationCollection = new ObservableCollection<RoleItemViewModel>();
+
+            foreach (string parameter in reader.ReadParameters("application"))
             {
-              
-              
-                _applicationCollection = new ObservableCollection<ApplicationItemViewModel>();
+                var includeCollection =
+                    new ObservableCollection<ItemViewModel>(reader.ApplicationIncludeList("application", parameter,
+                                                                                          "include"));
 
-                foreach (string parameter in reader.ReadParameters("application"))
-                {
-                    ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.ApplicationIncludeList("application", parameter, "include"));
-                  
-                    ApplicationItemViewModel model = new ApplicationItemViewModel()
-                    {
-                          Label = "Application",
-                        EditCollectionViewModel = new EditCollectionViewModel(reader,  includeCollection),
-                        Name = parameter,
-                       // Root = root,
-
-                    };
-                    _applicationCollection.Add(model);
-                }
-
-                SourceString = reader.GetRulesSourceStringPropertyValueByName("application");
-                _applicationCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
+                var model = new RoleItemViewModel()
+                                                     {
+                                                         Label = "Application",
+                                                         EditCollectionViewModel =
+                                                             new EditCollectionViewModel(reader, includeCollection),
+                                                         Name = parameter,
+                                                     };
+                _applicationCollection.Add(model);
             }
 
-        public class ApplicationItemViewModel : ExtraPropertiesForCollectionsViewModelBase
+            SourceString = reader.GetRulesSourceStringPropertyValueByName("application");
+            _applicationCollection.CollectionChanged +=
+                new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
+        }
+
+        public class RoleItemViewModel : ExtraPropertiesForCollectionsViewModelBase
         {
             public EditCollectionViewModel _editCollectionViewModel;
             public EditCollectionViewModel EditCollectionViewModel
@@ -105,8 +96,8 @@ namespace CoAppPackageMaker.ViewModels
             OnPropertyChanged("ApplicationCollection");
         }
 
-        public ApplicationItemViewModel _selectedFile;
-        public ApplicationItemViewModel SelectedFile
+        public RoleItemViewModel _selectedFile;
+        public RoleItemViewModel SelectedFile
         {
             get { return _selectedFile; }
             set
@@ -115,14 +106,14 @@ namespace CoAppPackageMaker.ViewModels
                 OnPropertyChanged("SelectedFile");
             }
         }
-        private ObservableCollection<ApplicationItemViewModel> _applicationCollection;
+        private ObservableCollection<RoleItemViewModel> _applicationCollection;
 
         protected ApplicationRoleViewModel()
         {
            
         }
 
-        public ObservableCollection<ApplicationItemViewModel> ApplicationCollection
+        public ObservableCollection<RoleItemViewModel> ApplicationCollection
         {
             get { return _applicationCollection; }
             set
@@ -171,7 +162,7 @@ namespace CoAppPackageMaker.ViewModels
         public virtual void Add()
         {
 
-            this.ApplicationCollection.Add(new ApplicationRoleViewModel.ApplicationItemViewModel() { Label = "Application",  EditCollectionViewModel = new EditCollectionViewModel(null,  new ObservableCollection<ItemViewModel>()) });
+            this.ApplicationCollection.Add(new ApplicationRoleViewModel.RoleItemViewModel() { Label = "Application",  EditCollectionViewModel = new EditCollectionViewModel(null,  new ObservableCollection<ItemViewModel>()) });
         }
 
         #endregion

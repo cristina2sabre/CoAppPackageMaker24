@@ -34,7 +34,8 @@ namespace CoAppPackageMaker
         private static MainWindowViewModel _vM;
         private static MainWindowViewModel VM
         {
-            get { return _vM ?? (_vM = MainWindowViewModel.Instance); }
+            //get { return _vM ?? (_vM = MainWindowViewModel.Instance); }
+            get { return MainWindowViewModel.Instance; }
         }
 
         #endregion

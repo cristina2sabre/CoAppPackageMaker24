@@ -36,13 +36,66 @@ namespace CoAppPackageMaker
            _packageSource.SavePackageFile(destinationFilename);
        }
 
-       private PackageSource _packageSource;
-       public PackageSource PackageSource
-       {
-           get { return _packageSource; }
-          
-       }
+        private PackageSource _packageSource;
+        //public PackageSource PackageSource
+        //{
+        //    get { return _packageSource; }
 
+        //}
+
+
+       public string SetMMM(string parameter, IEnumerable<string> value)
+       {
+           //IEnumerable<Rule> rules = _packageSource.Rules.GetRulesByName("manifest");
+           //IEnumerable<string> r = (rules != null) ? rules.GetRulesByParameter(parameter).GetPropertyValues("include") : new string[0];
+
+           PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName("manifest").GetProperty("manifest", "assembly");
+           if (propertyRule != null)
+           {
+               foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
+               {
+
+                   foreach (string s in propertyValue.SourceValues)
+                   {
+                       propertyValue.SourceValues = value;
+                       PropertyRule p = _packageSource.AllRules.GetRulesByName("requires").GetProperty("requires", "assembly");
+                      // result = p.Values.First();
+                   }
+               }
+           }
+
+         //foreach (string str in r)
+                
+           {
+
+               //if (propertyRule != null)
+               //{
+               //    PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+
+               //    if (propertyValue != null)
+               //    {
+               //        propertyValue.SourceValues = value;
+               //        // SearchAll(propertyName); from MainViewModel
+               //        return propertyRule.Value;
+               //    }
+               //}
+               //PropertyRule propertyRule = rule["include"];
+
+               //if (propertyRule != null)
+               //{
+               //   // IEnumerable<string> r = (rules != null) ? rules.GetRulesByParameter(parameter).GetPropertyValues(propertyName) : new string[0];
+               //    PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+
+               //    if (propertyValue != null)
+               //    {
+               //        propertyValue.SourceValues = value;
+               //        // SearchAll(propertyName); from MainViewModel
+               //        return propertyRule.Value;
+               //    }
+               //}
+           }
+           return String.Empty;
+       }
         public string SetSourceDefineRules(string propertyName, IEnumerable<string> value)
         {
 
@@ -94,19 +147,29 @@ namespace CoAppPackageMaker
         public ObservableCollection<ItemViewModel> GetRulesSourceValuesByParameterForEditableCollections(string ruleName, string parameter, string propertyName)
         {
             var result = new ObservableCollection<ItemViewModel>();
-            IEnumerable<Rule> rules = _packageSource.Rules.GetRulesByName(ruleName);
-            IEnumerable<string> r = (rules != null) ? rules.GetRulesByParameter(parameter).GetPropertyValues(propertyName) : new string[0];
-
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+            if (propertyRule != null)
             {
-                foreach (string value in r)
+                foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
                 {
-                    var model = new ItemViewModel();
-                    model.Reader = this;
-                   // model.UpdateSource = SetSourceManifestRules;
-                    model.SourceValue = value;
-                    result.Add(model);
+                    int count = propertyValue.SourceValues.Count();
+                    for (int i = 0; i <count ; i++)
+                    {
+                        var model = new ItemViewModel();
+                        model.Reader = this;
+                        model.Label = parameter;
+                        model.Index = i;
+                      //  model.UpdateSource = SetMiFINAL;
+                        model.SourceValue = propertyValue.SourceValues.ToList()[i];
+                      //  model.Value = propertyValue.Values.ToList()[i];
+                        result.Add(model);
+
+
+                    }
+                   
                 }
             }
+         
 
             return result;
         }
@@ -145,7 +208,7 @@ namespace CoAppPackageMaker
                    result = SetSourceRequireRules;
                    break;
                case "signing":
-                   result = SetSourceDefineRules;
+                   result = SetSourceSingingRules;
                    break;
            }
 
@@ -166,6 +229,87 @@ namespace CoAppPackageMaker
             return result.FirstOrDefault();
         }
 
+       public string SetMiFINAL(string parameter, IEnumerable<string> value)
+       {
+
+           string result = String.Empty;
+           IEnumerable<Rule>  hRules= _packageSource.AllRules.GetRulesByName("manifest");
+           PropertyRule propertyRule=null;
+           foreach (Rule hRule in hRules)
+           {
+               if (hRule.Parameter == parameter)
+               {
+                   propertyRule = hRule["assembly"];
+                   if (propertyRule != null)
+                   {
+                       PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+
+                       if (propertyValue != null)
+                       {
+                           propertyValue.SourceValues = value;
+                        
+                           return propertyRule.Value;
+                       }
+                      
+                   }
+                  
+               }
+           }
+
+         
+
+
+           return result;
+         
+
+
+          
+       }
+
+
+       public ObservableCollection<ItemViewModel> GETMiFINAL(string parameter, IEnumerable<string> value)
+       {
+           var result = new ObservableCollection<ItemViewModel>();
+        
+           IEnumerable<Rule> hRules = _packageSource.AllRules.GetRulesByName("manifest");
+           PropertyRule propertyRule = null;
+           foreach (Rule hRule in hRules)
+           {
+               if ( parameter==hRule.Parameter)
+               {
+                   propertyRule = hRule["include"];
+                   if (propertyRule != null)
+                   {
+                       PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+
+                       if (propertyValue != null)
+                       {
+                           foreach (string sourceValue in propertyValue.SourceValues)
+                           {
+                               var model = new ItemViewModel();
+                               model.Reader = this;
+                               model.Label = parameter;
+                               model.UpdateSource = SetMiFINAL;
+                               model.SourceValue = sourceValue;
+                               // model.Value = no need to set-is evaluated in the sourcevalue;
+                               result.Add(model);
+                           }
+                        
+                       }
+                   }
+
+               }
+           }
+
+
+
+
+           return result;
+
+
+
+
+       }
 
         public string SetSourceRequireRules(string parameter, IEnumerable<string> value)
         {
@@ -202,6 +346,29 @@ namespace CoAppPackageMaker
                     {
                         propertyValue.SourceValues = value;
                         PropertyRule p = _packageSource.AllRules.GetRulesByName("signing").GetProperty("signing", "include");
+                        result = p.Values.First();
+                    }
+                }
+            }
+
+
+            return result;
+        }
+
+
+        public string SetSourceMAnifestIncludeRules(string parameter, IEnumerable<string> value)
+        {
+            string result = String.Empty;
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName("manifest").GetProperty("manifest", "include");
+            if (propertyRule != null)
+            {
+                foreach (PropertyValue propertyValue in propertyRule.PropertyValues)
+                {
+
+                    foreach (string s in propertyValue.SourceValues)
+                    {
+                        propertyValue.SourceValues = value;
+                        PropertyRule p = _packageSource.AllRules.GetRulesByName("manifest").GetProperty("manifest", "include");
                         result = p.Values.First();
                     }
                 }
