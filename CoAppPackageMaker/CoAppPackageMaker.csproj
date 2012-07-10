@@ -79,7 +79,7 @@
     </ApplicationDefinition>
     <Compile Include="PackageReader.cs" />
     <Compile Include="Support\Focus.cs" />
-    <Compile Include="Support\FocusRecieveBehavior.cs" />
+    <Compile Include="Support\FocusReceiveBehavior.cs" />
     <Compile Include="Temp\Class1.cs" />
     <Compile Include="Temp\MockPackageSource.cs" />
     <Compile Include="ViewModels\RoleViewModels\ApplicationRoleViewModel.cs" />
