@@ -40,7 +40,7 @@
       <HintPath>..\..\..\..\..\..\ProgramData\ReferenceAssemblies\any\CoApp.Client.dll</HintPath>
     </Reference>
     <Reference Include="CoApp.Developer.Toolkit, Version=1.2.0.316, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\ProgramData\ReferenceAssemblies\any\CoApp.Developer.Toolkit.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\CoApp.Developer.Toolkit\v4.0_1.2.0.272__1e373a58e25250cb\CoApp.Developer.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="CoApp.Packaging, Version=1.2.0.272, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
