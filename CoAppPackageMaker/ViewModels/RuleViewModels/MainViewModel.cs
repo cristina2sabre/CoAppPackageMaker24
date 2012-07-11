@@ -401,8 +401,9 @@ namespace CoAppPackageMaker.ViewModels.Base
             {
                 try
                 {
-                    UndoService.Current[this].Clear();
+                   
                     LoadData();
+                    UndoService.Current[this].Clear();
                     // ResetForm();
                 }
                 catch (Exception ex)
