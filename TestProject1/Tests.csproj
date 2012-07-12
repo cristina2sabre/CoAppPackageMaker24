@@ -33,17 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autopackage">
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.216-Any-1E373a58e25250cb\Autopackage.exe</HintPath>
-    </Reference>
-    <Reference Include="CoApp.CCI, Version=1.2.0.216, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL" />
-    <Reference Include="CoApp.Client, Version=1.2.0.346, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL" />
-    <Reference Include="CoApp.Developer.Toolkit, Version=1.2.0.216, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL" />
-    <Reference Include="CoApp.Packaging, Version=1.2.0.236, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.236-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Packaging.dll</HintPath>
-    </Reference>
-    <Reference Include="CoApp.Toolkit, Version=1.2.0.346, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />

@@ -36,10 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CoApp.Client, Version=1.2.0.409, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp-1.2.0.409-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Client.dll</HintPath>
-    </Reference>
     <Reference Include="CoApp.Developer.Toolkit, Version=1.2.0.272, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.272-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Developer.Toolkit.dll</HintPath>

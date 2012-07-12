@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 using System.Collections.ObjectModel;
-using CoApp.Packaging.Client;
+
 using CoAppPackageMaker.ViewModels.Base;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
 

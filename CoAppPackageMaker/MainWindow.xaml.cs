@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
@@ -31,7 +20,7 @@ namespace CoAppPackageMaker
 
         #region View Model Accessor
         //to avoid calls to getInstance for Undo/Redo canExecute
-        private static MainWindowViewModel _vM;
+      
         private  MainWindowViewModel VM
         {
             //get { return _vM ?? (_vM = MainWindowViewModel.Instance); }

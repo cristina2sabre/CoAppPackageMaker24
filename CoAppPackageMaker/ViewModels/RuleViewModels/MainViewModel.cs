@@ -10,7 +10,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 
 using CoApp.Packaging;
-using CoApp.Packaging.Client;
+
 using CoAppPackageMaker.ViewModels.RuleViewModels;
 using MonitoredUndo;
 
@@ -26,8 +26,6 @@ namespace CoAppPackageMaker.ViewModels.Base
             get { return _instance; }
 
         }
-
-
 
         private MainWindowViewModel()
         {
