@@ -7,7 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <DataTemplate x:Key="ManifestTemplate">
-            <Expander  IsExpanded="False" Margin="5">               
+            <Expander  IsExpanded="False" Margin="5">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Manifest" FontWeight="Bold"/>
@@ -53,13 +53,13 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Assembly" Grid.Row="0" Margin="5"/>
                     <Label Content="Include" Grid.Row="1" Margin="5"/>
-                    <Views:EditCollectionsUC  Width="200" Grid.Column="1" Grid.Row="0" DataContext="{Binding  AssemblyCollection}" Height="100"  Margin="5" ListTemplate="SourceValueTemplate"/>
+                    <Views:EditCollectionsUC  Width="200" Grid.Column="1" Grid.Row="0" DataContext="{Binding  AssemblyCollection}" Height="100"  Margin="5" ListTemplate="ValueTemplate"/>
                     <Views:EditCollectionsUC DataContext="{Binding  IncludeCollection}" Grid.Column="1" Grid.Row="1" Width="200" Height="100"  Margin="5" ListTemplate="ValueTemplate"/>
                 </Grid>
             </Expander>
         </DataTemplate>
     </UserControl.Resources>
-   
+
     <DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
             <Button Width="20" Height="20" Margin="3"   Command="{Binding Path = RemoveCommand}" Content="-"/>
@@ -67,6 +67,6 @@
         </StackPanel>
         <ListBox Name="ListBoxManifestCollection"
             ItemsSource="{Binding ManifestCollection}" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}">
-        </ListBox>       
+        </ListBox>
     </DockPanel>
 </UserControl>

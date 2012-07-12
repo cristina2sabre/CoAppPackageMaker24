@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,7 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
 {
-     public class ManifestViewModel : ExtraPropertiesForCollectionsViewModelBase
+    public class ManifestViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
 
         private ObservableCollection<ManifestItemViewModel> _manifestCollection;
@@ -24,7 +24,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-       
+
         public ManifestViewModel()
         {
         }
@@ -34,21 +34,22 @@ namespace CoAppPackageMaker.ViewModels
             _manifestCollection = new ObservableCollection<ManifestItemViewModel>();
             foreach (string parameter in reader.ReadParameters("manifest"))
             {
-                var includeCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "include"));
-                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "assembly"));
+                // var includeCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "include"));
+                //  var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "assembly"));
+                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GETMiFINAL(parameter, null));
                 var model = new ManifestItemViewModel()
                 {
                     AssemblyCollection = new EditCollectionViewModel(reader, assemblyCollection),
-                    IncludeCollection = new EditCollectionViewModel(reader, includeCollection),
+                    // IncludeCollection = new EditCollectionViewModel(reader, includeCollection),
                     Name = parameter,
                 };
                 _manifestCollection.Add(model);
-                
+
             }
-          
-           
-             SourceString = reader.GetRulesSourceStringPropertyValueByName("manifest");
-             _manifestCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
+
+
+            SourceString = reader.GetRulesSourceStringPropertyValueByName("manifest");
+            _manifestCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
 
         }
 
@@ -57,7 +58,7 @@ namespace CoAppPackageMaker.ViewModels
             DefaultChangeFactory.OnCollectionChanged(this, "ManifestCollection", ManifestCollection, e);
             OnPropertyChanged("ManifestCollection");
         }
-         
+
         private ManifestItemViewModel _selectedFile;
         public ManifestItemViewModel SelectedFile
         {
@@ -101,7 +102,7 @@ namespace CoAppPackageMaker.ViewModels
         public void Add()
         {
 
-            this.ManifestCollection.Add(new ManifestItemViewModel() {  IncludeCollection = new EditCollectionViewModel(null,  new ObservableCollection<ItemViewModel>()), AssemblyCollection = new EditCollectionViewModel(null,  new ObservableCollection<ItemViewModel>()) });
+            this.ManifestCollection.Add(new ManifestItemViewModel() { IncludeCollection = new EditCollectionViewModel(null, new ObservableCollection<ItemViewModel>()), AssemblyCollection = new EditCollectionViewModel(null, new ObservableCollection<ItemViewModel>()) });
         }
 
         #endregion

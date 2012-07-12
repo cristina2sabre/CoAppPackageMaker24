@@ -32,9 +32,10 @@ namespace CoAppPackageMaker
         #region View Model Accessor
         //to avoid calls to getInstance for Undo/Redo canExecute
         private static MainWindowViewModel _vM;
-        private static MainWindowViewModel VM
+        private  MainWindowViewModel VM
         {
-            get { return _vM ?? (_vM = MainWindowViewModel.Instance); }
+            //get { return _vM ?? (_vM = MainWindowViewModel.Instance); }
+            get { return DataContext as MainWindowViewModel; } 
         }
 
         #endregion

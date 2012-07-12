@@ -17,37 +17,38 @@ using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.Base
 {
-  public  class MainWindowViewModel:ViewModelBase, ISupportsUndo
+    public class MainWindowViewModel : ViewModelBase, ISupportsUndo
     {
-       private static MainWindowViewModel _instance=new MainWindowViewModel();
-       public static MainWindowViewModel Instance
-       {
-           get { return _instance; }
-         
-       }
+        //http://msdn.microsoft.com/en-us/library/ff650316.aspx
+        private readonly static MainWindowViewModel _instance = new MainWindowViewModel();
+        public static MainWindowViewModel Instance
+        {
+            get { return _instance; }
 
-     
+        }
 
-       private MainWindowViewModel()
-       {
-           PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
-           if (PathToFile != null && File.Exists(PathToFile))
-           {
-               LoadData();
-           }
-       }
-      
+
+
+        private MainWindowViewModel()
+        {
+            PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+            if (PathToFile != null && File.Exists(PathToFile))
+            {
+                LoadData();
+            }
+        }
+
         private string _ruleNameSelectedItem;
         private ObservableCollection<string> _ruleNames;
         private ObservableCollection<string> _roleNames;
-       
+
         private PackageViewModel _packageViewModel;
         private MetadataViewModel _metadataViewModel;
         private RequiresViewModel _requiresViewModel;
         private PackageCompositionViewModel _packageCompositionViewModel;
         private FilesViewModel _filesViewModel;
         private ManifestViewModel _manifestViewModel;
-        private ObservableCollection<ExtraPropertiesForCollectionsViewModelBase> _allViewModels =new ObservableCollection<ExtraPropertiesForCollectionsViewModelBase>();
+        private ObservableCollection<ExtraPropertiesForCollectionsViewModelBase> _allViewModels = new ObservableCollection<ExtraPropertiesForCollectionsViewModelBase>();
         private PackageReader _reader;
 
         private List<List<string>> SearchAll(string definePropertyName)
@@ -67,44 +68,13 @@ namespace CoAppPackageMaker.ViewModels.Base
         }
 
 
-        //public MainWindowViewModel()
-        //{
-        //    //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
-        //    //  PackageReader reader = new PackageReader();
-        //    //  reader.Read(PathToFile);
 
-        //    //  _ruleNames = reader.Rules;
-        //    //  Dictionary<string, IFactory> dic = new Dictionary<string, IFactory>();
-        //    //  dic.Add("package", new PackageViewModelFactory());
-        //    //  dic.Add("files",new FilesViewModelFactory());
-        //    //  foreach (string str in _ruleNames)
-        //    //  {
-        //    //      if (dic.ContainsKey(str))
-        //    //      {
-        //    //          object instance = (dic[str].CreateInstance(reader));
-        //    //          string name = instance.GetType().Name;
-        //    //          var p = GetType().GetProperty(name);
-        //    //          p.SetValue(this, instance, null);
-        //    //      }
-
-        //    //}
-
-        ////  PathToFile = "D:\\P\\COPKG\\test2.autopkg";
-        //   // PathToFile = "D:\\P\\procmon\\copkg\\procmon.autopkg";
-        //  PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
-        //    if (PathToFile != null && File.Exists(PathToFile))
-        //    {
-        //        LoadData();
-        //    }
-
-
-        //}
 
         private void LoadData()
         {
-            
-           _reader = new PackageReader();
-           _reader.Read(PathToFile);
+
+            _reader = new PackageReader();
+            _reader.Read(PathToFile);
 
             PackageViewModel = new PackageViewModel(_reader);
             MetadataViewModel = new MetadataViewModel(_reader);
@@ -122,7 +92,7 @@ namespace CoAppPackageMaker.ViewModels.Base
 
         }
 
-        private  string _pathToFile;
+        private string _pathToFile;
         public string PathToFile
         {
             get { return _pathToFile; }
@@ -133,10 +103,10 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
         }
 
-       
+
         #region ViewModels
 
-      
+
         public PackageViewModel PackageViewModel
         {
             get
@@ -185,7 +155,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
             set
             {
-               _packageCompositionViewModel = value;
+                _packageCompositionViewModel = value;
                 OnPropertyChanged("PackageCompositionViewModel");
             }
         }
@@ -211,7 +181,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
             set
             {
-               _manifestViewModel = value;
+                _manifestViewModel = value;
                 OnPropertyChanged("ManifestViewModel");
             }
         }
@@ -305,95 +275,95 @@ namespace CoAppPackageMaker.ViewModels.Base
         }
         #endregion ViewModels
 
-       
-         public ObservableCollection<string> RulesNames
-         {
-             get { return _ruleNames; }
-             set
-             {
-                 _ruleNames = value;
-                 OnPropertyChanged("RulesNames");
-             }
-         }
 
-         public ObservableCollection<string> RolesNames
-         {
-             get { return _roleNames; }
-             set
-             {
-                 _roleNames = value;
-                 OnPropertyChanged("RolesNames");
-             }
-         }
+        public ObservableCollection<string> RulesNames
+        {
+            get { return _ruleNames; }
+            set
+            {
+                _ruleNames = value;
+                OnPropertyChanged("RulesNames");
+            }
+        }
+
+        public ObservableCollection<string> RolesNames
+        {
+            get { return _roleNames; }
+            set
+            {
+                _roleNames = value;
+                OnPropertyChanged("RolesNames");
+            }
+        }
 
         //used for binding between Rule and it's properties and values
-         public String RuleNameSelectedItem
-         {
-             get { return _ruleNameSelectedItem; }
-             set
-             {
-                 _ruleNameSelectedItem = value;
-                 OnPropertyChanged("RuleNameSelectedItem");
-             }
-         }
+        public String RuleNameSelectedItem
+        {
+            get { return _ruleNameSelectedItem; }
+            set
+            {
+                _ruleNameSelectedItem = value;
+                OnPropertyChanged("RuleNameSelectedItem");
+            }
+        }
 
-      
-      
-        
-         #region Commands
 
-         public ICommand DeleteCommand
-         {
-             get { return new RelayCommand(DeleteExecute, CanDeleteExecute); }
-         }
+
+
+        #region Commands
+
+        public ICommand DeleteCommand
+        {
+            get { return new RelayCommand(DeleteExecute, CanDeleteExecute); }
+        }
 
         public ICommand SaveCommand
-         {
-             get { return new RelayCommand(SaveExecute, CanSaveExecute); }
-         }
+        {
+            get { return new RelayCommand(SaveExecute, CanSaveExecute); }
+        }
 
-         public ICommand ResetCommand
-         {
-             get { return new RelayCommand(ResetExecute, CanResetExecute); }
-         }
+        public ICommand ResetCommand
+        {
+            get { return new RelayCommand(ResetExecute, CanResetExecute); }
+        }
 
-         public ICommand NewCommand
-         {
-             get { return new RelayCommand(NewExecute, CanNewExecute); }
-         }
-        
-        
-
-       
-
-#endregion
+        public ICommand NewCommand
+        {
+            get { return new RelayCommand(NewExecute, CanNewExecute); }
+        }
 
 
-         #region Methods
 
-         void DeleteExecute()
-         {
-             if (CanDeleteExecute() )
-             {
-                 try
-                 {
-                     _ruleNames.Remove(this._ruleNameSelectedItem);
 
-                     // ResetForm();
-                 }
-                 catch (Exception ex)
-                 {
-                     MessageBox.Show(ex.Message);
-                 }
-             }
-         }
+
+        #endregion
+
+
+        #region Methods
+
+        void DeleteExecute()
+        {
+            if (CanDeleteExecute())
+            {
+                try
+                {
+                    _ruleNames.Remove(this._ruleNameSelectedItem);
+
+                    // ResetForm();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
 
 
         bool CanDeleteExecute()
-         {
-          return this.RuleNameSelectedItem!=null;
-            
-         }
+        {
+            return this.RuleNameSelectedItem != null;
+
+        }
 
         void ResetExecute()
         {
@@ -401,7 +371,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             {
                 try
                 {
-                   
+
                     LoadData();
                     UndoService.Current[this].Clear();
                     // ResetForm();
@@ -417,7 +387,7 @@ namespace CoAppPackageMaker.ViewModels.Base
         bool CanResetExecute()
         {
             return
-                    UndoService.Current[this].CanUndo; 
+                    UndoService.Current[this].CanUndo;
 
         }
 
@@ -447,42 +417,42 @@ namespace CoAppPackageMaker.ViewModels.Base
                     UndoService.Current[this].CanUndo;
 
         }
-         void NewExecute()
-         {
-             if (CanNewExecute())
-             {
-                 try
-                 {
-                     _ruleNames.Add(this._ruleNameSelectedItem);
+        void NewExecute()
+        {
+            if (CanNewExecute())
+            {
+                try
+                {
+                    _ruleNames.Add(this._ruleNameSelectedItem);
 
-                     // ResetForm();
-                 }
-                 catch (Exception ex)
-                 {
-                     MessageBox.Show(ex.Message);
-                 }
-             }
-         }
-
-
-         bool CanNewExecute()
-         {
-             //to add if rule properties have correct values
-             return this.RuleNameSelectedItem != null;
-         }
-
-#endregion
-
-         #region ISupportsUndo Members
-
-         public object GetUndoRoot()
-         {
-             return MainWindowViewModel.Instance;
-         }
-
-         #endregion
+                    // ResetForm();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
 
 
-       
+        bool CanNewExecute()
+        {
+            //to add if rule properties have correct values
+            return this.RuleNameSelectedItem != null;
+        }
+
+        #endregion
+
+        #region ISupportsUndo Members
+
+        public object GetUndoRoot()
+        {
+            return MainWindowViewModel.Instance;
+        }
+
+        #endregion
+
+
+
     }
 }

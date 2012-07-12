@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +10,11 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
     {
 
         //type
-        public delegate string Process(string parameter,IEnumerable<string> sEnumerable);
+        public delegate string Process(string parameter, IEnumerable<string> sEnumerable);
 
         //property
-        public  Process UpdateSource { get; set; }
-       
+        public Process UpdateSource { get; set; }
+
         private string _label = "NewLabel";
         public string Label
         {
@@ -27,8 +27,31 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
-        
-        private string _value="new";
+        private string _parameter;
+        public string Parameter
+        {
+            get { return _parameter; }
+            set
+            {
+                _parameter = value;
+                OnPropertyChanged("Parameter");
+            }
+        }
+
+
+        private int _index;
+        public int Index
+        {
+            get { return _index; }
+            set
+            {
+                _index = value;
+                OnPropertyChanged("Index");
+            }
+        }
+
+
+        private string _value = "new";
         public string Value
         {
             get { return _value; }
@@ -51,13 +74,13 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                     DefaultChangeFactory.OnChanging(this, "SourceValue", _sourceValue, value);
                     _sourceValue = value;
                     OnPropertyChanged("SourceValue");
-                    
-                  if (_reader != null)
+
+                    if (_reader != null)
                     {
-                      //!!!!!!!!!!!!!!!!!WRONG-only for requires-ovveride needed
-                      //  Value = _reader.SetSourceRequireRules( new[] { (_sourceValue) });
-                      if(UpdateSource!=null){ Value = UpdateSource(this.Label,new[] { (_sourceValue) });}
-                       
+                        //!!!!!!!!!!!!!!!!!WRONG-only for requires-ovveride needed
+                        //  Value = _reader.SetSourceRequireRules( new[] { (_sourceValue) });
+                        if (UpdateSource != null) { Value = UpdateSource(this.Label, new[] { (_sourceValue) }); }
+
                     }
 
                 }
@@ -76,5 +99,5 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
     }
-        
+
 }
