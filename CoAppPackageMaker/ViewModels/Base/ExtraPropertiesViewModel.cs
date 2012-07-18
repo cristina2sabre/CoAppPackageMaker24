@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
@@ -9,7 +10,19 @@ namespace CoAppPackageMaker.ViewModels
 {
     public abstract class ExtraPropertiesForCollectionsViewModelBase : ViewModelBase,ISupportsUndo
     {
-        private string _helpTip;
+        private string _ruleNameToDisplay="Rule Name to Display--TEMP";
+        public string RuleNameToDisplay
+        {
+            get { return _ruleNameToDisplay; }
+            set
+            {
+                _ruleNameToDisplay = value;
+                OnPropertyChanged("RuleNameToDisplay");
+            }
+        }
+
+        
+        private string _helpTip="test";
         private bool _isRequired=false;
 
         public string HelpTip
@@ -32,7 +45,7 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        private string _sourceString;
+        private string _sourceString=String.Empty;
         public string SourceString
         {
             get { return _sourceString; }
@@ -71,15 +84,20 @@ namespace CoAppPackageMaker.ViewModels
 
     
        
-        public List<string> Search(string toSearch)
+        public List<Tuple<string,string>> Search(string toSearch)
         {
-            List<string> result = new List<string>(4);
+            string name = RuleNameToDisplay;
+            var result =new  List<Tuple<string, string>>(4);
             foreach (var prop in this.GetType().GetProperties())
             {
-                if (prop.GetValue(this, null).ToString().Contains(toSearch))
-                {
-                    result.Add(prop.Name);
+               {
+                    var tempString = prop.GetValue(this, null).ToString();
+                    if (tempString.Contains(toSearch))
+                    {
+                        result.Add(new Tuple<string, string>(name, prop.Name));
+                    }
                 }
+               
             }
             return result;
         }

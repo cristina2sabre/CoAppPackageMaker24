@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MonitoredUndo;
+﻿using CoAppPackageMaker.ViewModels.Base;
+﻿using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
@@ -60,6 +61,13 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
                 _value = value;
                 OnPropertyChanged("Value");
+                //if (MainWindowViewModel.Instance != null)
+                //{
+
+                //    MainWindowViewModel.Instance.SearchAll(this.Label);
+
+                //}
+
             }
         }
 

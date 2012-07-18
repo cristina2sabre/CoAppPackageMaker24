@@ -98,6 +98,7 @@ namespace CoAppPackageMaker
         }
         public string SetSourceDefineRules(string propertyName, IEnumerable<string> value)
         {
+            
 
             foreach (Rule rule in _packageSource.DefineRules)
             {
@@ -233,13 +234,13 @@ namespace CoAppPackageMaker
         {
 
             string result = String.Empty;
-            IEnumerable<Rule> hRules = _packageSource.AllRules.GetRulesByName("manifest");
+            IEnumerable<Rule> rules = _packageSource.AllRules.GetRulesByName("manifest");
             PropertyRule propertyRule = null;
-            foreach (Rule hRule in hRules)
+            foreach (Rule rule in rules)
             {
-                if (hRule.Parameter == parameter)
+                if (rule.Parameter == parameter)
                 {
-                    propertyRule = hRule["assembly"];
+                    propertyRule = rule["assembly"];
                     if (propertyRule != null)
                     {
                         PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
@@ -267,7 +268,7 @@ namespace CoAppPackageMaker
         }
 
 
-        public ObservableCollection<ItemViewModel> GETMiFINAL(string parameter, IEnumerable<string> value)
+        public ObservableCollection<ItemViewModel> GETMiFINAL(string parameter, string ruleName)
         {
             var result = new ObservableCollection<ItemViewModel>();
 
@@ -277,7 +278,7 @@ namespace CoAppPackageMaker
             {
                 if (parameter == hRule.Parameter)
                 {
-                    propertyRule = hRule["assembly"];
+                    propertyRule = hRule[ruleName];
                     if (propertyRule != null)
                     {
                         PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();

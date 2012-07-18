@@ -29,10 +29,13 @@ namespace CoAppPackageMaker.ViewModels.Base
 
         private MainWindowViewModel()
         {
-            PathToFile = "D:\\P\\glib\\COPKG\\glib.autopkg";
+            PathToFile = "D:\\P\\glib2\\COPKG\\glib.autopkg";
             if (PathToFile != null && File.Exists(PathToFile))
             {
-                LoadData();
+                //_reader = new PackageReader();
+                //_reader.Read(PathToFile);
+                //this._reader.Save("D:\\P\\COPKG\\test2.autopkg");
+              LoadData();
             }
         }
 
@@ -49,10 +52,27 @@ namespace CoAppPackageMaker.ViewModels.Base
         private ObservableCollection<ExtraPropertiesForCollectionsViewModelBase> _allViewModels = new ObservableCollection<ExtraPropertiesForCollectionsViewModelBase>();
         private PackageReader _reader;
 
-        private List<List<string>> SearchAll(string definePropertyName)
+        
+        public void SearchAll(string definePropertyName)
         {
-            var allProp = AllViewModels.Select(item => item.Search("definePropertyName"));
-            return allProp.ToList();
+            var allProp = AllViewModels.SelectMany(item => item.Search(definePropertyName));
+            foreach (Tuple<string, string> tuple in allProp)
+            {
+                ErrorsCollection.Add(new ErrorViewModel() { ErrorHeader = definePropertyName,ErrorDetails = String.Format("{0} is used in {1} rule for {2}",definePropertyName,tuple.Item1,tuple.Item2) });
+                    
+            }
+       //a propety have been changed, for ex rachitecture in Pack- to remove the warning
+            //how to refresh all bindings?
+            //this.PackageViewModel.OnPropertyChanged("Name");
+            //this.PackageViewModel.OnPropertyChanged("Architecture");
+            //this.LicenseViewModel.OnPropertyChanged("License");
+           
+        }
+
+        public void RemoveError(string errorHeader)
+        {
+            var newErrorCollection = ErrorsCollection.Where(item => item.ErrorHeader != errorHeader);
+            ErrorsCollection = new ObservableCollection<ErrorViewModel>(newErrorCollection);
         }
 
         public ObservableCollection<ExtraPropertiesForCollectionsViewModelBase> AllViewModels
@@ -86,7 +106,9 @@ namespace CoAppPackageMaker.ViewModels.Base
             AssemblyRoleViewModel = new AssemblyRoleViewModel(_reader);
             FilesViewModel = new FilesViewModel(_reader);
             //PackageCompositionViewModel = new PackageCompositionViewModel(_reader);
-            //_allViewModels.Add(PackageViewModel);
+            AllViewModels.Add(PackageViewModel);
+            AllViewModels.Add(LicenseViewModel);
+           // AllViewModels.Add(ManifestViewModel);
 
         }
 
@@ -101,6 +123,16 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
         }
 
+        private ObservableCollection<ErrorViewModel> _errorsCollection = new ObservableCollection<ErrorViewModel>();
+        public ObservableCollection<ErrorViewModel> ErrorsCollection
+        {
+            get { return _errorsCollection; }
+            set
+            {
+                _errorsCollection = value;
+                OnPropertyChanged("ErrorsCollection");
+            }
+        }
 
         #region ViewModels
 

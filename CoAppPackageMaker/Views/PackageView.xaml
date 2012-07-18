@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"          
              xmlns:Base="clr-namespace:CoAppPackageMaker.ViewModels.Base"
-             xmlns:local="clr-namespace:CoAppPackageMaker.Temp" mc:Ignorable="d" 
+             xmlns:local="clr-namespace:CoAppPackageMaker.Temp" xmlns:c="clr-namespace:CoAppPackageMaker.Views"
+             mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -30,9 +31,25 @@
         <Label Content="Feed" Grid.Row="4"  Margin="5"/>
         <Label Content="Location" Grid.Row="5"  Margin="5"/>
         <Label Content="Publisher" Grid.Row="6"  Margin="5"/>
-        <TextBox Name="PackageName" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Name}"  IsEnabled="{Binding IsEditable}"/>
+        <TextBox Name="PackageName" Grid.Column="1" Grid.Row="0" Margin="5"   IsEnabled="{Binding IsEditable}">
+            <TextBox.Text>
+                <Binding  Path="Name" UpdateSourceTrigger="PropertyChanged"  Mode="TwoWay" NotifyOnSourceUpdated="True" NotifyOnTargetUpdated="True">
+                    <Binding.ValidationRules>
+                        <c:DefineUpdateValidationRule  ValidationStep="UpdatedValue"  ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBox Name="PackageDisplayName" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding DisplayName}" IsEnabled="{Binding IsEditable}"  />
-        <TextBox Name="PackageArchitecture" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding Architecture}" IsEnabled="{Binding IsEditable}"/>
+        <TextBox Name="PackageArchitecture" Grid.Column="1" Grid.Row="2" Margin="5"  IsEnabled="{Binding IsEditable}">
+            <TextBox.Text>
+                <Binding  Path="Architecture" >
+                    <Binding.ValidationRules>
+                        <c:DefineUpdateValidationRule  ValidationStep="UpdatedValue"  ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBox Name="PackageVersion" Grid.Column="1" Grid.Row="3"  Margin="5" Text="{Binding Version}" IsEnabled="{Binding IsEditable}"/>
         <TextBox Name="PackageFeed" Grid.Column="1" Grid.Row="4"  Margin="5" Text="{Binding Feed}" IsEnabled="{Binding IsEditable}"/>
         <TextBox Name="PackageLocation" Grid.Column="1" Grid.Row="5"  Margin="5" Text="{Binding Location}" IsEnabled="{Binding IsEditable}"/>

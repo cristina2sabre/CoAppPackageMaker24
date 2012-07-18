@@ -25,40 +25,46 @@ namespace CoAppPackageMaker.ViewModels
         public PackageViewModel(PackageReader reader)
         {
             _reader = reader;
-            SourcePackageViewModel=new PackageViewModel()
+            ValuePackageViewModel=new PackageViewModel()
                                      {
-            Name = reader.GetRulesSourcePropertyValueByName(Package, "name"),
-            DisplayName = reader.GetRulesSourcePropertyValueByName(Package, "display-name"),
-            Architecture = reader.GetRulesSourcePropertyValueByName(Package, "arch"),
-            Feed = reader.GetRulesSourcePropertyValueByName(Package, "feed"),
-            Location = reader.GetRulesSourcePropertyValueByName(Package, "location"),
-            Publisher = reader.GetRulesSourcePropertyValueByName(Package, "publisher"),
-            Version = reader.GetRulesSourcePropertyValueByName(Package, "version"),
-            IsEditable = true,
-            IsSource = true,
+       
+            Name = reader.GetRulesPropertyValueByName(Package, "name"),
+            DisplayName = reader.GetRulesPropertyValueByName(Package, "display-name"),
+            Architecture = reader.GetRulesPropertyValueByName(Package, "arch"),
+            Feed = reader.GetRulesPropertyValueByName(Package, "feed"),
+            Location = reader.GetRulesPropertyValueByName(Package, "location"),
+            Publisher = reader.GetRulesPropertyValueByName(Package, "publisher"),
+            Version = reader.GetRulesPropertyValueByName(Package, "version"),
+            IsEditable = false,
+            SourceString = _reader.GetRulesSourceStringPropertyValueByName(Package),
                                      };
 
-            Name = reader.GetRulesPropertyValueByName(Package, "name");
-            DisplayName = reader.GetRulesPropertyValueByName(Package, "display-name");
-            Architecture = reader.GetRulesPropertyValueByName(Package, "arch");
-            Feed = reader.GetRulesPropertyValueByName(Package, "feed");
-            Location = reader.GetRulesPropertyValueByName(Package, "location");
-            Publisher = reader.GetRulesPropertyValueByName(Package, "publisher");
-            Version = reader.GetRulesPropertyValueByName(Package, "version");
-            IsEditable = false;
+            Name = reader.GetRulesSourcePropertyValueByName(Package, "name");
+            DisplayName = reader.GetRulesSourcePropertyValueByName(Package, "display-name");
+            Architecture = reader.GetRulesSourcePropertyValueByName(Package, "arch");
+            Feed = reader.GetRulesSourcePropertyValueByName(Package, "feed");
+            Location = reader.GetRulesSourcePropertyValueByName(Package, "location");
+            Publisher = reader.GetRulesSourcePropertyValueByName(Package, "publisher");
+            Version = reader.GetRulesSourcePropertyValueByName(Package, "version");
+            IsEditable = true;
+            IsSource = true;
+            RuleNameToDisplay = "Package";
 
-            SourceString = reader.GetRulesSourceStringPropertyValueByName(Package);
-            SourcePackageViewModel.PropertyChanged += EvaluatedChanged;
+            
+            //SourceString = reader.GetRulesSourceStringPropertyValueByName(Package);
+            //SourcePackageViewModel.PropertyChanged += EvaluatedChanged;
+            this.PropertyChanged += EvaluatedChanged;
+
         }
 
-        private PackageViewModel _sourcePackageViewModel;
-        public PackageViewModel SourcePackageViewModel
+        private PackageViewModel _valuePackageViewModel;
+        public PackageViewModel ValuePackageViewModel
         {
-            get { return _sourcePackageViewModel; }
+            get { return _valuePackageViewModel; }
             set
             {
-                _sourcePackageViewModel = value;
-                OnPropertyChanged(" SourcePackageViewModel");
+                _valuePackageViewModel = value;
+                OnPropertyChanged("ValuePackageViewModel");
             }
         }
 
@@ -158,36 +164,36 @@ namespace CoAppPackageMaker.ViewModels
                 {
                     case "Name":
                         //reevaluate
-                        newValues= new[]{((PackageViewModel) sender).Name};
-                        Name = _reader.SetNewSourceValue(Package, "name", newValues);
+                        newValues = new[] { ((this.Name ))};
+                        this.ValuePackageViewModel.Name = _reader.SetNewSourceValue(Package, "name", newValues);
                         break;
                     case "Version":
-                        newValues = new[] { ((PackageViewModel)sender).Version};
-                        Version = _reader.SetNewSourceValue(Package, "version", newValues);
+                        newValues = new[] {Version};
+                       this.ValuePackageViewModel.Version = _reader.SetNewSourceValue(Package, "version", newValues);
                         break;
                     case "DisplayName":
-                        newValues = new[] { ((PackageViewModel)sender).DisplayName };
-                        DisplayName = _reader.SetNewSourceValue(Package, "display-name", newValues);
+                        newValues = new[] { DisplayName };
+                        this.ValuePackageViewModel.DisplayName = _reader.SetNewSourceValue(Package, "display-name", newValues);
                         break;
                     case "Location":
-                        newValues = new[] { ((PackageViewModel)sender).Location };
-                        Location = _reader.SetNewSourceValue(Package, "location", newValues);
+                        newValues = new[] { Location };
+                        this.ValuePackageViewModel.Location = _reader.SetNewSourceValue(Package, "location", newValues);
                         break;
                     case "Feed":
-                        newValues = new[] { ((PackageViewModel)sender).Feed };
-                        Feed = _reader.SetNewSourceValue(Package, "feed", newValues);
+                        newValues = new[] { Feed };
+                        this.ValuePackageViewModel.Feed = _reader.SetNewSourceValue(Package, "feed", newValues);
                         break;
                     case "Architecture":
-                        newValues = new[] { ((PackageViewModel)sender).Architecture };
-                        Architecture = _reader.SetNewSourceValue(Package, "arch", newValues);
+                        newValues = new[] { Architecture };
+                        this.ValuePackageViewModel.Architecture = _reader.SetNewSourceValue(Package, "arch", newValues);
                         break;
                     case "Publisher":
-                        newValues = new[] { ((PackageViewModel)sender).Publisher };
-                        Publisher = _reader.SetNewSourceValue(Package, "publisher", newValues);
+                        newValues = new[] { Publisher };
+                        this.ValuePackageViewModel.Publisher = _reader.SetNewSourceValue(Package, "publisher", newValues);
                         break;
                 }
 
-                SourceString = _reader.GetRulesSourceStringPropertyValueByName(Package);
+                this.ValuePackageViewModel.SourceString = _reader.GetRulesSourceStringPropertyValueByName(Package);
             }
         
     }

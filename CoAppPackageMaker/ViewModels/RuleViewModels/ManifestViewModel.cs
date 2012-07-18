@@ -34,13 +34,13 @@ namespace CoAppPackageMaker.ViewModels
             _manifestCollection = new ObservableCollection<ManifestItemViewModel>();
             foreach (string parameter in reader.ReadParameters("manifest"))
             {
-                // var includeCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "include"));
-                //  var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GetRulesSourceValuesByParameterForEditableCollections("manifest", parameter, "assembly"));
-                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GETMiFINAL(parameter, null));
+                
+                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GETMiFINAL(parameter, "assembly"));
+                var includeCollection = new ObservableCollection<ItemViewModel>(reader.GETMiFINAL(parameter, "include"));
                 var model = new ManifestItemViewModel()
                 {
                     AssemblyCollection = new EditCollectionViewModel(reader, assemblyCollection),
-                    // IncludeCollection = new EditCollectionViewModel(reader, includeCollection),
+                    IncludeCollection = new EditCollectionViewModel(reader, includeCollection),
                     Name = parameter,
                 };
                 _manifestCollection.Add(model);
