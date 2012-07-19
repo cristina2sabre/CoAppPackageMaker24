@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"            
         xmlns:Views="clr-namespace:CoAppPackageMaker.Views"    
         xmlns:local="clr-namespace:CoAppPackageMaker.Temp"
-        xmlns:ViewModels="clr-namespace:CoAppPackageMaker.ViewModels" Title="CoAppMaker"      
+        Title="CoAppMaker"      
         Height="700" Width="775" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" >  
     <Window.CommandBindings>
@@ -12,11 +12,121 @@
     </Window.CommandBindings>
     
     <Window.Resources>
-       
+        <Color x:Key="MouseOverTabBackground">#FFDEDEDE</Color>
+        <SolidColorBrush x:Key="MouseOverTabBackgroundBrush" Color="{StaticResource MouseOverTabBackground}" />
+        <Color x:Key="SelectedTabBackground">#D8FFD9</Color>
+        <SolidColorBrush x:Key="SelectedTabBackgroundBrush" Color="{StaticResource SelectedTabBackground}" />
+        <Style TargetType="{x:Type TabItem}" x:Key="Highlight">
+            <Setter Property="Foreground" Value="Black" />
+            <!--<Setter Property="FontFamily" Value="{StaticResource HeaderFontFamily}" />-->
+            <Setter Property="Padding" Value="0" />
+            <!--<Setter Property="Margin" Value="5"/>-->
+            <Setter Property="Width" Value="300"/>
+            <!--<Setter Property="TextBlock.HorizontalAlignment" Value="Right"/>-->
+            <Setter Property="BorderBrush" Value="{x:Null}" />
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid SnapsToDevicePixels="true">
+                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0"
+                                                    Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter x:Name="Content" ContentSource="Header" HorizontalAlignment="Left"
+                                                    RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"                           
+                                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" >
+                                    <!--<ContentPresenter.Content>
+                                                            <StackPanel Orientation="Horizontal" Margin="0">
+                                                                <Ellipse Fill="Red" Width="10" Height="10"/>
+                                                                <Label Name="d" Content="{Binding }"/>
+                                                            </StackPanel>
+                                                        </ContentPresenter.Content>-->
+                                </ContentPresenter>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                                <Setter Property="Background"
+                                                     Value="{StaticResource SelectedTabBackgroundBrush}" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="false" />
+                                    <Condition Property="IsMouseOver" Value="true" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background"
+                                                        Value="{StaticResource MouseOverTabBackgroundBrush}" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="#919B9C"/>
+      
+        <LinearGradientBrush x:Key="TabItemNormalBackground" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#FFFFFFFF" Offset="0"/>
+            <GradientStop Color="#FFECEBE6" Offset="1"/>
+        </LinearGradientBrush>
+        <Style TargetType="{x:Type TabItem}" x:Key="Highlight2">          
+            <Setter Property="MinWidth" Value="100" />
+            <Setter Property="Padding" Value="10,2,10,2"/>
+            <Setter Property="BorderThickness" Value="1,1,0,0"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource TabItemNormalBackground}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border SnapsToDevicePixels="true" Padding="0">
+                            <Grid Margin="0">
+                                <Border x:Name="border"
+									BorderThickness="1,0,1,0"
+									Padding="4"
+									Background="#FF00AEEF"
+									BorderBrush="White"
+										>
+                                    <ContentPresenter x:Name="contentPresenter" ContentSource="Header" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true" SourceName="contentPresenter">
+                                <Setter Property="Cursor" Value="Hand"/>
+                               
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Background" TargetName="border" Value="White"/>
+                                <Setter Property="Foreground" Value="#FF00AEEF"/>
+                                <Setter Property="OpacityMask" TargetName="contentPresenter" Value="{x:Null}"/>
+                               
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Bottom"/>
+                            <Trigger Property="TabStripPlacement" Value="Left"/>
+                            <Trigger Property="TabStripPlacement" Value="Right"/>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                          
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
         <DataTemplate x:Key="ErrorTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding ErrorHeader , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Width="170" ></TextBox>
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding ErrorDetails , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                <Label Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Content="{Binding ErrorHeader , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Width="170" />
+                <Label Margin="0,2,0,0" BorderBrush="Transparent" Content="{Binding ErrorDetails , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" />
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
@@ -28,89 +138,38 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <local:DebugFocusedElementProxy x:Name="debugFocusedElement"/>
-        <DockPanel Grid.Row="1" Margin="5,-25,5,5"   FlowDirection="LeftToRight" Height="50" VerticalAlignment="Top">
-            <Button Width="40" HorizontalAlignment="Right" Margin="310,5,5,5" Background="Transparent" BorderBrush="Transparent" Content="Hello world"/>
-           
-                <GroupBox Margin="5" HorizontalAlignment="Right" >
+        <DockPanel Grid.Row="1" Margin="0,-20,0,0" Background="#FFe0f2e0"  FlowDirection="LeftToRight" Height="52" VerticalAlignment="Top">
+            <!--<Button Width="40" HorizontalAlignment="Right" Margin="315,0,0,0" Background="Transparent" BorderBrush="Transparent" Content="Hello world"  Foreground="AliceBlue"/>-->
+            <GroupBox Margin="415,0,0,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">                    
+                    <Button  Width="20" Height="20" Margin="5" Content="New" />
+                    <Button  Width="35" Height="20" Margin="5" Content="Open" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Margin="5,2,5,2" HorizontalAlignment="Right" >
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">                  
-                    <Button  Width="20" Margin="5" Content="S" Command="{Binding Path=SaveCommand}"/>
-                    <Button  Width="20" Margin="5" Content="U" Command="Undo" />
-                    <Button  Width="20" Margin="5" Content="R" Command="Redo"/>
-                    <Button  Width="35" Margin="5" Content="Reset" Command="{Binding Path=ResetCommand}"/>
+                    <Button  Width="20" Height="20" Margin="5" Content="S" Command="{Binding Path=SaveCommand}"/>
+                    <Button  Width="20" Height="20" Margin="5" Content="U" Command="Undo" />
+                    <Button  Width="20" Height="20" Margin="5" Content="R" Command="Redo"/>
+                    <Button  Width="35" Height="20" Margin="5" Content="Reset" Command="{Binding Path=ResetCommand}"/>
                 </StackPanel>
             </GroupBox>
         </DockPanel>
 
-        <TabControl Height="450" HorizontalAlignment="Left" Name="TabMain" VerticalAlignment="Top"  Grid.Row="1"  Margin="5" >
-            <TabItem Header="Standard Rules" Name="TabStandardRules">
-                <Grid>
+        <TabControl Height="450" HorizontalAlignment="Left" Name="TabMain" VerticalAlignment="Top"  Grid.Row="1"  Margin="5" BorderBrush="Transparent"  Background="White">
+            <TabItem Header="Standard Rules"   Name="TabStandardRules" Height="30" Style="{StaticResource Highlight2}" >
+                <Grid >                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0*" />
                         <RowDefinition Height="339*" />
                     </Grid.RowDefinitions>
-                    <TabControl Height="410" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControl2" VerticalAlignment="Top" TabStripPlacement="Left" Grid.Row="1" Width="739">
-                       
-                        <TabControl.Resources>                            
-                            <Color x:Key="MouseOverTabBackground">#FFDEDEDE</Color>
-                            <SolidColorBrush x:Key="MouseOverTabBackgroundBrush" Color="{StaticResource MouseOverTabBackground}" />
-                            <Color x:Key="SelectedTabBackground">#D8FFD9</Color>
-                            <SolidColorBrush x:Key="SelectedTabBackgroundBrush" Color="{StaticResource SelectedTabBackground}" />
-                            <Style TargetType="{x:Type TabItem}" >                               
-                                <Setter Property="Foreground" Value="Black" />
-                                <!--<Setter Property="FontFamily" Value="{StaticResource HeaderFontFamily}" />-->
-                                <Setter Property="Padding" Value="5" />
-                                <!--<Setter Property="Margin" Value="5"/>-->
-                                <Setter Property="Width" Value="300"/>
-                                <!--<Setter Property="TextBlock.HorizontalAlignment" Value="Right"/>-->
-                                <Setter Property="BorderBrush" Value="{x:Null}" />
-                                <Setter Property="Background" Value="White" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type TabItem}">
-                                            <Grid SnapsToDevicePixels="true">
-                                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0"
-                                                    Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
-                                                    <ContentPresenter x:Name="Content" ContentSource="Header" HorizontalAlignment="Left"
-                                                    RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"                           
-                                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" >
-                                                        <!--<ContentPresenter.Content>
-                                                            <StackPanel Orientation="Horizontal" Margin="0">
-                                                                <Ellipse Fill="Red" Width="10" Height="10"/>
-                                                                <Label Name="d" Content="{Binding }"/>
-                                                            </StackPanel>
-                                                        </ContentPresenter.Content>-->
-                                                    </ContentPresenter>
-                                                </Border>
-                                            </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsSelected" Value="true">
-                                                    <Setter Property="Panel.ZIndex" Value="1" />
-                                                    <Setter Property="Background"
-                                                     Value="{StaticResource SelectedTabBackgroundBrush}" />
-                                                    <Setter Property="Foreground" Value="Black" />
-                                                </Trigger>
-                                                <MultiTrigger>
-                                                    <MultiTrigger.Conditions>
-                                                        <Condition Property="IsSelected" Value="false" />
-                                                        <Condition Property="IsMouseOver" Value="true" />
-                                                    </MultiTrigger.Conditions>
-                                                    <Setter Property="Background"
-                                                        Value="{StaticResource MouseOverTabBackgroundBrush}" />
-                                                </MultiTrigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>                    
-                        </TabControl.Resources>
-
-                        <TabItem  Name="TabPackage">
+                    <TabControl Height="460" HorizontalAlignment="Left" Margin="0"  VerticalAlignment="Top" TabStripPlacement="Left" Grid.Row="1" Width="745" BorderBrush="Transparent" ItemContainerStyle="{StaticResource Highlight}"   Background="White">
+   
+                        <TabItem  Name="TabPackage" >
                             <TabItem.Header>                               
                                 <StackPanel Orientation="Horizontal" Margin="0">                                   
                                     <Ellipse Fill="Red" Width="10" Height="10"/>
-                                    <Label Name="d" Content="{Binding PackageViewModel.RuleNameToDisplay}"/>
+                                    <Label  Content="{Binding PackageViewModel.RuleNameToDisplay}" Margin="5" FontWeight="Bold"/>
                                 </StackPanel>
                             </TabItem.Header>
                             <Grid>
@@ -118,21 +177,27 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
-                                    <TabItem Header="Source Value" Width="80">
+                                <TabControl Height="350" HorizontalAlignment="Left" Margin="0"  VerticalAlignment="Top" Width="430" TabStripPlacement="Bottom" Grid.Row="1" BorderBrush="#FF00AEEF">
+                                    <TabItem Header="Source Value" Width="140" Style="{StaticResource Highlight}" Padding="5">
                                         <Views:PackageView Margin="5,10,5,5" DataContext="{Binding PackageViewModel}" />
                                     </TabItem>
-                                    <TabItem Header="Evaluated" Width="80">
+                                    <TabItem Header="Evaluated" Width="140" Style="{StaticResource Highlight}" Padding="5">
                                         <Views:PackageView Margin="5,10,5,5" DataContext="{Binding  PackageViewModel.ValuePackageViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
-                                    <TabItem Header="Package"  Width="80">
+                                    <TabItem Header="Package"  Width="140" Style="{StaticResource Highlight}" Padding="5">
                                         <TextBlock Text="{Binding PackageViewModel.ValuePackageViewModel.SourceString}"/>
                                     </TabItem>
                                 </TabControl>
                             </Grid>
                         </TabItem>
                        
-                        <TabItem Header="Metadata" Name="TabMetadata">
+                        <TabItem  Name="TabMetadata">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <Ellipse Fill="Green" Width="10" Height="10"/>
+                                    <Label  Content="Metadata" Margin="5"/>
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -152,7 +217,13 @@
                             </Grid>
                         </TabItem>
                        
-                        <TabItem Header="Manifest" Name="TabManifest">
+                        <TabItem  Name="TabManifest">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <Ellipse Fill="Red" Width="10" Height="10"/>
+                                    <Label  Content="Manifest" FontWeight="Bold" Margin="5"/>
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -171,13 +242,19 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Files" Name="TabFiles">                          
-                           <Grid>
+                        <TabItem  Name="TabFiles">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <Ellipse Fill="Red" Width="10" Height="10"/>
+                                    <Label  Content="Files" FontWeight="Bold" Margin="5"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="0*" />
                                         <RowDefinition Height="359*" />
                                     </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1" >
                                         <TabItem Header="Source Value" >
                                             <Views:Files DataContext="{Binding FilesViewModel}" Margin="5,10,5,5"/>
                                         </TabItem>
@@ -189,7 +266,13 @@
                                 </Grid>
                           
                         </TabItem>
-                        <TabItem Header="Package Composition" Name="TabPackageComposition" >
+                        <TabItem  Name="TabPackageComposition" >
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <Ellipse Fill="Red" Width="10" Height="10" />
+                                    <Label  Content="Package Composition" FontWeight="Bold" Margin="5"/>
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -208,13 +291,19 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Requires" Name="TabRequires" >
+                        <TabItem  Name="TabRequires" >
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <Ellipse Fill="Green" Width="10" Height="10"/>
+                                    <Label  Content="Requires" FontWeight="Bold" Margin="5"/>
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="415" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="420" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:EditCollectionsUC IsEnabled="True" DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="SourceValueTemplate"/>                                      
                                     </TabItem>
@@ -227,7 +316,13 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Signing" Name="TabSigning" >                          
+                        <TabItem  Name="TabSigning" >
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <Ellipse Fill="Red" Width="10" Height="10"/>
+                                    <Label  Content="Signing" Margin="5"/>
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -247,13 +342,19 @@
                             </Grid>
                         </TabItem>
 
-                        <TabItem Header="Define" Name="TabDefine">
+                        <TabItem  Name="TabDefine">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <Ellipse Fill="Red" Width="10" Height="10"/>
+                                    <Label  Content="Define" Margin="5"/>
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="360" HorizontalAlignment="Left" Margin="0"  VerticalAlignment="Top" Width="430" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:EditCollectionsUC IsEnabled="True"  DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineSourceValueTemplate"/>                                      
                                     </TabItem>
@@ -266,7 +367,13 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="License" Name="TabLicense" >
+                        <TabItem  Name="TabLicense" >
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <Ellipse Fill="Green" Width="10" Height="10"/>
+                                    <Label  Content="License" Margin="5"/>
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -285,7 +392,13 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Compatibility Policy" Name="TabCompatibilityPolicy" >
+                        <TabItem  Name="TabCompatibilityPolicy" >
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <Ellipse Fill="Red" Width="10" Height="10"/>
+                                    <Label  Content="Compatibility Policy" Margin="5"/>
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
@@ -307,7 +420,7 @@
                     </TabControl>
                 </Grid>
             </TabItem>
-            <TabItem Header="Package Roles rules" Name="TabPackageRolesRules">               
+            <TabItem Header="Package Roles rules" Name="TabPackageRolesRules" Style="{StaticResource Highlight2}">               
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0*" />
@@ -363,23 +476,68 @@
                     </TabControl>
                     </Grid>
                 </TabItem>
-            <TabItem Header="Custom Rules" Name="TabCustomRules">
+            <TabItem Header="Custom Rules" Name="TabCustomRules" Style="{StaticResource Highlight2}">
                 <Grid />
             </TabItem>
         </TabControl>
         
-        <DockPanel Grid.Row="2" Margin="5"   FlowDirection="LeftToRight" Height="50">
-            <GroupBox >
+        <DockPanel Grid.Row="2" Grid.RowSpan="2" Margin="5"   FlowDirection="LeftToRight" Height="150">
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*"  />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0">
                 <DockPanel>                 
                     <TextBlock TextWrapping="Wrap" Text="{Binding  HelpForFocusedElement, ElementName=debugFocusedElement}"/>
                 </DockPanel>               
-            </GroupBox>         
-        </DockPanel>
-        <DockPanel Grid.Row="3" Margin="5"   FlowDirection="LeftToRight" Height="50">
-            <ListBox  Name="ErrorsList" 
+            </GroupBox>
+                <GridSplitter 
+            ResizeDirection="Rows" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2"
+            Grid.Row="1"
+            Width="Auto" 
+            Height="3" 
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch" 
+            Margin="0">
+                </GridSplitter>
+                <ListView Name="ErrorsList" Grid.Row="2"
       ItemsSource="{Binding ErrorsCollection,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Focusable="False"
                       ItemTemplate="{StaticResource ErrorTemplate}">
-            </ListBox>
+            </ListView>
+            </Grid>
+            <!--<Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Left" Grid.Column="0" />
+                <GridSplitter HorizontalAlignment="Right" 
+                  VerticalAlignment="Stretch" 
+                  Grid.Column="1" ResizeBehavior="PreviousAndNext"
+                  Width="5" Background="#FFBCBCBC"/>
+                <Label Content="Right" Grid.Column="2" />
+            </Grid>-->
+
+            <!--<GroupBox >
+                <DockPanel>                 
+                    <TextBlock TextWrapping="Wrap" Text="{Binding  HelpForFocusedElement, ElementName=debugFocusedElement}"/>
+                </DockPanel>               
+            </GroupBox>-->         
+        </DockPanel>
+        <DockPanel Grid.Row="3" Margin="5"   FlowDirection="LeftToRight" Height="0">
+            <!--<ListView Name="ErrorsList"
+      ItemsSource="{Binding ErrorsCollection,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Focusable="False"
+                      ItemTemplate="{StaticResource ErrorTemplate}">
+            </ListView>-->
         </DockPanel>
     </Grid>
 </Window>
