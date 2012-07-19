@@ -39,7 +39,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             if(e.Action==NotifyCollectionChangedAction.Remove)
             {
                 string itemToRemove = ((ItemViewModel) e.OldItems[0]).Label;
-                MainWindowViewModel.Instance.SearchAll(itemToRemove);
+                MainWindowViewModel.Instance.SearchForAllUsings(itemToRemove);
             }
 
             else if (e.Action==NotifyCollectionChangedAction.Add)

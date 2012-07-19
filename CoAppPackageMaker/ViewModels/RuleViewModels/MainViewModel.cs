@@ -53,20 +53,32 @@ namespace CoAppPackageMaker.ViewModels.Base
         private PackageReader _reader;
 
         
-        public void SearchAll(string definePropertyName)
+        public void SearchForAllUsings(string definePropertyName)
         {
+
+            
+            ////////////////
             var allProp = AllViewModels.SelectMany(item => item.Search(definePropertyName));
             foreach (Tuple<string, string> tuple in allProp)
             {
+                //to remove everything before adding?
                 ErrorsCollection.Add(new ErrorViewModel() { ErrorHeader = definePropertyName,ErrorDetails = String.Format("{0} is used in {1} rule for {2}",definePropertyName,tuple.Item1,tuple.Item2) });
                     
             }
        //a propety have been changed, for ex rachitecture in Pack- to remove the warning
-            //how to refresh all bindings?
-            //this.PackageViewModel.OnPropertyChanged("Name");
-            //this.PackageViewModel.OnPropertyChanged("Architecture");
-            //this.LicenseViewModel.OnPropertyChanged("License");
-           
+           RefreshAllBindings();
+        }
+
+        private void RefreshAllBindings()
+        {
+            foreach (ExtraPropertiesForCollectionsViewModelBase viewModel in AllViewModels)
+            {
+                foreach (var property in viewModel.GetType().GetProperties())
+                {
+                    viewModel.OnPropertyChanged(property.Name);
+                }
+
+            }
         }
 
         public void RemoveError(string errorHeader)

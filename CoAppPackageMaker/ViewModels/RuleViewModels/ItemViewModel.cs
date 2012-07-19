@@ -22,6 +22,11 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _label; }
             set
             {
+                if(MainWindowViewModel.Instance!=null)
+                {
+                    MainWindowViewModel.Instance.RemoveError(_label);
+                }
+               
                 DefaultChangeFactory.OnChanging(this, "Label", _label, value);
                 _label = value;
                 OnPropertyChanged("Label");

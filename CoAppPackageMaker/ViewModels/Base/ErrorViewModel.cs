@@ -20,9 +20,6 @@ namespace CoAppPackageMaker.ViewModels.Base
         }
     }
 
-
-    //public string ErrorHeader { get; set; }
-
     public string ErrorDetails { get; set; }
 }
 }

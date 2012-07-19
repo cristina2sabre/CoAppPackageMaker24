@@ -194,6 +194,7 @@ namespace CoAppPackageMaker.ViewModels
                 }
 
                 this.ValuePackageViewModel.SourceString = _reader.GetRulesSourceStringPropertyValueByName(Package);
+             
             }
         
     }

@@ -68,12 +68,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         public void Remove()
         {
 
-            //if (MainWindowViewModel.Instance != null)
-            //{
-
-            //    MainWindowViewModel.Instance.SearchAll(this.SelectedItem.Label);
-
-            //}
+           
            
             this.EditableItems.Remove(this.SelectedItem);
            

@@ -2,8 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"            
         xmlns:Views="clr-namespace:CoAppPackageMaker.Views"    
-        xmlns:local="clr-namespace:CoAppPackageMaker.Temp" Title="CoAppMaker"      
-        Height="780" Width="675"
+        xmlns:local="clr-namespace:CoAppPackageMaker.Temp"
+        xmlns:ViewModels="clr-namespace:CoAppPackageMaker.ViewModels" Title="CoAppMaker"      
+        Height="700" Width="775" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" >  
     <Window.CommandBindings>
         <CommandBinding Command="Undo" Executed="Undo_Executed" CanExecute="Undo_CanExecute" />
@@ -11,6 +12,7 @@
     </Window.CommandBindings>
     
     <Window.Resources>
+       
         <DataTemplate x:Key="ErrorTemplate">
             <StackPanel Orientation="Horizontal">
                 <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding ErrorHeader , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Width="170" ></TextBox>
@@ -26,12 +28,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <local:DebugFocusedElementProxy x:Name="debugFocusedElement"/>
-        <DockPanel Grid.Row="0" Margin="5"   FlowDirection="LeftToRight" Height="50">
+        <DockPanel Grid.Row="1" Margin="5,-25,5,5"   FlowDirection="LeftToRight" Height="50" VerticalAlignment="Top">
+            <Button Width="40" HorizontalAlignment="Right" Margin="310,5,5,5" Background="Transparent" BorderBrush="Transparent" Content="Hello world"/>
            
-            <GroupBox Margin="5" HorizontalAlignment="Right" >
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
-                    
-                   
+                <GroupBox Margin="5" HorizontalAlignment="Right" >
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">                  
                     <Button  Width="20" Margin="5" Content="S" Command="{Binding Path=SaveCommand}"/>
                     <Button  Width="20" Margin="5" Content="U" Command="Undo" />
                     <Button  Width="20" Margin="5" Content="R" Command="Redo"/>
@@ -40,28 +41,91 @@
             </GroupBox>
         </DockPanel>
 
-        <TabControl Height="450" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="639" Grid.Row="1"  Margin="5" >
-            <TabItem Header="Standard Rules" Name="tabItem1">
+        <TabControl Height="450" HorizontalAlignment="Left" Name="TabMain" VerticalAlignment="Top"  Grid.Row="1"  Margin="5" >
+            <TabItem Header="Standard Rules" Name="TabStandardRules">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0*" />
                         <RowDefinition Height="339*" />
                     </Grid.RowDefinitions>
-                    <TabControl Height="410" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControl2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">
-                        <TabItem Header="Package" Name="TabPackage">
+                    <TabControl Height="410" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControl2" VerticalAlignment="Top" TabStripPlacement="Left" Grid.Row="1" Width="739">
+                       
+                        <TabControl.Resources>                            
+                            <Color x:Key="MouseOverTabBackground">#FFDEDEDE</Color>
+                            <SolidColorBrush x:Key="MouseOverTabBackgroundBrush" Color="{StaticResource MouseOverTabBackground}" />
+                            <Color x:Key="SelectedTabBackground">#D8FFD9</Color>
+                            <SolidColorBrush x:Key="SelectedTabBackgroundBrush" Color="{StaticResource SelectedTabBackground}" />
+                            <Style TargetType="{x:Type TabItem}" >                               
+                                <Setter Property="Foreground" Value="Black" />
+                                <!--<Setter Property="FontFamily" Value="{StaticResource HeaderFontFamily}" />-->
+                                <Setter Property="Padding" Value="5" />
+                                <!--<Setter Property="Margin" Value="5"/>-->
+                                <Setter Property="Width" Value="300"/>
+                                <!--<Setter Property="TextBlock.HorizontalAlignment" Value="Right"/>-->
+                                <Setter Property="BorderBrush" Value="{x:Null}" />
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type TabItem}">
+                                            <Grid SnapsToDevicePixels="true">
+                                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0"
+                                                    Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter x:Name="Content" ContentSource="Header" HorizontalAlignment="Left"
+                                                    RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"                           
+                                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" >
+                                                        <!--<ContentPresenter.Content>
+                                                            <StackPanel Orientation="Horizontal" Margin="0">
+                                                                <Ellipse Fill="Red" Width="10" Height="10"/>
+                                                                <Label Name="d" Content="{Binding }"/>
+                                                            </StackPanel>
+                                                        </ContentPresenter.Content>-->
+                                                    </ContentPresenter>
+                                                </Border>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="true">
+                                                    <Setter Property="Panel.ZIndex" Value="1" />
+                                                    <Setter Property="Background"
+                                                     Value="{StaticResource SelectedTabBackgroundBrush}" />
+                                                    <Setter Property="Foreground" Value="Black" />
+                                                </Trigger>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="IsSelected" Value="false" />
+                                                        <Condition Property="IsMouseOver" Value="true" />
+                                                    </MultiTrigger.Conditions>
+                                                    <Setter Property="Background"
+                                                        Value="{StaticResource MouseOverTabBackgroundBrush}" />
+                                                </MultiTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>                    
+                        </TabControl.Resources>
+
+                        <TabItem  Name="TabPackage">
+                            <TabItem.Header>                               
+                                <StackPanel Orientation="Horizontal" Margin="0">                                   
+                                    <Ellipse Fill="Red" Width="10" Height="10"/>
+                                    <Label Name="d" Content="{Binding PackageViewModel.RuleNameToDisplay}"/>
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
-                                    <TabItem Header="Source Value" >
+                                <TabControl Height="310" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
+                                    <TabItem Header="Source Value" Width="80">
                                         <Views:PackageView Margin="5,10,5,5" DataContext="{Binding PackageViewModel}" />
                                     </TabItem>
-                                    <TabItem Header="Evaluated">
+                                    <TabItem Header="Evaluated" Width="80">
                                         <Views:PackageView Margin="5,10,5,5" DataContext="{Binding  PackageViewModel.ValuePackageViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
-                                    <TabItem Header="Package" >
+                                    <TabItem Header="Package"  Width="80">
                                         <TextBlock Text="{Binding PackageViewModel.ValuePackageViewModel.SourceString}"/>
                                     </TabItem>
                                 </TabControl>
@@ -74,7 +138,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400"  TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:MetadataView  Margin="5,10,5,5" DataContext="{Binding MetadataViewModel.SourceMetadataViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
@@ -88,13 +152,13 @@
                             </Grid>
                         </TabItem>
                        
-                        <TabItem Header="Manifest" Name="tabItem7">
+                        <TabItem Header="Manifest" Name="TabManifest">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:ManifestView IsEnabled="True" Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
                                     </TabItem>
@@ -107,13 +171,13 @@
                                 </TabControl>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Files" Name="tabItem8">                          
+                        <TabItem Header="Files" Name="TabFiles">                          
                            <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="0*" />
                                         <RowDefinition Height="359*" />
                                     </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
                                         <TabItem Header="Source Value" >
                                             <Views:Files DataContext="{Binding FilesViewModel}" Margin="5,10,5,5"/>
                                         </TabItem>
@@ -125,13 +189,13 @@
                                 </Grid>
                           
                         </TabItem>
-                        <TabItem Header="Package Composition" Name="tabItem9" >
+                        <TabItem Header="Package Composition" Name="TabPackageComposition" >
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:PackageComposition Margin="5,10,5,5" DataContext="{Binding PackageCompositionViewModel.SourcePackageCompositionViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </TabItem>
@@ -150,7 +214,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="415" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:EditCollectionsUC IsEnabled="True" DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="SourceValueTemplate"/>                                      
                                     </TabItem>
@@ -169,7 +233,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:SigningView  IsEnabled="True"  Margin="5,10,5,5" DataContext="{Binding SigningViewModel.SourceSigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </TabItem>
@@ -189,7 +253,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:EditCollectionsUC IsEnabled="True"  DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineSourceValueTemplate"/>                                      
                                     </TabItem>
@@ -208,7 +272,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="415" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:LicenseView Margin="5,10,5,5" DataContext="{Binding LicenseViewModel}"/>
                                     </TabItem>
@@ -227,7 +291,7 @@
                                     <RowDefinition Height="0*" />
                                     <RowDefinition Height="359*" />
                                 </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
                                     <TabItem Header="Source Value" >
                                         <Views:CompatibilityPolicy Margin="5,10,5,5" DataContext="{Binding CompatibilityPolicy.SourceValueCompatibilityPolicyViewModel}"/>
                                     </TabItem>
@@ -243,7 +307,7 @@
                     </TabControl>
                 </Grid>
             </TabItem>
-            <TabItem Header="Package Roles rules" Name="tabItem2">               
+            <TabItem Header="Package Roles rules" Name="TabPackageRolesRules">               
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0*" />
@@ -299,15 +363,14 @@
                     </TabControl>
                     </Grid>
                 </TabItem>
-            <TabItem Header="Custom Rules" Name="tabItem3">
+            <TabItem Header="Custom Rules" Name="TabCustomRules">
                 <Grid />
             </TabItem>
         </TabControl>
         
         <DockPanel Grid.Row="2" Margin="5"   FlowDirection="LeftToRight" Height="50">
             <GroupBox >
-                <DockPanel>
-                    <!--<TextBlock TextWrapping="Wrap" Text="{Binding FocusedElementDescription, ElementName=debugFocusedElement}" Height="30" />-->
+                <DockPanel>                 
                     <TextBlock TextWrapping="Wrap" Text="{Binding  HelpForFocusedElement, ElementName=debugFocusedElement}"/>
                 </DockPanel>               
             </GroupBox>         
