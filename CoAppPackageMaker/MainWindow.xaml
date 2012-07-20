@@ -5,18 +5,21 @@
         xmlns:local="clr-namespace:CoAppPackageMaker.Temp"
         Title="CoAppMaker"      
         Height="700" Width="775" ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen" >  
+        WindowStartupLocation="CenterScreen">  
     <Window.CommandBindings>
         <CommandBinding Command="Undo" Executed="Undo_Executed" CanExecute="Undo_CanExecute" />
         <CommandBinding Command="Redo" Executed="Redo_Executed" CanExecute="Redo_CanExecute" />
     </Window.CommandBindings>
     
     <Window.Resources>
+        
+        
+        
         <Color x:Key="MouseOverTabBackground">#FFDEDEDE</Color>
         <SolidColorBrush x:Key="MouseOverTabBackgroundBrush" Color="{StaticResource MouseOverTabBackground}" />
         <Color x:Key="SelectedTabBackground">#D8FFD9</Color>
         <SolidColorBrush x:Key="SelectedTabBackgroundBrush" Color="{StaticResource SelectedTabBackground}" />
-        <Style TargetType="{x:Type TabItem}" x:Key="Highlight">
+        <Style TargetType="{x:Type TabItem}" x:Key="MainTabItem">
             <Setter Property="Foreground" Value="Black" />
             <!--<Setter Property="FontFamily" Value="{StaticResource HeaderFontFamily}" />-->
             <Setter Property="Padding" Value="0" />
@@ -66,13 +69,57 @@
             </Setter>
         </Style>
 
-        <SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="#919B9C"/>
-      
+        <Style TargetType="{x:Type TabItem}" x:Key="ValueSourceStringTab">
+            <Setter Property="Foreground" Value="Black" />
+            <!--<Setter Property="FontFamily" Value="{StaticResource HeaderFontFamily}" />-->
+            <Setter Property="Padding" Value="5" />
+            <!--<Setter Property="Margin" Value="5"/>-->
+            <Setter Property="Width" Value="144.3"/>
+            <!--<Setter Property="TextBlock.HorizontalAlignment" Value="Right"/>-->
+            <Setter Property="BorderBrush" Value="{x:Null}" />
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid SnapsToDevicePixels="true">
+                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0"
+                                                    Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter x:Name="Content" ContentSource="Header" HorizontalAlignment="Left"
+                                                    RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"                           
+                                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" >
+                                    
+                                </ContentPresenter>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                                <Setter Property="Background"
+                                                     Value="{StaticResource SelectedTabBackgroundBrush}" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="false" />
+                                    <Condition Property="IsMouseOver" Value="true" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background"
+                                                        Value="{StaticResource MouseOverTabBackgroundBrush}" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="#919B9C"/>      
         <LinearGradientBrush x:Key="TabItemNormalBackground" EndPoint="0,1" StartPoint="0,0">
             <GradientStop Color="#FFFFFFFF" Offset="0"/>
             <GradientStop Color="#FFECEBE6" Offset="1"/>
         </LinearGradientBrush>
-        <Style TargetType="{x:Type TabItem}" x:Key="Highlight2">          
+        
+        <Style TargetType="{x:Type TabItem}" x:Key="BlueTabItem">          
             <Setter Property="MinWidth" Value="100" />
             <Setter Property="Padding" Value="10,2,10,2"/>
             <Setter Property="BorderThickness" Value="1,1,0,0"/>
@@ -90,23 +137,20 @@
 									BorderThickness="1,0,1,0"
 									Padding="4"
 									Background="#FF00AEEF"
-									BorderBrush="White"
-										>
+									BorderBrush="White">
                                     <ContentPresenter x:Name="contentPresenter" ContentSource="Header" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
                                 </Border>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true" SourceName="contentPresenter">
-                                <Setter Property="Cursor" Value="Hand"/>
-                               
+                                <Setter Property="Cursor" Value="Hand"/>                               
                             </Trigger>
                             <Trigger Property="IsSelected" Value="true">
                                 <Setter Property="Panel.ZIndex" Value="1"/>
                                 <Setter Property="Background" TargetName="border" Value="White"/>
                                 <Setter Property="Foreground" Value="#FF00AEEF"/>
-                                <Setter Property="OpacityMask" TargetName="contentPresenter" Value="{x:Null}"/>
-                               
+                                <Setter Property="OpacityMask" TargetName="contentPresenter" Value="{x:Null}"/>                               
                             </Trigger>
                             <Trigger Property="TabStripPlacement" Value="Bottom"/>
                             <Trigger Property="TabStripPlacement" Value="Left"/>
@@ -114,56 +158,74 @@
                             <Trigger Property="IsEnabled" Value="false">
                                 <!--<Setter Property="FontWeight" Value="Bold"/>-->
                                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            </Trigger>
-                          
+                            </Trigger>                          
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
+        <Style TargetType="{x:Type TabControl}" x:Key="SubTabContorolStyle">
+            <Setter Property="Height" Value="390"/>
+            <Setter Property="Width" Value="437"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="TabStripPlacement" Value="Bottom"/>
+            <Setter Property="BorderBrush" Value="#FF00AEEF"/>           
+        </Style>
 
         <DataTemplate x:Key="ErrorTemplate">
             <StackPanel Orientation="Horizontal">
-                <Label Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Content="{Binding ErrorHeader , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Width="170" />
+                <Image  Margin="5,2,5,5" Stretch="Uniform"  Source="Icons\eventlogWarn.ico"/>
+                <Label Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Content="{Binding ErrorHeader , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Width="100" />
                 <Label Margin="0,2,0,0" BorderBrush="Transparent" Content="{Binding ErrorDetails , Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" />
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>          
-            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <local:DebugFocusedElementProxy x:Name="debugFocusedElement"/>
-        <DockPanel Grid.Row="1" Margin="0,-20,0,0" Background="#FFe0f2e0"  FlowDirection="LeftToRight" Height="52" VerticalAlignment="Top">
-            <!--<Button Width="40" HorizontalAlignment="Right" Margin="315,0,0,0" Background="Transparent" BorderBrush="Transparent" Content="Hello world"  Foreground="AliceBlue"/>-->
-            <GroupBox Margin="415,0,0,0">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">                    
-                    <Button  Width="20" Height="20" Margin="5" Content="New" />
-                    <Button  Width="35" Height="20" Margin="5" Content="Open" />
+        <DockPanel Grid.Row="1" Margin="0,-15,0,0" Background="#D8FFD9"  FlowDirection="LeftToRight" Height="52" VerticalAlignment="Top">           
+            <!--<GroupBox Margin="335,10,5,0">-->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="335,0,0,0">
+                    <Button  Width="25" Height="25" Margin="5" BorderBrush="Transparent" Background="Transparent" ToolTip="New">
+                        <Image Stretch="Uniform"  Source="Icons/NewDocumentHS.png" />
+                    </Button>
+                    <Button  Width="25" Height="25" Margin="5" BorderBrush="Transparent" Background="Transparent" ToolTip="Open a file">
+                        <Image Stretch="Uniform"  Source="Icons/OpenFile.png" />
+                    </Button>
                 </StackPanel>
-            </GroupBox>
-            <GroupBox Margin="5,2,5,2" HorizontalAlignment="Right" >
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">                  
-                    <Button  Width="20" Height="20" Margin="5" Content="S" Command="{Binding Path=SaveCommand}"/>
-                    <Button  Width="20" Height="20" Margin="5" Content="U" Command="Undo" />
-                    <Button  Width="20" Height="20" Margin="5" Content="R" Command="Redo"/>
-                    <Button  Width="35" Height="20" Margin="5" Content="Reset" Command="{Binding Path=ResetCommand}"/>
-                </StackPanel>
-            </GroupBox>
+            <!--</GroupBox>-->
+            <!--<GroupBox Margin="5,2,5,2" HorizontalAlignment="Right" Background="White">-->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="5,2,5,2">
+                    <Button  Width="25" Height="25" Margin="5" Command="{Binding Path=SaveCommand}" BorderBrush="Transparent" Background="Transparent" ToolTip="Save">
+                    <Image Stretch="Uniform"  Source="Icons/SaveHS.bmp" />
+                    </Button>
+                <Button  Width="25" Height="25" Margin="5"  Command="Undo" BorderBrush="Transparent" Background="Transparent" ToolTip="Undo">
+                    <Image Stretch="Uniform"  Source="Icons/Undo.ico" />
+                    </Button>
+                <Button  Width="25" Height="25" Margin="5"  Command="Redo" BorderBrush="Transparent" Background="Transparent" ToolTip="Redo">
+                        <Image Stretch="Uniform"  Source="Icons/Redo.ico" />
+                    </Button>
+                <Button  Width="25" Height="25" Margin="5"  Command="{Binding Path=ResetCommand}" BorderBrush="Transparent" Background="Transparent" ToolTip="Reset">
+                    <Image Stretch="Uniform"  Source="Icons/Delete_black.png" />
+                </Button>
+
+            </StackPanel>
+            <!--</GroupBox>-->
         </DockPanel>
 
-        <TabControl Height="450" HorizontalAlignment="Left" Name="TabMain" VerticalAlignment="Top"  Grid.Row="1"  Margin="5" BorderBrush="Transparent"  Background="White">
-            <TabItem Header="Standard Rules"   Name="TabStandardRules" Height="30" Style="{StaticResource Highlight2}" >
-                <Grid >                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0*" />
-                        <RowDefinition Height="339*" />
-                    </Grid.RowDefinitions>
-                    <TabControl Height="460" HorizontalAlignment="Left" Margin="0"  VerticalAlignment="Top" TabStripPlacement="Left" Grid.Row="1" Width="745" BorderBrush="Transparent" ItemContainerStyle="{StaticResource Highlight}"   Background="White">
+        <TabControl Grid.Row="1" Name="TabMain"  Margin="0" HorizontalAlignment="Center" VerticalAlignment="Top" BorderBrush="Transparent" Background="White">
+            <!--Standard Rules Tab-->
+            <TabItem  Name="TabStandardRules" Height="30" Header="Standard Rules" Style="{StaticResource BlueTabItem}" >
+                <!--List of Rules Standard Rules-->
+                    <TabControl  HorizontalAlignment="Left" Margin="0"  VerticalAlignment="Top" TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">
    
                         <TabItem  Name="TabPackage" >
                             <TabItem.Header>                               
@@ -172,23 +234,19 @@
                                     <Label  Content="{Binding PackageViewModel.RuleNameToDisplay}" Margin="5" FontWeight="Bold"/>
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="350" HorizontalAlignment="Left" Margin="0"  VerticalAlignment="Top" Width="430" TabStripPlacement="Bottom" Grid.Row="1" BorderBrush="#FF00AEEF">
-                                    <TabItem Header="Source Value" Width="140" Style="{StaticResource Highlight}" Padding="5">
-                                        <Views:PackageView Margin="5,10,5,5" DataContext="{Binding PackageViewModel}" />
+
+                        <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
+                                    <TabItem Header="Source Value" >
+                                        <Views:PackageView Margin="5" DataContext="{Binding PackageViewModel}" />
                                     </TabItem>
-                                    <TabItem Header="Evaluated" Width="140" Style="{StaticResource Highlight}" Padding="5">
-                                        <Views:PackageView Margin="5,10,5,5" DataContext="{Binding  PackageViewModel.ValuePackageViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TabItem Header="Evaluated" >
+                                        <Views:PackageView Margin="5" DataContext="{Binding  PackageViewModel.ValuePackageViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
-                                    <TabItem Header="Package"  Width="140" Style="{StaticResource Highlight}" Padding="5">
+                                    <TabItem Header="Package"  >
                                         <TextBlock Text="{Binding PackageViewModel.ValuePackageViewModel.SourceString}"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                          
                         </TabItem>
                        
                         <TabItem  Name="TabMetadata">
@@ -198,23 +256,19 @@
                                     <Label  Content="Metadata" Margin="5"/>
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400"  TabStripPlacement="Bottom" Grid.Row="1">
+
+                        <TabControl Style="{StaticResource SubTabContorolStyle}"  ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:MetadataView  Margin="5,10,5,5" DataContext="{Binding MetadataViewModel.SourceMetadataViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Views:MetadataView  Margin="5" DataContext="{Binding MetadataViewModel.SourceMetadataViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:MetadataView Margin="5,10,5,5" DataContext="{Binding MetadataViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Views:MetadataView Margin="5" DataContext="{Binding MetadataViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBlock Text="{Binding MetadataViewModel.SourceString}"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                          
                         </TabItem>
                        
                         <TabItem  Name="TabManifest">
@@ -224,23 +278,20 @@
                                     <Label  Content="Manifest" FontWeight="Bold" Margin="5"/>
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
+
+
+                        <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:ManifestView IsEnabled="True" Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
+                                        <Views:ManifestView IsEnabled="True" Margin="5" DataContext="{Binding ManifestViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:ManifestView IsEnabled="False" Margin="5,10,5,5" DataContext="{Binding ManifestViewModel}"/>
+                                        <Views:ManifestView IsEnabled="False" Margin="5" DataContext="{Binding ManifestViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding ManifestViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                           
                         </TabItem>
                         <TabItem  Name="TabFiles">
                             <TabItem.Header>
@@ -249,21 +300,17 @@
                                     <Label  Content="Files" FontWeight="Bold" Margin="5"/>
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="0*" />
-                                        <RowDefinition Height="359*" />
-                                    </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1" >
+
+                        <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                         <TabItem Header="Source Value" >
-                                            <Views:Files DataContext="{Binding FilesViewModel}" Margin="5,10,5,5"/>
+                                            <Views:Files DataContext="{Binding FilesViewModel}" Margin="5"/>
                                         </TabItem>
                                       
                                         <TabItem Header="Package" >
                                         <TextBox Text="{Binding FilesViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
                                         </TabItem>
                                     </TabControl>
-                                </Grid>
+                               
                           
                         </TabItem>
                         <TabItem  Name="TabPackageComposition" >
@@ -273,23 +320,19 @@
                                     <Label  Content="Package Composition" FontWeight="Bold" Margin="5"/>
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
+
+                        <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:PackageComposition Margin="5,10,5,5" DataContext="{Binding PackageCompositionViewModel.SourcePackageCompositionViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        <Views:PackageComposition Margin="5" DataContext="{Binding PackageCompositionViewModel.SourcePackageCompositionViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:PackageComposition Margin="5,10,5,5" DataContext="{Binding  PackageCompositionViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Views:PackageComposition Margin="5" DataContext="{Binding  PackageCompositionViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBlock Text="{Binding PackageCompositionViewModel.SourceString}"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                         
                         </TabItem>
                         <TabItem  Name="TabRequires" >
                             <TabItem.Header>
@@ -298,12 +341,8 @@
                                     <Label  Content="Requires" FontWeight="Bold" Margin="5"/>
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="420" TabStripPlacement="Bottom" Grid.Row="1">
+
+                        <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
                                         <Views:EditCollectionsUC IsEnabled="True" DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="SourceValueTemplate"/>                                      
                                     </TabItem>
@@ -314,7 +353,7 @@
                                         <TextBox Text="{Binding RequiresViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                           
                         </TabItem>
                         <TabItem  Name="TabSigning" >
                             <TabItem.Header>
@@ -323,23 +362,19 @@
                                     <Label  Content="Signing" Margin="5"/>
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
+
+                        <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:SigningView  IsEnabled="True"  Margin="5,10,5,5" DataContext="{Binding SigningViewModel.SourceSigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        <Views:SigningView  IsEnabled="True"  Margin="5" DataContext="{Binding SigningViewModel.SourceSigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:SigningView IsEnabled="False" Margin="5,10,5,5" DataContext="{Binding  SigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Views:SigningView IsEnabled="False" Margin="5" DataContext="{Binding  SigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBlock Text="{Binding SigningViewModel.SourceString}"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                           
                         </TabItem>
 
                         <TabItem  Name="TabDefine">
@@ -349,12 +384,8 @@
                                     <Label  Content="Define" Margin="5"/>
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="360" HorizontalAlignment="Left" Margin="0"  VerticalAlignment="Top" Width="430" TabStripPlacement="Bottom" Grid.Row="1">
+
+                        <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
                                         <Views:EditCollectionsUC IsEnabled="True"  DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineSourceValueTemplate"/>                                      
                                     </TabItem>
@@ -365,7 +396,7 @@
                                         <TextBox Text="{Binding DefineViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                           
                         </TabItem>
                         <TabItem  Name="TabLicense" >
                             <TabItem.Header>
@@ -374,23 +405,19 @@
                                     <Label  Content="License" Margin="5"/>
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="415" TabStripPlacement="Bottom" Grid.Row="1">
+
+                        <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:LicenseView Margin="5,10,5,5" DataContext="{Binding LicenseViewModel}"/>
+                                        <Views:LicenseView Margin="5" DataContext="{Binding LicenseViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:LicenseView Margin="5,10,5,5" DataContext="{Binding LicenseViewModel.ValueLicenseViewModel}"/>
+                                        <Views:LicenseView Margin="5" DataContext="{Binding LicenseViewModel.ValueLicenseViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding LicenseViewModel.ValueLicenseViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                          
                         </TabItem>
                         <TabItem  Name="TabCompatibilityPolicy" >
                             <TabItem.Header>
@@ -399,42 +426,30 @@
                                     <Label  Content="Compatibility Policy" Margin="5"/>
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="400" TabStripPlacement="Bottom" Grid.Row="1">
+
+                        <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:CompatibilityPolicy Margin="5,10,5,5" DataContext="{Binding CompatibilityPolicy.SourceValueCompatibilityPolicyViewModel}"/>
+                                        <Views:CompatibilityPolicy Margin="5" DataContext="{Binding CompatibilityPolicy.SourceValueCompatibilityPolicyViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:CompatibilityPolicy Margin="5,10,5,5" DataContext="{Binding CompatibilityPolicy}"/>
+                                        <Views:CompatibilityPolicy Margin="5" DataContext="{Binding CompatibilityPolicy}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding CompatibilityPolicy.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                         
                         </TabItem>                       
                     </TabControl>
-                </Grid>
             </TabItem>
-            <TabItem Header="Package Roles rules" Name="TabPackageRolesRules" Style="{StaticResource Highlight2}">               
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0*" />
-                            <RowDefinition Height="339*" />
-                        </Grid.RowDefinitions>
-                    <TabControl Height="410" HorizontalAlignment="Left" Margin="6,6,0,0" Name="tabControlr2" VerticalAlignment="Top" Width="610" TabStripPlacement="Left" Grid.Row="1">              
+            <!--Package Roles Rules Tab-->
+            <TabItem Header="Package Roles rules" Name="TabPackageRolesRules" Style="{StaticResource BlueTabItem}">
+
+                <TabControl  HorizontalAlignment="Left" Margin="0"  VerticalAlignment="Top" TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">              
                             <TabItem Header="Application" Name="tabItem17" >
-                                
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+
+
+                        <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
                                         <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding ApplicationRoleViewModel}" />
                                     </TabItem>
@@ -446,16 +461,12 @@
                                         <TextBox Text="{Binding ApplicationRoleViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                           
                         </TabItem>
                         
                             <TabItem Header="Assembly" Name="tabItem18" >
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="359*" />
-                                </Grid.RowDefinitions>
-                                <TabControl Height="390" HorizontalAlignment="Left" Margin="6,6,0,0"  VerticalAlignment="Top" Width="450" TabStripPlacement="Bottom" Grid.Row="1">
+
+                        <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
                                         <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding AssemblyRoleViewModel}"/>
                                     </TabItem>
@@ -463,81 +474,90 @@
                                         <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding AssemblyRoleViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
-
                                         <TextBox Text="{Binding AssemblyRoleViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
-                            </Grid>
+                           
                         </TabItem>
-                        <TabItem Header="Developer library library" Name="tabItem19" >
-                            <!--<Views:AssemblyView Margin="5,10,5,5"/>-->
-                            <TextBlock Text="to add :headers, libraries, docs" />
+                        <TabItem Header="Developer library " Name="TabDeveloperLibrary" >                            
+                            <!--<TextBlock Text="to add :headers, libraries, docs" />-->
                         </TabItem>
                     </TabControl>
-                    </Grid>
+                 
                 </TabItem>
-            <TabItem Header="Custom Rules" Name="TabCustomRules" Style="{StaticResource Highlight2}">
-                <Grid />
+            <!--Custom Rules Tab-->
+            <TabItem Header="Custom Rules" Name="TabCustomRules" Style="{StaticResource BlueTabItem}">
+             
             </TabItem>
         </TabControl>
         
-        <DockPanel Grid.Row="2" Grid.RowSpan="2" Margin="5"   FlowDirection="LeftToRight" Height="150">
-            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Grid.ColumnDefinitions >
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*"  />
-                </Grid.ColumnDefinitions>
+        <DockPanel Grid.Row="2" Grid.RowSpan="2"   Margin="5,5,5,5"   FlowDirection="LeftToRight" >
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">               
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" MinHeight="25" MaxHeight="70"/>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />                  
                 </Grid.RowDefinitions>
-                <GroupBox Grid.Row="0">
-                <DockPanel>                 
-                    <TextBlock TextWrapping="Wrap" Text="{Binding  HelpForFocusedElement, ElementName=debugFocusedElement}"/>
-                </DockPanel>               
-            </GroupBox>
+                <GroupBox Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" BorderBrush="Black">                   
+                        <TextBlock   TextWrapping="Wrap" Text="{Binding  HelpForFocusedElement, ElementName=debugFocusedElement}" Margin="4"/>         
+                </GroupBox>
                 <GridSplitter 
-            ResizeDirection="Rows" 
-            Grid.Column="0" 
-            Grid.ColumnSpan="2"
-            Grid.Row="1"
-            Width="Auto" 
-            Height="3" 
-            HorizontalAlignment="Stretch" 
-            VerticalAlignment="Stretch" 
-            Margin="0">
-                </GridSplitter>
-                <ListView Name="ErrorsList" Grid.Row="2"
+                    ResizeDirection="Rows" 
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Width="Auto" 
+                    Height="3" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" Margin="0" BorderBrush="White">
+                    <!--Margin="2" BorderThickness="3" BorderBrush="red"-->
+                    
+                     </GridSplitter>
+                <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>                       
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Line Grid.Row="0"
+					        Stroke="Black" 
+					        StrokeThickness="2" 
+					        StrokeDashArray="1" 
+					        VerticalAlignment="Center" 
+					        HorizontalAlignment="Stretch"                  
+					        X1="0" 
+					        Y1="0" 
+					        X2="10000" 
+					        Y2="0"
+                            Margin="0"
+			        	/>
+                    <Grid Grid.Row="1">
+                        <Rectangle Grid.Row="1" HorizontalAlignment="Left"  Height="20"  VerticalAlignment="Center"	Width="780">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" Opacity="0.3">
+                                    <GradientStop Offset="0" Color="Red"/>
+                                    <GradientStop Offset="0.5" Color="White"/>
+                                    <GradientStop Offset="1" Color="Red"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock
+                                 Text="Error List"
+								 FontSize="12"
+							     HorizontalAlignment="Left" 
+								 VerticalAlignment="Center"										         
+								 Margin="5"
+                                 Foreground="White"		          
+							/>
+                    </Grid>
+                    <ListView Name="ErrorsList" Grid.Row="2" Grid.ColumnSpan="2"
       ItemsSource="{Binding ErrorsCollection,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Focusable="False"
-                      ItemTemplate="{StaticResource ErrorTemplate}">
-            </ListView>
-            </Grid>
-            <!--<Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Content="Left" Grid.Column="0" />
-                <GridSplitter HorizontalAlignment="Right" 
-                  VerticalAlignment="Stretch" 
-                  Grid.Column="1" ResizeBehavior="PreviousAndNext"
-                  Width="5" Background="#FFBCBCBC"/>
-                <Label Content="Right" Grid.Column="2" />
-            </Grid>-->
+                      ItemTemplate="{StaticResource ErrorTemplate}" BorderBrush="LightGray">
+            </ListView>               
+                </Grid>
+            </Grid>      
 
-            <!--<GroupBox >
-                <DockPanel>                 
-                    <TextBlock TextWrapping="Wrap" Text="{Binding  HelpForFocusedElement, ElementName=debugFocusedElement}"/>
-                </DockPanel>               
-            </GroupBox>-->         
         </DockPanel>
-        <DockPanel Grid.Row="3" Margin="5"   FlowDirection="LeftToRight" Height="0">
-            <!--<ListView Name="ErrorsList"
-      ItemsSource="{Binding ErrorsCollection,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Focusable="False"
-                      ItemTemplate="{StaticResource ErrorTemplate}">
-            </ListView>-->
-        </DockPanel>
+       
     </Grid>
 </Window>

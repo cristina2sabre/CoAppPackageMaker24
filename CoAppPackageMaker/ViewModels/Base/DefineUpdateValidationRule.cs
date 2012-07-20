@@ -21,7 +21,7 @@ namespace CoAppPackageMaker.Views
         ///     
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            var validationResult = new ValidationResult(true, null);
+            var validationResult = new ValidationResult(false, null);
             //int searchListSize = MainWindowViewModel.Instance.SearchList.Count();
             //if (searchListSize > 0)
             //{
