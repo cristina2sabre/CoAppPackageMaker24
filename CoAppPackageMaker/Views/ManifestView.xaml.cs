@@ -23,6 +23,7 @@ namespace CoAppPackageMaker.Views
         {
             InitializeComponent();
             Loaded += MyLoadedRoutedEventHandler;
+           
         }
 
         void MyLoadedRoutedEventHandler(Object sender, RoutedEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -8,11 +9,13 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 using CoApp.Packaging;
 
 using CoAppPackageMaker.ViewModels.RuleViewModels;
 using MonitoredUndo;
+
 
 
 namespace CoAppPackageMaker.ViewModels.Base
@@ -36,8 +39,41 @@ namespace CoAppPackageMaker.ViewModels.Base
                 //_reader.Read(PathToFile);
                 //this._reader.Save("D:\\P\\COPKG\\test2.autopkg");
               LoadData();
+              _errorsCollection.CollectionChanged += (ErrorsCollection_CollectionChanged);
             }
         }
+
+        void ErrorsCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            HeaderColor = ErrorsCollection.Count != 0 ? Colors.Red : Colors.Green;
+            //if Erroor count is 0 1*0.3=initial opacity
+            HeaderOpacity = 1*(ErrorsCollection.Count*0.05+0.3);
+        }
+
+        private double _headerOpacity = 0.3;
+        public double HeaderOpacity
+        {
+            get { return _headerOpacity; }
+            set
+            {
+                _headerOpacity = value;
+                OnPropertyChanged("HeaderOpacity");
+            }
+        }
+
+        
+        private Color _headerColor=Colors.Green;
+        public Color HeaderColor
+        {
+            get { return _headerColor; }
+            set
+            {
+                _headerColor = value;
+                OnPropertyChanged("HeaderColor");
+            }
+        }
+
+        
 
         private string _ruleNameSelectedItem;
         private ObservableCollection<string> _ruleNames;
@@ -61,9 +97,10 @@ namespace CoAppPackageMaker.ViewModels.Base
             var allProp = AllViewModels.SelectMany(item => item.Search(definePropertyName));
             foreach (Tuple<string, string> tuple in allProp)
             {
+               
                 //to remove everything before adding?
-                ErrorsCollection.Add(new ErrorViewModel() { ErrorHeader = definePropertyName,ErrorDetails = String.Format("{0} is used in {1} rule for {2}",definePropertyName,tuple.Item1,tuple.Item2) });
-                    
+                ErrorsCollection.Add(new Error() { ErrorHeader = definePropertyName,ErrorDetails = String.Format("{0} is used in {1} rule for {2}",definePropertyName,tuple.Item1,tuple.Item2) });
+                ErrorsCollection.Add(new Warning() { ErrorHeader = definePropertyName, ErrorDetails = String.Format("{0} is used in {1} rule for {2}", definePropertyName, tuple.Item1, tuple.Item2) });
             }
        //a propety have been changed, for ex rachitecture in Pack- to remove the warning
            RefreshAllBindings();
@@ -83,8 +120,16 @@ namespace CoAppPackageMaker.ViewModels.Base
 
         public void RemoveError(string errorHeader)
         {
-            var newErrorCollection = ErrorsCollection.Where(item => item.ErrorHeader != errorHeader);
-            ErrorsCollection = new ObservableCollection<ErrorViewModel>(newErrorCollection);
+            //var newErrorCollection = ErrorsCollection.Where(item => item.ErrorHeader != errorHeader);
+            //ErrorsCollection = new ObservableCollection<Error>(newErrorCollection);
+            var copy = new ObservableCollection<Error>(ErrorsCollection);
+            foreach (var item in copy)
+            {
+                if (item.ErrorHeader == errorHeader)
+                {
+                    ErrorsCollection.Remove(item);
+                }
+            }
         }
 
         public ObservableCollection<ExtraPropertiesForCollectionsViewModelBase> AllViewModels
@@ -135,8 +180,8 @@ namespace CoAppPackageMaker.ViewModels.Base
             }
         }
 
-        private ObservableCollection<ErrorViewModel> _errorsCollection = new ObservableCollection<ErrorViewModel>();
-        public ObservableCollection<ErrorViewModel> ErrorsCollection
+        private ObservableCollection<Error> _errorsCollection = new ObservableCollection<Error>();
+        public ObservableCollection<Error> ErrorsCollection
         {
             get { return _errorsCollection; }
             set
@@ -413,7 +458,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             {
                 try
                 {
-
+                    this.ErrorsCollection=new ObservableCollection<Error>();
                     LoadData();
                     UndoService.Current[this].Clear();
                     // ResetForm();

@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
@@ -15,6 +18,7 @@ namespace CoAppPackageMaker
         {
             InitializeComponent();
             this.DataContext = MainWindowViewModel.Instance;
+           
         }
 
 
@@ -84,5 +88,36 @@ namespace CoAppPackageMaker
 
 
         #endregion
+
+        //private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+
+        private void filterError_Click(object sender, RoutedEventArgs e)
+        {
+            var collectionView = CollectionViewSource.GetDefaultView(MainWindowViewModel.Instance.ErrorsCollection);
+            if ((bool)filterError.IsChecked && (bool)filterWarning.IsChecked)
+            {
+                collectionView.Filter = o =>  true;
+            }
+            else if (!(bool)filterError.IsChecked && !(bool)filterWarning.IsChecked)
+            {
+                collectionView.Filter = o => false;
+            }
+            else if ((bool)filterWarning.IsChecked)
+            {
+                collectionView.Filter = o => !(o is Warning) ;
+
+            }
+            else if ((bool)filterError.IsChecked)
+            {
+                collectionView.Filter = o => (o is Warning);
+            }
+            
+            collectionView.Refresh();
+        }
+
+       
     }
 }

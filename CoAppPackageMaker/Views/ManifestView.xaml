@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Views="clr-namespace:CoAppPackageMaker.Views" mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" >
     <UserControl.Resources>
         <DataTemplate x:Key="ManifestTemplate">
             <Expander  IsExpanded="False" Margin="5">
@@ -53,7 +53,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Assembly" Grid.Row="0" Margin="5"/>
                     <Label Content="Include" Grid.Row="1" Margin="5"/>
-                    <Views:EditCollectionsUC  Width="200" Grid.Column="1" Grid.Row="0" DataContext="{Binding  AssemblyCollection}" Height="100"  Margin="5" ListTemplate="ValueTemplate"/>
+                    <Views:EditCollectionsUC  Width="200" Grid.Column="1" Grid.Row="0" DataContext="{Binding  AssemblyCollection}" Height="100"  Margin="5" ListTemplate="ValueTemplate" />
                     <Views:EditCollectionsUC DataContext="{Binding  IncludeCollection}" Grid.Column="1" Grid.Row="1" Width="200" Height="100"  Margin="5" ListTemplate="ValueTemplate"/>
                 </Grid>
             </Expander>
@@ -63,9 +63,9 @@
     <DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
             <Button Width="20" Height="20" Margin="3"   Command="{Binding Path = RemoveCommand}" Content="-"/>
-            <Button Width="20" Height="20" Margin="3"  Command="{Binding Path = AddCommand}" Content="+"/>
+            <Button Name="btnAddManifest" Width="20" Height="20" Margin="3"  Command="{Binding Path = AddCommand}" Content="+"/>
         </StackPanel>
-        <ListBox Name="ListBoxManifestCollection"
+        <ListBox Name="ListBoxManifestCollection" Uid="123"
             ItemsSource="{Binding ManifestCollection}" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}">
         </ListBox>
     </DockPanel>

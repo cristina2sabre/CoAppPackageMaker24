@@ -61,6 +61,15 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If your files need to link to multiple other assemblies, one manifest[] section will be required for each other assembly..
+        /// </summary>
+        internal static string btnAddManifest {
+            get {
+                return ResourceManager.GetString("btnAddManifest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string CompatibilityPolicyMaximum {
@@ -115,7 +124,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to a cosmetic string that contains the version the author has assigned to the product. (ie, this can be &quot;1.0f&quot; instead of in the four-digit-version &quot;1.0.9.0&quot;..
         /// </summary>
         internal static string MetadataAuthorVersion {
             get {
@@ -124,7 +133,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to A URL pointing to the location of a given product&apos;s Bug Tracker..
         /// </summary>
         internal static string MetadataBugTracker {
             get {
@@ -133,7 +142,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to A full-text description of the software package..
         /// </summary>
         internal static string MetadataDescription {
             get {
@@ -142,7 +151,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to One or more license-references that specify the license for the package..
         /// </summary>
         internal static string MetadataLicenses {
             get {
@@ -151,7 +160,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to An integer value ranging from -100 (very unstable) to 100 (very stable) to indicate to consumers the relative stability of the contents of the package..
         /// </summary>
         internal static string MetadataStability {
             get {
@@ -160,7 +169,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to A short description of the package..
         /// </summary>
         internal static string MetadataSummary {
             get {
@@ -322,7 +331,16 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to If your package links to assemblies in another CoApp package, it may be necessary to embed a manifest into any files from this package which uses those other assemblies..
+        /// </summary>
+        internal static string TabManifest {
+            get {
+                return ResourceManager.GetString("TabManifest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The metadata rule contains additional cosmetic data about the contents of the package..
         /// </summary>
         internal static string TabMetadata {
             get {
@@ -336,6 +354,33 @@ namespace CoAppPackageMaker.Properties {
         internal static string TabPackage {
             get {
                 return ResourceManager.GetString("TabPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package Rule  Value.
+        /// </summary>
+        internal static string TabPackageEvaluated {
+            get {
+                return ResourceManager.GetString("TabPackageEvaluated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package Rule Source Value.
+        /// </summary>
+        internal static string TabPackageSourceValue {
+            get {
+                return ResourceManager.GetString("TabPackageSourceValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package Rule  Source String.
+        /// </summary>
+        internal static string TabPackageSourseString {
+            get {
+                return ResourceManager.GetString("TabPackageSourseString", resourceCulture);
             }
         }
         

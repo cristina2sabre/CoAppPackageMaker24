@@ -21,18 +21,22 @@ namespace CoAppPackageMaker.Views
         ///     
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            var validationResult = new ValidationResult(false, null);
+           
+            var validationResult = new ValidationResult(true, null);
             //int searchListSize = MainWindowViewModel.Instance.SearchList.Count();
             //if (searchListSize > 0)
             //{
-            //    BindingExpression bindingExpression = (value as BindingExpression);
-            //    if (bindingExpression != null)
-            //    {
-            //        string bindingName = bindingExpression.ParentBinding.Path.Path;
-            //        validationResult = MainWindowViewModel.Instance.SearchList.Contains(bindingName)
-            //                               ? new ValidationResult(false, null)
-            //                               : new ValidationResult(true, null);
-            //    }
+                BindingExpression bindingExpression = (value as BindingExpression);
+                if (bindingExpression != null)
+                {
+                    string bindingName = bindingExpression.ParentBinding.Path.Path;
+                  validationResult =   bindingName.Contains("n")? new ValidationResult(false, null)
+                             : new ValidationResult(true, null);
+                    MainWindowViewModel.Instance.ErrorsCollection.Remove(new Error());
+                    //validationResult = MainWindowViewModel.Instance.SearchList.Contains(bindingName)
+                    //                       ? new ValidationResult(false, null)
+                    //                       : new ValidationResult(true, null);
+                }
             //}
 
             return validationResult;

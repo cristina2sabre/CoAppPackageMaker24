@@ -127,22 +127,22 @@
     <value />
   </data>
   <data name="MetadataAuthorVersion" xml:space="preserve">
-    <value />
+    <value>a cosmetic string that contains the version the author has assigned to the product. (ie, this can be "1.0f" instead of in the four-digit-version "1.0.9.0".</value>
   </data>
   <data name="MetadataBugTracker" xml:space="preserve">
-    <value />
+    <value>A URL pointing to the location of a given product's Bug Tracker.</value>
   </data>
   <data name="MetadataDescription" xml:space="preserve">
-    <value />
+    <value>A full-text description of the software package.</value>
   </data>
   <data name="MetadataLicenses" xml:space="preserve">
-    <value />
+    <value>One or more license-references that specify the license for the package.</value>
   </data>
   <data name="MetadataStability" xml:space="preserve">
-    <value />
+    <value>An integer value ranging from -100 (very unstable) to 100 (very stable) to indicate to consumers the relative stability of the contents of the package.</value>
   </data>
   <data name="MetadataSummary" xml:space="preserve">
-    <value />
+    <value>A short description of the package.</value>
   </data>
   <data name="PackageArchitecture" xml:space="preserve">
     <value>The binary architecture of the contents of the package. It is not permitted to have multiple binary architectures in the same package.</value>
@@ -169,7 +169,7 @@
     <value />
   </data>
   <data name="TabMetadata" xml:space="preserve">
-    <value />
+    <value>The metadata rule contains additional cosmetic data about the contents of the package.</value>
   </data>
   <data name="TabPackage" xml:space="preserve">
     <value>The package rule contains the manditory data for creating a package.</value>
@@ -215,5 +215,20 @@
   </data>
   <data name="TabDefine" xml:space="preserve">
     <value />
+  </data>
+  <data name="btnAddManifest" xml:space="preserve">
+    <value>If your files need to link to multiple other assemblies, one manifest[] section will be required for each other assembly.</value>
+  </data>
+  <data name="TabManifest" xml:space="preserve">
+    <value>If your package links to assemblies in another CoApp package, it may be necessary to embed a manifest into any files from this package which uses those other assemblies.</value>
+  </data>
+  <data name="TabPackageEvaluated" xml:space="preserve">
+    <value>Package Rule  Value</value>
+  </data>
+  <data name="TabPackageSourceValue" xml:space="preserve">
+    <value>Package Rule Source Value</value>
+  </data>
+  <data name="TabPackageSourseString" xml:space="preserve">
+    <value>Package Rule  Source String</value>
   </data>
 </root>
