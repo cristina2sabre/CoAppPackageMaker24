@@ -428,6 +428,7 @@ namespace CoAppPackageMaker
         {
             var rules = _packageSource.AllRules.GetRulesByName(ruleName);
             PropertyRule propertyRule = rules.GetProperty(ruleName, propertyName);
+            
             if (propertyRule != null)
             {
                 PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();

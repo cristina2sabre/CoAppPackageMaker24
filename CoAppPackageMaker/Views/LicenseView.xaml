@@ -24,9 +24,9 @@
         <TextBox Name="License" Grid.Column="1" Grid.Row="0" Margin="5"  IsEnabled="{Binding IsEditable}">
             <TextBox.Text>
                 <Binding  Path="License" UpdateSourceTrigger="PropertyChanged"  Mode="TwoWay" NotifyOnSourceUpdated="True" NotifyOnTargetUpdated="True">
-                    <Binding.ValidationRules>
+                    <!--<Binding.ValidationRules>
                         <c:DefineUpdateValidationRule  ValidationStep="UpdatedValue"  ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
+                    </Binding.ValidationRules>-->
                 </Binding>
             </TextBox.Text>
         </TextBox>

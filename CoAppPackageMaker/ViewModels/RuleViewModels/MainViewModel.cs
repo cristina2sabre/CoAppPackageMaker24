@@ -145,7 +145,7 @@ namespace CoAppPackageMaker.ViewModels.Base
 
 
 
-        private void LoadData()
+        public void LoadData()
         {
 
             _reader = new PackageReader();

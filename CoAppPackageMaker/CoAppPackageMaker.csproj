@@ -124,7 +124,7 @@
     <Compile Include="Views\CompatibilityPolicy.xaml.cs">
       <DependentUpon>CompatibilityPolicy.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Base\DefineUpdateValidationRule.cs" />
+    <Compile Include="ViewModels\Base\PackageValidationRule.cs" />
     <Compile Include="Views\EditCollectionsUC.xaml.cs">
       <DependentUpon>EditCollectionsUC.xaml</DependentUpon>
     </Compile>

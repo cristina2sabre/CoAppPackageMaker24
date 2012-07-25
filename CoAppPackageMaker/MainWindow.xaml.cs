@@ -107,15 +107,40 @@ namespace CoAppPackageMaker
             }
             else if ((bool)filterWarning.IsChecked)
             {
-                collectionView.Filter = o => !(o is Warning) ;
+                collectionView.Filter = o => (o is Warning) ;
 
             }
             else if ((bool)filterError.IsChecked)
             {
-                collectionView.Filter = o => (o is Warning);
+                collectionView.Filter = o => !(o is Warning);
             }
             
             collectionView.Refresh();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension
+            dlg.DefaultExt = ".autopkg";
+            dlg.Filter = "Text documents (.autopkg)|*.autopkg";
+
+            // Display OpenFileDialog by calling ShowDialog method
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox
+            if (result == true)
+            {
+                // Open document
+                string filename = dlg.FileName;
+                //txtFileName.Text = filename;
+                VM.PathToFile = filename;
+                VM.LoadData();
+                UndoService.Current[this.VM].Clear();
+
+            }
         }
 
        

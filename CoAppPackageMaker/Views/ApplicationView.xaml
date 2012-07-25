@@ -7,30 +7,32 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <DataTemplate x:Key="ManifestTemplate">
-            <Expander  IsExpanded="False" Margin="5">
-                <Expander.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{Binding Label}" FontWeight="Bold"/>
-                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
-                    </StackPanel>
-                </Expander.Header>
-                <Grid>
-                    <!--<Grid.RowDefinitions>
+            <DockPanel>
+                <Expander  IsExpanded="False" Margin="5">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Label}" FontWeight="Bold"/>
+                            <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                        </StackPanel>
+                    </Expander.Header>
+                    <Grid>
+                        <!--<Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>-->
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                  
-                    <Label Content="Include" Grid.Row="1" Margin="5"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                    <Views:EditCollectionsUC DataContext="{Binding  EditCollectionViewModel}" Grid.Column="1" Grid.Row="1" Width="200" Height="100"  ListTemplate="SourceValueTemplate"/>
-                </Grid>
-            </Expander>
+                        <Label Content="Include" Grid.Row="1" Margin="5"/>
+
+                        <Views:EditCollectionsUC DataContext="{Binding  EditCollectionViewModel}" Grid.Column="1" Grid.Row="1" MinWidth="200" Height="100"  ListTemplate="SourceValueTemplate"/>
+                    </Grid>
+                </Expander>
+            </DockPanel>
         </DataTemplate>
     </UserControl.Resources>
 

@@ -4,13 +4,13 @@
         xmlns:Views="clr-namespace:CoAppPackageMaker.Views"    
         xmlns:local="clr-namespace:CoAppPackageMaker.Temp"
         Title="CoAppMaker"      
-        Height="700" Width="775" 
+       Height="700" Width="775"  
+        MinHeight="500" MinWidth="575"    
         WindowStartupLocation="CenterScreen">  
     <Window.CommandBindings>
         <CommandBinding Command="Undo" Executed="Undo_Executed" CanExecute="Undo_CanExecute" />
         <CommandBinding Command="Redo" Executed="Redo_Executed" CanExecute="Redo_CanExecute" />
-    </Window.CommandBindings>
-    
+    </Window.CommandBindings>    
     <Window.Resources>
         <ControlTemplate x:Key="ToggleButtonTemplate" TargetType="{x:Type ToggleButton}">
             <Grid>
@@ -93,7 +93,7 @@
             <!--<Setter Property="FontFamily" Value="{StaticResource HeaderFontFamily}" />-->
             <Setter Property="Padding" Value="5" />
             <!--<Setter Property="Margin" Value="5"/>-->
-            <Setter Property="Width" Value="144.3"/>
+            <Setter Property="MinWidth" Value="144.3"/>
             <!--<Setter Property="TextBlock.HorizontalAlignment" Value="Right"/>-->
             <Setter Property="BorderBrush" Value="{x:Null}" />
             <Setter Property="Background" Value="WhiteSmoke" />
@@ -139,7 +139,7 @@
         </LinearGradientBrush>
         
         <Style TargetType="{x:Type TabItem}" x:Key="BlueTabItem">          
-            <Setter Property="MinWidth" Value="100" />
+            <Setter Property="MinWidth" Value="97" />
             <Setter Property="Padding" Value="10,2,10,2"/>
             <Setter Property="BorderThickness" Value="1,1,0,0"/>
             <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
@@ -183,9 +183,56 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="{x:Type TabItem}" x:Key="MainWindowTabItem">
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="MinWidth" Value="251" />
+            <Setter Property="Padding" Value="10,2,10,2"/>
+            <Setter Property="BorderThickness" Value="2,2,0,0"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource TabItemNormalBackground}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+           
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border SnapsToDevicePixels="true" Padding="0">
+                            <Grid Margin="0">
+                                <Border x:Name="border"
+									BorderThickness="1,0,1,0"
+									Padding="4"
+									Background="#626299"
+									BorderBrush="White">
+                                    <ContentPresenter x:Name="contentPresenter" ContentSource="Header" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true" SourceName="contentPresenter">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
 
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Background" TargetName="border" Value="WhiteSmoke"/>
+                                <Setter Property="Foreground" Value="#6464C7"/>
+                                <Setter Property="OpacityMask" TargetName="contentPresenter" Value="{x:Null}"/>
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Bottom"/>
+                            <Trigger Property="TabStripPlacement" Value="Left"/>
+                            <Trigger Property="TabStripPlacement" Value="Right"/>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style TargetType="{x:Type TabControl}" x:Key="SubTabContorolStyle">
-            <Setter Property="Height" Value="390"/>
+            <Setter Property="MinHeight" Value="390"/>
             <!--<Setter Property="Width" Value="437"/>-->
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Margin" Value="0"/>
@@ -202,21 +249,22 @@
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
-    <Grid>
+    <TabControl Padding="0" ItemContainerStyle="{StaticResource MainWindowTabItem}">
+        <TabItem  Height="30" Header="File Editor">           
+        <Grid>
         <Grid.RowDefinitions>          
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <local:DebugFocusedElementProxy x:Name="debugFocusedElement"/>
-        <DockPanel Grid.Row="1" Margin="0,-15,0,0" Background="#D8FFD9"  FlowDirection="LeftToRight" Height="52" VerticalAlignment="Top">           
-          
+        <DockPanel Grid.Row="1" Margin="0,-15,0,0" Background="#D8FFD9"  FlowDirection="LeftToRight" Height="52" VerticalAlignment="Top">             
             <ToolBar  VerticalAlignment="Center" HorizontalAlignment="Right" VerticalContentAlignment="Center">
                 <Button  Width="25" Height="25" Margin="3" BorderBrush="Transparent" Background="Transparent" ToolTip="New">
                     <Image Stretch="Uniform"  Source="Icons/NewDocumentHS.png" />
                 </Button>
-                <Button  Width="25" Height="25" Margin="3" BorderBrush="Transparent" Background="Transparent" ToolTip="Open a file">
+                <Button  Width="25" Height="25" Margin="3" BorderBrush="Transparent" Background="Transparent" ToolTip="Open a file" Click="Button_Click">
                     <Image Stretch="Uniform"  Source="Icons/OpenFile.png" />
                 </Button>
                 <Separator/>
@@ -239,17 +287,24 @@
             <!--</GroupBox>-->
         </DockPanel>
 
-        <TabControl Grid.Row="1" Name="TabMain"  Margin="0" HorizontalAlignment="Center" VerticalAlignment="Top" BorderBrush="Transparent" Background="White" Width="Auto">
+        <TabControl Grid.Row="1" Name="TabMain" Padding="0" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Transparent" Background="White" >
             <!--Standard Rules Tab-->
             <TabItem  Name="TabStandardRules" Height="30" Header="Standard Rules" Style="{StaticResource BlueTabItem}" >
                 <!--List of Rules Standard Rules-->
-                    <TabControl  HorizontalAlignment="Left" Margin="0"  VerticalAlignment="Top" TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">
+                    <TabControl   Margin="0"  VerticalAlignment="Stretch" TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">
    
                         <TabItem  Name="TabPackage" >
                             <TabItem.Header>                               
-                                <StackPanel Orientation="Horizontal" Margin="0">                                   
-                                    <Ellipse Fill="Red" Width="10" Height="10"/>
-                                    <Label  Content="{Binding PackageViewModel.RuleNameToDisplay}" Margin="5" FontWeight="Bold"/>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                        <Ellipse  Width="10" Height="10">
+                                            <Ellipse.Fill>
+                                                <RadialGradientBrush>
+                                                    <GradientStop Color="{Binding PackageViewModel.StatusColor}"/>                                                   
+                                                </RadialGradientBrush>
+                                            </Ellipse.Fill>
+                                       
+                                        </Ellipse>
+                                        <Label  Content="{Binding PackageViewModel.RuleNameToDisplay}" Margin="5" FontWeight="Bold"/>
                                 </StackPanel>
                             </TabItem.Header>
 
@@ -465,7 +520,7 @@
             <!--Package Roles Rules Tab-->
             <TabItem Header="Package Roles rules" Name="TabPackageRolesRules" Style="{StaticResource BlueTabItem}">
 
-                <TabControl  HorizontalAlignment="Left" Margin="0"  VerticalAlignment="Top" TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">              
+                <TabControl  Margin="0"  TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">              
                             <TabItem Header="Application" Name="tabItem17" >
 
 
@@ -592,4 +647,10 @@
         </DockPanel>
        
     </Grid>
+            </TabItem>
+        <TabItem Header="Quick Package Maker">
+        </TabItem>
+        <TabItem Header="Help">
+        </TabItem>
+    </TabControl>
 </Window>

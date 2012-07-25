@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
@@ -123,6 +125,18 @@ namespace CoAppPackageMaker.ViewModels
             {
                 _isSource = value;
                 OnPropertyChanged("IsSource");
+            }
+        }
+
+
+        private Color _statusColor = Colors.Green;
+        public Color StatusColor
+        {
+            get { return _statusColor; }
+            set
+            {
+                _statusColor = value;
+                OnPropertyChanged("StatusColor");
             }
         }
     }

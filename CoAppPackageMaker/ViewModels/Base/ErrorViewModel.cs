@@ -22,7 +22,7 @@ namespace CoAppPackageMaker.ViewModels.Base
 
         public string Icon
         {
-            get { return "Icons\\eventlogWarn.ico"; }
+            get { return "Icons\\eventlogError.ico"; }
         }
     }
 
@@ -30,7 +30,7 @@ namespace CoAppPackageMaker.ViewModels.Base
     {
        new  public string Icon
         {
-            get { return "Icons\\eventlogError.ico"; }
+            get { return "Icons\\eventlogWarn.ico"; }
         }
 
     }

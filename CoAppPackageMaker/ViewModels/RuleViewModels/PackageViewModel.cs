@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 
 using System.Security.Policy;
+using System.Windows.Media;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 using CoAppPackageMaker.Temp;
@@ -69,6 +70,7 @@ namespace CoAppPackageMaker.ViewModels
         }
 
         #region Properties
+       
 
         private string _name;
         public string Name

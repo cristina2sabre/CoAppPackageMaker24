@@ -70,7 +70,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to The maximum version this package is binary compatible with (inclusive)..
         /// </summary>
         internal static string CompatibilityPolicyMaximum {
             get {
@@ -79,7 +79,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to The minimum version this package is binary compatible with (inclusive)..
         /// </summary>
         internal static string CompatibilityPolicyMinimum {
             get {
@@ -88,7 +88,8 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to The major.minor version numbers that this package replaces (this is used to create policy assemblies). If non are included, this is deduced from the feed locations available on the build computer.
+        ///.
         /// </summary>
         internal static string CompatibilityPolicyVersions {
             get {
@@ -97,7 +98,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to License Type(string).
         /// </summary>
         internal static string LicenceType {
             get {
@@ -106,7 +107,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Indicate file-path.
         /// </summary>
         internal static string License {
             get {
@@ -115,7 +116,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to License Url.
         /// </summary>
         internal static string LicenseUrl {
             get {
@@ -241,7 +242,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to string.
         /// </summary>
         internal static string SigningCompany {
             get {
@@ -250,7 +251,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to string.
         /// </summary>
         internal static string SigningDescription {
             get {
@@ -259,7 +260,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to four-digit-version.
         /// </summary>
         internal static string SigningFileVersionAttribute {
             get {
@@ -268,7 +269,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to string.
         /// </summary>
         internal static string SigningProductNameAttribute {
             get {
@@ -277,7 +278,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to four-digit-version.
         /// </summary>
         internal static string SigningProductVersion {
             get {
@@ -286,7 +287,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to bool.
         /// </summary>
         internal static string SigningReplaceSignature {
             get {
@@ -295,7 +296,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to files-reference.
         /// </summary>
         internal static string SingningInclude {
             get {
@@ -304,7 +305,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Describes the range of previous versions this package is binary compatible with..
         /// </summary>
         internal static string TabCompatibilityPolicy {
             get {
@@ -313,7 +314,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to This section initializes custom variables to be used elsewhere in the document..
         /// </summary>
         internal static string TabDefine {
             get {
@@ -322,7 +323,16 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to This rule can be declared multiple times, each with a different reference_name. This is used to group similar files to be referenced by other rules. While not strictly necessary by itself, the use of it is highly encouraged to improve the readability of the .autopkg file..
+        /// </summary>
+        internal static string TabFiles {
+            get {
+                return ResourceManager.GetString("TabFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thsi rule contains information about License..
         /// </summary>
         internal static string TabLicense {
             get {
@@ -358,6 +368,15 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This is a critical part of any application package, though it is generally omitted in assembly packages..
+        /// </summary>
+        internal static string TabPackageComposition {
+            get {
+                return ResourceManager.GetString("TabPackageComposition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Package Rule  Value.
         /// </summary>
         internal static string TabPackageEvaluated {
@@ -385,7 +404,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to This rule is necessary if this package depends on other CoApp packages..
         /// </summary>
         internal static string TabRequires {
             get {
@@ -394,7 +413,7 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to This section is only required if all relavent files were not already signed beforehand..
         /// </summary>
         internal static string TabSigning {
             get {

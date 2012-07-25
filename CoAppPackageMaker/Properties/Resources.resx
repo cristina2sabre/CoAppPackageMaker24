@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LicenceType" xml:space="preserve">
-    <value />
+    <value>License Type(string)</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value />
+    <value>Indicate file-path</value>
   </data>
   <data name="LicenseUrl" xml:space="preserve">
-    <value />
+    <value>License Url</value>
   </data>
   <data name="MetadataAuthorVersion" xml:space="preserve">
     <value>a cosmetic string that contains the version the author has assigned to the product. (ie, this can be "1.0f" instead of in the four-digit-version "1.0.9.0".</value>
@@ -166,7 +166,7 @@
     <value>The four-digit-version of the package. (ie, 1.2.3.4)</value>
   </data>
   <data name="TabLicense" xml:space="preserve">
-    <value />
+    <value>Thsi rule contains information about License.</value>
   </data>
   <data name="TabMetadata" xml:space="preserve">
     <value>The metadata rule contains additional cosmetic data about the contents of the package.</value>
@@ -175,46 +175,47 @@
     <value>The package rule contains the manditory data for creating a package.</value>
   </data>
   <data name="CompatibilityPolicyMaximum" xml:space="preserve">
-    <value />
+    <value>The maximum version this package is binary compatible with (inclusive).</value>
   </data>
   <data name="CompatibilityPolicyMinimum" xml:space="preserve">
-    <value />
+    <value>The minimum version this package is binary compatible with (inclusive).</value>
   </data>
   <data name="CompatibilityPolicyVersions" xml:space="preserve">
-    <value />
+    <value>The major.minor version numbers that this package replaces (this is used to create policy assemblies). If non are included, this is deduced from the feed locations available on the build computer.
+</value>
   </data>
   <data name="TabCompatibilityPolicy" xml:space="preserve">
-    <value />
+    <value>Describes the range of previous versions this package is binary compatible with.</value>
   </data>
   <data name="SigningCompany" xml:space="preserve">
-    <value />
+    <value>string</value>
   </data>
   <data name="SigningDescription" xml:space="preserve">
-    <value />
+    <value>string</value>
   </data>
   <data name="SigningFileVersionAttribute" xml:space="preserve">
-    <value />
+    <value>four-digit-version</value>
   </data>
   <data name="SigningProductNameAttribute" xml:space="preserve">
-    <value />
+    <value>string</value>
   </data>
   <data name="SigningProductVersion" xml:space="preserve">
-    <value />
+    <value>four-digit-version</value>
   </data>
   <data name="SigningReplaceSignature" xml:space="preserve">
-    <value />
+    <value>bool</value>
   </data>
   <data name="SingningInclude" xml:space="preserve">
-    <value />
+    <value>files-reference</value>
   </data>
   <data name="TabSigning" xml:space="preserve">
-    <value />
+    <value>This section is only required if all relavent files were not already signed beforehand.</value>
   </data>
   <data name="TabRequires" xml:space="preserve">
-    <value />
+    <value>This rule is necessary if this package depends on other CoApp packages.</value>
   </data>
   <data name="TabDefine" xml:space="preserve">
-    <value />
+    <value>This section initializes custom variables to be used elsewhere in the document.</value>
   </data>
   <data name="btnAddManifest" xml:space="preserve">
     <value>If your files need to link to multiple other assemblies, one manifest[] section will be required for each other assembly.</value>
@@ -230,5 +231,11 @@
   </data>
   <data name="TabPackageSourseString" xml:space="preserve">
     <value>Package Rule  Source String</value>
+  </data>
+  <data name="TabFiles" xml:space="preserve">
+    <value>This rule can be declared multiple times, each with a different reference_name. This is used to group similar files to be referenced by other rules. While not strictly necessary by itself, the use of it is highly encouraged to improve the readability of the .autopkg file.</value>
+  </data>
+  <data name="TabPackageComposition" xml:space="preserve">
+    <value>This is a critical part of any application package, though it is generally omitted in assembly packages.</value>
   </data>
 </root>
