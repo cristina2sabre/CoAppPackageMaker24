@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Views="clr-namespace:CoAppPackageMaker.Views" mc:Ignorable="d" 
+             xmlns:Views="clr-namespace:CoAppPackageMaker.Views"
+             xmlns:Support="clr-namespace:CoAppPackageMaker.Support" mc:Ignorable="d" 
              d:DesignWidth="300" x:Name="singView">
     <Grid>
         <Grid.RowDefinitions>
@@ -30,12 +31,12 @@
         <Label Content="Replace-signature" Grid.Row="6" FontWeight="Bold" Margin="5,5,5,5"/>
         <Label Content="Include" Grid.Row="7" FontWeight="Bold" Margin="5,5,5,5"/>
 
-        <TextBox Name="SigningCompany" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding CompanyAttribute }"  TextWrapping="Wrap" MaxHeight="100" IsEnabled="{Binding IsEditable}"  />
-        <TextBox Name="SigningDescription" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding DescriptionAttribute }"  Height="27"   TextWrapping="Wrap"  ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="{Binding IsReadOnly}" />
-        <TextBox Name="SigningProductNameAttribute" Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding  ProductNameAttribute}"  IsEnabled="{Binding IsEditable}"/>
-        <TextBox Name="SigningProductVersion" Grid.Column="1" Grid.Row="4" Margin="5" Text="{Binding  ProductVersion }"  IsEnabled="{Binding IsEditable}"/>
-        <TextBox Name="SigningFileVersionAttribute" Grid.Column="1" Grid.Row="5" Margin="5"  Text="{Binding  FileVersionAttribute}"  IsEnabled="{Binding IsEditable}"/>
-        <CheckBox Name="SigningReplaceSignature" Grid.Column="1" Grid.Row="6" Margin="5,11,5,5" IsChecked="{Binding  ReplaceSignature}"   IsEnabled="{Binding IsEditable}"/>
-        <Views:EditCollectionsUC x:Name="SingningInclude" Grid.Column="1" Grid.Row="7"  Height="85"  Margin="5"  DataContext="{Binding EditCollectionViewModel}"/>
+        <TextBox Name="SigningCompany" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding CompanyAttribute }"  TextWrapping="Wrap" MaxHeight="100" IsEnabled="{Binding IsEditable}"  Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="SigningDescription" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding DescriptionAttribute }"  Height="27"   TextWrapping="Wrap"  ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="SigningProductNameAttribute" Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding  ProductNameAttribute}"  IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="SigningProductVersion" Grid.Column="1" Grid.Row="4" Margin="5" Text="{Binding  ProductVersion }"  IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="SigningFileVersionAttribute" Grid.Column="1" Grid.Row="5" Margin="5"  Text="{Binding  FileVersionAttribute}"  IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <CheckBox Name="SigningReplaceSignature" Grid.Column="1" Grid.Row="6" Margin="5,11,5,5" IsChecked="{Binding  ReplaceSignature}"   IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <Views:EditCollectionsUC x:Name="SingningInclude" Grid.Column="1" Grid.Row="7"  Height="85"  Margin="5"  DataContext="{Binding EditCollectionViewModel}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
     </Grid>
 </UserControl>

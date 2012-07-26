@@ -4,19 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:c="clr-namespace:CoAppPackageMaker.Views" xmlns:ValidationRules="clr-namespace:CoAppPackageMaker.ValidationRules"
-             mc:Ignorable="d" 
+             xmlns:Support="clr-namespace:CoAppPackageMaker.Support" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <DataTemplate x:Key="SourceTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Width="170" ></TextBox>
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Width="170" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="DefineValueTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Width="170" ></TextBox>
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"></TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Width="170" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="ValueTemplate">
@@ -26,9 +26,9 @@
         </DataTemplate>
         <DataTemplate x:Key="DefineSourceValueTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding Label}" Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Width="170" >                    
+                <TextBox Text="{Binding Label}" Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Width="170" Support:Focus.UndoOccurredInt="{Binding UndoCounter}" >                    
                 </TextBox>
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent"  >
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent"  Support:Focus.UndoOccurredInt="{Binding UndoCounter}">
                     <TextBox.Text>
                         <Binding  Path="SourceValue"   UpdateSourceTrigger="LostFocus" >
                             <Binding.ValidationRules>
@@ -40,8 +40,8 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="SourceValueTemplate">
-            <StackPanel Orientation="Horizontal">               
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
@@ -56,7 +56,7 @@
             <!--<Label Content="Description?ex:Required Packeges" />-->
         </StackPanel>
         <ListBox  Name="FilesCollections" SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
-      ItemsSource="{Binding EditableItems,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Focusable="False">
+      ItemsSource="{Binding EditableItems,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Support:Focus.UndoOccurredInt="{Binding UndoCounter}">
             <!--ItemTemplate="{StaticResource ItemTemplate}"-->
         </ListBox>
     </DockPanel>

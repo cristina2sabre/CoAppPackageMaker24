@@ -11,6 +11,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         public DefineViewModel(PackageReader reader)
         {
+            RuleNameToDisplay = "Define";
             EditCollectionViewModel = new EditCollectionViewModel(reader,  reader.GetDefineRules());
             SourceString = reader.GetRulesSourceStringPropertyValueByName("*");
             this.EditCollectionViewModel.EditableItems.CollectionChanged += FilesCollectionCollectionChanged;

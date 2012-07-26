@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
+using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public abstract class ExtraPropertiesForCollectionsViewModelBase : ViewModelBase,ISupportsUndo
+    public abstract class ExtraPropertiesForCollectionsViewModelBase : ViewModelBase, ISupportsUndo, ISupportUndoNotification
     {
         private string _ruleNameToDisplay="Rule Name to Display--TEMP";
         public string RuleNameToDisplay
@@ -102,7 +104,8 @@ namespace CoAppPackageMaker.ViewModels
             var result =new  List<Tuple<string, string>>(4);
             foreach (var prop in this.GetType().GetProperties())
             {
-               {
+              
+                   
                    if(prop.Name!="SelectedFile")
                    {
                        var tempString = prop.GetValue(this, null).ToString();
@@ -112,10 +115,41 @@ namespace CoAppPackageMaker.ViewModels
                        }
                    }
                   
+                
+            }
+            //for search in collections of editable items
+            var method = this.GetType().GetProperty("EditCollectionViewModel");
+            if (method != null)
+            {
+                var s = method.GetValue(this, null);
+                foreach (ItemViewModel item in (s as EditCollectionViewModel).EditableItems)
+                {
+                    if (item.SourceValue.Contains(toSearch))
+                    {
+                        result.Add(new Tuple<string, string>(name, String.Format("Collection {0}",item.Label)));
+                        break;
+                    }
                 }
-               
             }
             return result;
+        }
+
+        private int _undoCounter;
+        public int UndoCounter
+        {
+            get { return _undoCounter; }
+        }
+
+        public void RedoHappened(Change change)
+        {
+            Interlocked.Increment(ref _undoCounter);
+            OnPropertyChanged("UndoCounter");
+        }
+
+        public void UndoHappened(Change change)
+        {
+            Interlocked.Increment(ref _undoCounter);
+            OnPropertyChanged("UndoCounter");
         }
     }
 

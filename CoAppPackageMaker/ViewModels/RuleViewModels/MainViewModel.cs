@@ -85,15 +85,11 @@ namespace CoAppPackageMaker.ViewModels.Base
         public void SearchForAllUsings(string definePropertyName)
         {
 
-            
             ////////////////
             var allProp = AllViewModels.SelectMany(item => item.Search(definePropertyName));
             foreach (Tuple<string, string> tuple in allProp)
             {
-               
-                //to remove everything before adding?
-                //ErrorsCollection.Add(new Error() { ErrorHeader = definePropertyName,ErrorDetails = String.Format("{0} is used in {1} rule for {2}",definePropertyName,tuple.Item1,tuple.Item2) });
-                ErrorsCollection.Add(new Warning() { ErrorHeader = definePropertyName, ErrorDetails = String.Format("{0} is used in {1} rule for {2}", definePropertyName, tuple.Item1, tuple.Item2) });
+               ErrorsCollection.Add(new Warning() { ErrorHeader = definePropertyName, ErrorDetails = String.Format("{0} is used in {1} rule for {2}", definePropertyName, tuple.Item1, tuple.Item2) });
             }
        //a propety have been changed, for ex rachitecture in Pack- to remove the warning
            RefreshAllBindings();
@@ -162,6 +158,11 @@ namespace CoAppPackageMaker.ViewModels.Base
                     AllViewModels.Add(MetadataViewModel);
                      AllViewModels.Add(ManifestViewModel);
                     AllViewModels.Add(SigningViewModel);
+                    AllViewModels.Add(RequiresViewModel);
+                    AllViewModels.Add(DefineViewModel);
+                    AllViewModels.Add(CompatibilityPolicy);
+                    AllViewModels.Add(FilesViewModel);
+                   
 
                 }
                 catch (Exception exception)

@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:RuleViewModels="clr-namespace:CoAppPackageMaker.ViewModels.RuleViewModels"
-             xmlns:Views="clr-namespace:CoAppPackageMaker.Views" mc:Ignorable="d" 
+             xmlns:Views="clr-namespace:CoAppPackageMaker.Views"
+             xmlns:Support="clr-namespace:CoAppPackageMaker.Support" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     
     <UserControl.Resources>
@@ -12,8 +13,8 @@
                     <Expander  IsExpanded="False" Margin="5">
                         <Expander.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Files" FontWeight="Bold"/>
-                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                        <Label Content="Files" FontWeight="Bold" />
+                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
                         </StackPanel>
                 </Expander.Header>
                 <Grid>
@@ -46,8 +47,8 @@
             <Button Width="20" Height="20" Margin="3"   Command="{Binding Path = RemoveCommand}" Content="-"/>
             <Button Width="20" Height="20" Margin="3"  Command="{Binding Path = AddCommand}" Content="+"/>
         </StackPanel>
-        
-        <ListBox Name="FilesCollections" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True}"
+
+        <ListBox Name="FilesCollections" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"
       ItemTemplate="{StaticResource FileTemplate}" ItemsSource="{Binding FilesCollection,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  >
            
         </ListBox>

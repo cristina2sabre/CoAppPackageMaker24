@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"            
         xmlns:Views="clr-namespace:CoAppPackageMaker.Views"    
         xmlns:local="clr-namespace:CoAppPackageMaker.Temp"
-        Title="CoAppMaker"      
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:Support="clr-namespace:CoAppPackageMaker.Support" Title="CoAppMaker"      
        Height="700" Width="775"  
         MinHeight="500" MinWidth="575"    
         WindowStartupLocation="CenterScreen">  
@@ -250,8 +251,11 @@
         </DataTemplate>
     </Window.Resources>
     <TabControl Padding="0" ItemContainerStyle="{StaticResource MainWindowTabItem}">
-        <TabItem  Height="30" Header="File Editor">           
-        <Grid>
+        <TabItem  Height="30" Header="File Editor">
+            <i:Interaction.Behaviors>
+                <Support:FocusReceiveBehavior/>
+            </i:Interaction.Behaviors>
+            <Grid>
         <Grid.RowDefinitions>          
             <RowDefinition Height="10"/>
             <RowDefinition Height="5*"/>
@@ -290,11 +294,17 @@
         <TabControl Grid.Row="1" Name="TabMain" Padding="0" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Transparent" Background="White" >
             <!--Standard Rules Tab-->
             <TabItem  Name="TabStandardRules" Height="30" Header="Standard Rules" Style="{StaticResource BlueTabItem}" >
-                <!--List of Rules Standard Rules-->
+                        <i:Interaction.Behaviors>
+                            <Support:FocusReceiveBehavior/>
+                        </i:Interaction.Behaviors>
+                        <!--List of Rules Standard Rules-->
                     <TabControl   Margin="0"  VerticalAlignment="Stretch" TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">
    
                         <TabItem  Name="TabPackage" >
-                            <TabItem.Header>                               
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <TabItem.Header>                               
                                 <StackPanel Orientation="Horizontal" Margin="0">
                                         <Ellipse  Width="10" Height="10">
                                             <!--Fill requires SolidColorBrush, in order to avoid conversion to Color, the GradientBrush is used-->
@@ -324,7 +334,10 @@
                         </TabItem>
                        
                         <TabItem  Name="TabMetadata">
-                            <TabItem.Header>
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <TabItem.Header>
                                 <StackPanel Orientation="Horizontal" Margin="0">
                                     <Ellipse Fill="Green" Width="10" Height="10"/>
                                     <Label  Content="Metadata" Margin="5"/>
@@ -346,7 +359,10 @@
                         </TabItem>
                        
                         <TabItem  Name="TabManifest">
-                            <TabItem.Header>
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <TabItem.Header>
                                 <StackPanel Orientation="Horizontal" Margin="0">
                                     <Ellipse Fill="Red" Width="10" Height="10"/>
                                     <Label  Content="Manifest" FontWeight="Bold" Margin="5"/>
@@ -368,7 +384,10 @@
                            
                         </TabItem>
                         <TabItem  Name="TabFiles">
-                            <TabItem.Header>
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <TabItem.Header>
                                 <StackPanel Orientation="Horizontal" Margin="0">
                                     <Ellipse Fill="Red" Width="10" Height="10"/>
                                     <Label  Content="Files" FontWeight="Bold" Margin="5"/>
@@ -390,7 +409,10 @@
                           
                         </TabItem>
                         <TabItem  Name="TabPackageComposition" >
-                            <TabItem.Header>
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <TabItem.Header>
                                 <StackPanel Orientation="Horizontal" Margin="0">
                                     <Ellipse Fill="Red" Width="10" Height="10" />
                                     <Label  Content="Package Composition" FontWeight="Bold" Margin="5"/>
@@ -411,7 +433,10 @@
                          
                         </TabItem>
                         <TabItem  Name="TabRequires" >
-                            <TabItem.Header>
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <TabItem.Header>
                                 <StackPanel Orientation="Horizontal" Margin="0">
                                     <Ellipse Fill="Green" Width="10" Height="10"/>
                                     <Label  Content="Requires" FontWeight="Bold" Margin="5"/>
@@ -432,7 +457,10 @@
                            
                         </TabItem>
                         <TabItem  Name="TabSigning" >
-                            <TabItem.Header>
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <TabItem.Header>
                                 <StackPanel Orientation="Horizontal" Margin="0">
                                     <Ellipse Fill="Red" Width="10" Height="10"/>
                                     <Label  Content="Signing" Margin="5"/>
@@ -454,6 +482,9 @@
                         </TabItem>
 
                         <TabItem  Name="TabDefine">
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Margin="0">
                                         <Ellipse  Width="10" Height="10">
@@ -482,7 +513,10 @@
                            
                         </TabItem>
                         <TabItem  Name="TabLicense" >
-                            <TabItem.Header>
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <TabItem.Header>
                                 <StackPanel Orientation="Horizontal" Margin="0">
                                     <Ellipse Fill="Green" Width="10" Height="10"/>
                                     <Label  Content="License" Margin="5"/>
@@ -503,7 +537,10 @@
                           
                         </TabItem>
                         <TabItem  Name="TabCompatibilityPolicy" >
-                            <TabItem.Header>
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <TabItem.Header>
                                 <StackPanel Orientation="Horizontal" Margin="0">
                                     <Ellipse Fill="Red" Width="10" Height="10"/>
                                     <Label  Content="Compatibility Policy" Margin="5"/>
@@ -527,12 +564,16 @@
             </TabItem>
             <!--Package Roles Rules Tab-->
             <TabItem Header="Package Roles rules" Name="TabPackageRolesRules" Style="{StaticResource BlueTabItem}">
-
-                <TabControl  Margin="0"  TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">              
+                        <i:Interaction.Behaviors>
+                            <Support:FocusReceiveBehavior/>
+                        </i:Interaction.Behaviors>
+                        <TabControl  Margin="0"  TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">              
                             <TabItem Header="Application" Name="tabItem17" >
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
 
-
-                        <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
+                                <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
                                         <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding ApplicationRoleViewModel}" />
                                     </TabItem>
@@ -548,8 +589,10 @@
                         </TabItem>
                         
                             <TabItem Header="Assembly" Name="tabItem18" >
-
-                        <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
                                         <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding AssemblyRoleViewModel}"/>
                                     </TabItem>
@@ -562,8 +605,11 @@
                                 </TabControl>
                            
                         </TabItem>
-                        <TabItem Header="Developer library " Name="TabDeveloperLibrary" >                            
-                            <!--<TextBlock Text="to add :headers, libraries, docs" />-->
+                        <TabItem Header="Developer library " Name="TabDeveloperLibrary" >
+                                <i:Interaction.Behaviors>
+                                    <Support:FocusReceiveBehavior/>
+                                </i:Interaction.Behaviors>
+                                <!--<TextBlock Text="to add :headers, libraries, docs" />-->
                         </TabItem>
                     </TabControl>
                  

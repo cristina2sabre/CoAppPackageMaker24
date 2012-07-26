@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Views="clr-namespace:CoAppPackageMaker.Views" mc:Ignorable="d" 
+             xmlns:Views="clr-namespace:CoAppPackageMaker.Views"
+             xmlns:Support="clr-namespace:CoAppPackageMaker.Support" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" >
     <UserControl.Resources>
         <DataTemplate x:Key="ManifestTemplate">
@@ -11,7 +12,7 @@
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Manifest" FontWeight="Bold"/>
-                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
                     </StackPanel>
                 </Expander.Header>
                 <Grid>
@@ -37,7 +38,7 @@
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Manifest" FontWeight="Bold"/>
-                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
                     </StackPanel>
                 </Expander.Header>
                 <Grid>
@@ -65,7 +66,7 @@
             <Button Width="20" Height="20" Margin="3"   Command="{Binding Path = RemoveCommand}" Content="-"/>
             <Button Name="btnAddManifest" Width="20" Height="20" Margin="3"  Command="{Binding Path = AddCommand}" Content="+"/>
         </StackPanel>
-        <ListBox Name="ListBoxManifestCollection" Uid="123" 
+        <ListBox Name="ListBoxManifestCollection" Uid="123" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"
             ItemsSource="{Binding ManifestCollection}" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}">
         </ListBox>
     </DockPanel>
