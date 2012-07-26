@@ -23,7 +23,17 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        
+        private Color _statusColor = Colors.Green;
+        public Color StatusColor
+        {
+            get { return _statusColor; }
+            set
+            {
+                _statusColor = value;
+                OnPropertyChanged("StatusColor");
+            }
+        }
+
         private string _helpTip="test";
         private bool _isRequired=false;
 
@@ -93,11 +103,15 @@ namespace CoAppPackageMaker.ViewModels
             foreach (var prop in this.GetType().GetProperties())
             {
                {
-                    var tempString = prop.GetValue(this, null).ToString();
-                    if (tempString.Contains(toSearch))
-                    {
-                        result.Add(new Tuple<string, string>(name, prop.Name));
-                    }
+                   if(prop.Name!="SelectedFile")
+                   {
+                       var tempString = prop.GetValue(this, null).ToString();
+                       if (tempString.Contains(toSearch))
+                       {
+                           result.Add(new Tuple<string, string>(name, prop.Name));
+                       }
+                   }
+                  
                 }
                
             }
@@ -129,15 +143,8 @@ namespace CoAppPackageMaker.ViewModels
         }
 
 
-        private Color _statusColor = Colors.Green;
-        public Color StatusColor
-        {
-            get { return _statusColor; }
-            set
-            {
-                _statusColor = value;
-                OnPropertyChanged("StatusColor");
-            }
-        }
+     
+       
+        
     }
 }

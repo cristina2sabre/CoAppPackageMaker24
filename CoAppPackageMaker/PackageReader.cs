@@ -16,7 +16,7 @@ namespace CoAppPackageMaker
 {
     public class PackageReader
     {
-
+        public bool susscesfullRead=true;
         public void Read(string pathToSourceFile)
         {
             try
@@ -26,7 +26,8 @@ namespace CoAppPackageMaker
 
             catch (Exception exception)
             {
-                MessageBox.Show(exception.ToString());
+                susscesfullRead = false;
+                MessageBox.Show(exception.Message);
             }
 
         }

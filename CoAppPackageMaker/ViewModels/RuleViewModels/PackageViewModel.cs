@@ -166,7 +166,7 @@ namespace CoAppPackageMaker.ViewModels
                 {
                     case "Name":
                         //reevaluate
-                        newValues = new[] { ((this.Name ))};
+                        newValues = new[] { Name };
                         this.ValuePackageViewModel.Name = _reader.SetNewSourceValue(Package, "name", newValues);
                         break;
                     case "Version":

@@ -92,7 +92,16 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                     {
                         //!!!!!!!!!!!!!!!!!WRONG-only for requires-ovveride needed
                         //  Value = _reader.SetSourceRequireRules( new[] { (_sourceValue) });
-                        if (UpdateSource != null) { Value = UpdateSource(this.Label, new[] { (_sourceValue) }); }
+                        var s = new[] {(_sourceValue)};
+                        //string aaa = s[0];
+                        //string ddd ="${"+  this.Label+"}";
+                        //var contains = aaa.Contains(ddd);
+                        //bool a = s[0].ToString().Contains(String.Format("${{0}}", this.Label));
+                        if (!s[0].Contains("${" + this.Label + "}"))
+                        {
+                            if (UpdateSource != null) { Value = UpdateSource(this.Label, new[] { (_sourceValue) }); }
+                        }
+                       
 
                     }
 

@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-
-using CoApp.Packaging;
-
 using CoAppPackageMaker.ViewModels.RuleViewModels;
 using MonitoredUndo;
 
@@ -99,7 +92,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             {
                
                 //to remove everything before adding?
-                ErrorsCollection.Add(new Error() { ErrorHeader = definePropertyName,ErrorDetails = String.Format("{0} is used in {1} rule for {2}",definePropertyName,tuple.Item1,tuple.Item2) });
+                //ErrorsCollection.Add(new Error() { ErrorHeader = definePropertyName,ErrorDetails = String.Format("{0} is used in {1} rule for {2}",definePropertyName,tuple.Item1,tuple.Item2) });
                 ErrorsCollection.Add(new Warning() { ErrorHeader = definePropertyName, ErrorDetails = String.Format("{0} is used in {1} rule for {2}", definePropertyName, tuple.Item1, tuple.Item2) });
             }
        //a propety have been changed, for ex rachitecture in Pack- to remove the warning
@@ -147,25 +140,34 @@ namespace CoAppPackageMaker.ViewModels.Base
 
         public void LoadData()
         {
-
             _reader = new PackageReader();
             _reader.Read(PathToFile);
+            if (_reader.susscesfullRead)
+                try
+                {
+                    PackageViewModel = new PackageViewModel(_reader);
+                    MetadataViewModel = new MetadataViewModel(_reader);
+                    ManifestViewModel = new ManifestViewModel(_reader);
+                    RequiresViewModel = new RequiresViewModel(_reader);
+                    DefineViewModel = new DefineViewModel(_reader);
+                    SigningViewModel = new SigningViewModel(_reader);
+                    LicenseViewModel = new LicenseViewModel(_reader);
+                    CompatibilityPolicy = new CompatibilityPolicyViewModel(_reader);
+                    ApplicationRoleViewModel = new ApplicationRoleViewModel(_reader);
+                    AssemblyRoleViewModel = new AssemblyRoleViewModel(_reader);
+                    FilesViewModel = new FilesViewModel(_reader);
+                    //PackageCompositionViewModel = new PackageCompositionViewModel(_reader);
+                    AllViewModels.Add(PackageViewModel);
+                    AllViewModels.Add(LicenseViewModel);
+                    AllViewModels.Add(MetadataViewModel);
+                     AllViewModels.Add(ManifestViewModel);
+                    AllViewModels.Add(SigningViewModel);
 
-            PackageViewModel = new PackageViewModel(_reader);
-            MetadataViewModel = new MetadataViewModel(_reader);
-            ManifestViewModel = new ManifestViewModel(_reader);
-            RequiresViewModel = new RequiresViewModel(_reader);
-            DefineViewModel = new DefineViewModel(_reader);
-            SigningViewModel = new SigningViewModel(_reader);
-            LicenseViewModel = new LicenseViewModel(_reader);
-            CompatibilityPolicy = new CompatibilityPolicyViewModel(_reader);
-            ApplicationRoleViewModel = new ApplicationRoleViewModel(_reader);
-            AssemblyRoleViewModel = new AssemblyRoleViewModel(_reader);
-            FilesViewModel = new FilesViewModel(_reader);
-            //PackageCompositionViewModel = new PackageCompositionViewModel(_reader);
-            AllViewModels.Add(PackageViewModel);
-            AllViewModels.Add(LicenseViewModel);
-           // AllViewModels.Add(ManifestViewModel);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
 
         }
 

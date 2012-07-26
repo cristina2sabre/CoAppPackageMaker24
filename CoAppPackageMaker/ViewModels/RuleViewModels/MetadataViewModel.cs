@@ -22,28 +22,29 @@ namespace CoAppPackageMaker.ViewModels
         {
             _reader = reader;
           
-                Summary = reader.GetRulesPropertyValueByName(Metadata, "summary");
-                Description = reader.GetRulesPropertyValueByName(Metadata, "description");
-                AuthorVersion = reader.GetRulesPropertyValueByName(Metadata, "author-version");
-                BugTracker = reader.GetRulesPropertyValueByName(Metadata, "bug-tracker");
-                Stability = reader.GetRulesPropertyValueByName(Metadata, "stability");
-                Licenses = reader.GetRulesPropertyValueByName(Metadata, "licenses");
-                IsEditable = false;
+               
           
-            SourceMetadataViewModel = new MetadataViewModel()
-                                          {
-                                              Summary = reader.GetRulesSourcePropertyValueByName(Metadata, "summary"),
-                                              Description = reader.GetRulesSourcePropertyValueByName(Metadata, "description"),
-                                              AuthorVersion = reader.GetRulesSourcePropertyValueByName(Metadata, "author-version"),
-                                              BugTracker = reader.GetRulesSourcePropertyValueByName(Metadata, "bug-tracker"),
-                                              Stability = reader.GetRulesSourcePropertyValueByName(Metadata, "stability"),
-                                              Licenses = reader.GetRulesSourcePropertyValueByName(Metadata, "licenses"),
-                                              IsEditable = true,
-                                              IsSource = true,
+            ValueMetadataViewModel = new MetadataViewModel()
+                                          { Summary = reader.GetRulesPropertyValueByName(Metadata, "summary"),
+                Description = reader.GetRulesPropertyValueByName(Metadata, "description"),
+                AuthorVersion = reader.GetRulesPropertyValueByName(Metadata, "author-version"),
+                BugTracker = reader.GetRulesPropertyValueByName(Metadata, "bug-tracker"),
+                Stability = reader.GetRulesPropertyValueByName(Metadata, "stability"),
+                Licenses = reader.GetRulesPropertyValueByName(Metadata, "licenses"),
+                IsEditable = false,
+                SourceString = reader.GetRulesSourceStringPropertyValueByName(Metadata),                           
                                           };
-
-            SourceString = reader.GetRulesSourceStringPropertyValueByName(Metadata);
-            SourceMetadataViewModel.PropertyChanged += EvaluatedChanged;
+            Summary = reader.GetRulesSourcePropertyValueByName(Metadata, "summary");
+            Description = reader.GetRulesSourcePropertyValueByName(Metadata, "description");
+            AuthorVersion = reader.GetRulesSourcePropertyValueByName(Metadata, "author-version");
+            BugTracker = reader.GetRulesSourcePropertyValueByName(Metadata, "bug-tracker");
+            Stability = reader.GetRulesSourcePropertyValueByName(Metadata, "stability");
+            Licenses = reader.GetRulesSourcePropertyValueByName(Metadata, "licenses");
+            IsEditable = true;
+            IsSource = true;
+            RuleNameToDisplay = "Metadata";
+           
+            this.PropertyChanged += EvaluatedChanged;
         }
 
         #region Properties
@@ -123,14 +124,14 @@ namespace CoAppPackageMaker.ViewModels
 
         #endregion
 
-        private MetadataViewModel _sourceMetadataViewModel;
-        public MetadataViewModel SourceMetadataViewModel
+        private MetadataViewModel _valueMetadataViewModel;
+        public MetadataViewModel ValueMetadataViewModel
         {
-            get { return _sourceMetadataViewModel; }
+            get { return _valueMetadataViewModel; }
             set
             {
-                _sourceMetadataViewModel = value;
-                OnPropertyChanged("SourceMetadataViewModel");
+                _valueMetadataViewModel = value;
+                OnPropertyChanged("ValueMetadataViewModel");
             }
         }
 
@@ -143,32 +144,32 @@ namespace CoAppPackageMaker.ViewModels
                 {
                     case "Summary":
                         //reevaluate
-                        newValues = new[] { ((MetadataViewModel)sender).Summary };
-                        Summary = _reader.SetNewSourceValue(Metadata, "summary", newValues);
+                        newValues = new[] { Summary };
+                        ValueMetadataViewModel.Summary = _reader.SetNewSourceValue(Metadata, "summary", newValues);
                         break;
                     case "Description":
-                        newValues = new [] { ((MetadataViewModel)sender).Description };
-                        Description = _reader.SetNewSourceValue(Metadata, "description", newValues);
+                        newValues = new [] { Description };
+                        ValueMetadataViewModel.Description = _reader.SetNewSourceValue(Metadata, "description", newValues);
                         break;
                     case "AuthorVersion":
-                        newValues = new [] { ((MetadataViewModel)sender).AuthorVersion };
-                        AuthorVersion = _reader.SetNewSourceValue(Metadata, "author-version", newValues);
+                        newValues = new [] { AuthorVersion };
+                        ValueMetadataViewModel.AuthorVersion = _reader.SetNewSourceValue(Metadata, "author-version", newValues);
                         break;
                     case "BugTracker":
-                        newValues = new [] { ((MetadataViewModel)sender).BugTracker };
-                        BugTracker = _reader.SetNewSourceValue(Metadata, "bug-tracker", newValues);
+                        newValues = new [] { BugTracker };
+                        ValueMetadataViewModel.BugTracker = _reader.SetNewSourceValue(Metadata, "bug-tracker", newValues);
                         break;
                     case "Stability":
-                        newValues = new[] { ((MetadataViewModel)sender).Stability };
-                        Stability = _reader.SetNewSourceValue(Metadata, "stability", newValues);
+                        newValues = new[] { Stability };
+                        ValueMetadataViewModel.Stability = _reader.SetNewSourceValue(Metadata, "stability", newValues);
                         break;
                     case "Licenses":
-                        newValues = new[] { ((MetadataViewModel)sender).Licenses };
-                        Licenses = _reader.SetNewSourceValue(Metadata, "licenses", newValues);
+                        newValues = new[] { Licenses };
+                        ValueMetadataViewModel.Licenses = _reader.SetNewSourceValue(Metadata, "licenses", newValues);
                         break;
 
                 }
-                SourceString = _reader.GetRulesSourceStringPropertyValueByName(Metadata); 
+                ValueMetadataViewModel.SourceString = _reader.GetRulesSourceStringPropertyValueByName(Metadata); 
     }     
 
     }

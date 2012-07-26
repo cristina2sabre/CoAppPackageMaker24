@@ -52,7 +52,7 @@
         </TextBox>
         <TextBox Name="PackageVersion" Grid.Column="1" Grid.Row="3"  Margin="5"  IsEnabled="{Binding IsEditable}" >
             <TextBox.Text>
-                <Binding  Path="Version" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" NotifyOnSourceUpdated="True" NotifyOnTargetUpdated="True">
+                <Binding ValidatesOnDataErrors="True" ValidatesOnExceptions="True" Path="Version" UpdateSourceTrigger="PropertyChanged" NotifyOnSourceUpdated="True" NotifyOnTargetUpdated="True">
                     <Binding.ValidationRules>
                         <c:PackageValidationRule  ValidationStep="UpdatedValue"  ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>

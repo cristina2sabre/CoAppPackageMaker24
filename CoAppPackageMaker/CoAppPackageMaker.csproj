@@ -94,6 +94,7 @@
     </ApplicationDefinition>
     <Compile Include="PackageReader.cs" />
     <Compile Include="Temp\FocusedELement.cs" />
+    <Compile Include="ValidationRules\DefineValidationRule.cs" />
     <Compile Include="ViewModels\Base\ErrorViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\ApplicationRoleViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\AssemblyRoleViewModel.cs" />
@@ -124,7 +125,7 @@
     <Compile Include="Views\CompatibilityPolicy.xaml.cs">
       <DependentUpon>CompatibilityPolicy.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Base\PackageValidationRule.cs" />
+    <Compile Include="ValidationRules\PackageValidationRule.cs" />
     <Compile Include="Views\EditCollectionsUC.xaml.cs">
       <DependentUpon>EditCollectionsUC.xaml</DependentUpon>
     </Compile>

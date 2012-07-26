@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:c="clr-namespace:CoAppPackageMaker.Views" mc:Ignorable="d" 
+             xmlns:c="clr-namespace:CoAppPackageMaker.Views" xmlns:ValidationRules="clr-namespace:CoAppPackageMaker.ValidationRules"
+             mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <DataTemplate x:Key="SourceTemplate">
@@ -25,16 +26,17 @@
         </DataTemplate>
         <DataTemplate x:Key="DefineSourceValueTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Width="170" >
+                <TextBox Text="{Binding Label}" Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Width="170" >                    
+                </TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent"  >
                     <TextBox.Text>
-                        <Binding  Path="Label"   UpdateSourceTrigger="PropertyChanged" >
-                            <!--<Binding.ValidationRules>
-                                <c:MinAlarmValidationRule  ValidationStep="UpdatedValue" ValidatesOnTargetUpdated="True" Type="RangeRule"/>
-                            </Binding.ValidationRules>-->
+                        <Binding  Path="SourceValue"   UpdateSourceTrigger="LostFocus" >
+                            <Binding.ValidationRules>
+                                <ValidationRules:DefineValidationRule  ValidationStep="UpdatedValue"  ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding SourceValue, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="SourceValueTemplate">

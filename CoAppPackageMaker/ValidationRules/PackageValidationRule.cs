@@ -51,15 +51,22 @@ namespace CoAppPackageMaker.Views
                                                                                   ErrorHeader =
                                                                                       bindingExpression.
                                                                                       ParentBinding.Path.Path,
-                                                                                  ErrorDetails =_errorsMessages[errorHeader]
+                                                                                  ErrorDetails =_errorsMessages[errorHeader],
+                                                                                  ErrorRule = "Package"
                                                                                       
                                                                               });
                         MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Red;
 
                     }
-                    //MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Green;
+                   
                     return new ValidationResult(false, null);
 
+                }
+                var errorStatus =
+                         MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorRule == "Package");
+                if (!errorStatus.Any())
+                {
+                    MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Green;
                 }
                 MainWindowViewModel.Instance.RemoveError(errorHeader);
             }
@@ -70,21 +77,18 @@ namespace CoAppPackageMaker.Views
 
         public bool Version()
         {
-            var sd = MainWindowViewModel.Instance.PackageViewModel.ValuePackageViewModel.GetType().GetProperty("Version").GetValue(MainWindowViewModel.Instance.PackageViewModel.ValuePackageViewModel, null).ToString();
-            return (sd.Split('.').Count() != 4 ||
-                    sd.Split('.').ToList().Any(item => item.Length == 0));
-
-
+            var valuePackageViewModel = MainWindowViewModel.Instance.PackageViewModel.ValuePackageViewModel;
+            var stringToTest = valuePackageViewModel.GetType().GetProperty("Version").GetValue(valuePackageViewModel, null).ToString();
+            return (stringToTest.Split('.').Count() != 4 ||
+                    stringToTest.Split('.').ToList().Any(item => item.Length == 0));
         }
 
         public bool Architecture()
         {
-           string sd = MainWindowViewModel.Instance.PackageViewModel.ValuePackageViewModel.GetType().GetProperty("Architecture").GetValue(MainWindowViewModel.Instance.PackageViewModel.ValuePackageViewModel, null).ToString();
-           return !(sd.Equals("x86") | sd.Equals("x64") | sd.Equals("any"));
-                
-
-
+            var valuePackageViewModel = MainWindowViewModel.Instance.PackageViewModel.ValuePackageViewModel;
+            string stringToTest = valuePackageViewModel.GetType().GetProperty("Architecture").GetValue(valuePackageViewModel, null).ToString();
+            return !(stringToTest.Equals("x86") | stringToTest.Equals("x64") | stringToTest.Equals("any"));
         }
-       
+
     }
 }
