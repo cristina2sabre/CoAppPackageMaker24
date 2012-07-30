@@ -34,42 +34,46 @@ namespace CoAppPackageMaker.Views
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var validationResult = new ValidationResult(true, null);
-            var bindingExpression = (value as BindingExpression);
-            if (bindingExpression != null)
-            {
-                string errorHeader = bindingExpression.ParentBinding.Path.Path;
-                MethodInfo method = typeof(PackageValidationRule).GetMethod(errorHeader);
-                if ((bool)method.Invoke(this,null))
-                {
-                    //check if the error exist in the list
-                    var existingErros =
-                        MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorHeader == errorHeader);
-                    if (!existingErros.Any())
-                    {
-                        MainWindowViewModel.Instance.ErrorsCollection.Add(new Error()
-                                                                              {
-                                                                                  ErrorHeader =
-                                                                                      bindingExpression.
-                                                                                      ParentBinding.Path.Path,
-                                                                                  ErrorDetails =_errorsMessages[errorHeader],
-                                                                                  ErrorRule = "Package"
-                                                                                      
-                                                                              });
-                        MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Red;
+            //if (MainWindowViewModel.Instance != null)
+            //{
+            //    var bindingExpression = (value as BindingExpression);
+            //    if (bindingExpression != null)
+            //    {
+            //        string errorHeader = bindingExpression.ParentBinding.Path.Path;
+            //        MethodInfo method = typeof (PackageValidationRule).GetMethod(errorHeader);
+            //        if ((bool) method.Invoke(this, null))
+            //        {
+            //            //check if the error exist in the list
+            //            var existingErros =
+            //                MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorHeader == errorHeader);
+            //            if (!existingErros.Any())
+            //            {
+            //                MainWindowViewModel.Instance.ErrorsCollection.Add(new Error()
+            //                                                                      {
+            //                                                                          ErrorHeader =
+            //                                                                              bindingExpression.
+            //                                                                              ParentBinding.Path.Path,
+            //                                                                          ErrorDetails =
+            //                                                                              _errorsMessages[errorHeader],
+            //                                                                          ErrorRule = "Package"
 
-                    }
-                   
-                    return new ValidationResult(false, null);
+            //                                                                      });
+            //                MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Red;
 
-                }
-                var errorStatus =
-                         MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorRule == "Package");
-                if (!errorStatus.Any())
-                {
-                    MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Green;
-                }
-                MainWindowViewModel.Instance.RemoveError(errorHeader);
-            }
+            //            }
+
+            //            return new ValidationResult(false, null);
+
+            //        }
+            //        var errorStatus =
+            //            MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorRule == "Package");
+            //        if (!errorStatus.Any())
+            //        {
+            //            MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Green;
+            //        }
+            //        MainWindowViewModel.Instance.RemoveError(errorHeader);
+            //    }
+           // }
             return validationResult;
         }
 

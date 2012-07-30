@@ -315,7 +315,8 @@
                                             </Ellipse.Fill>
                                        
                                         </Ellipse>
-                                        <Label  Content="{Binding PackageViewModel.RuleNameToDisplay}" Margin="5" FontWeight="Bold"/>
+                                        <!--<Label  Content="{Binding PackageViewModel.RuleNameToDisplay}" Margin="5" FontWeight="Bold"/>-->
+                                        <Label  Content="Package" Margin="5" FontWeight="Bold"/>
                                 </StackPanel>
                             </TabItem.Header>
 
@@ -398,9 +399,9 @@
                                         <TabItem Header="Source Value" >
                                             <Views:Files DataContext="{Binding FilesViewModel}" Margin="5"/>
                                         </TabItem>
-                            <TabItem Header="Evaluated" >
-                                <TextBox Text="{Binding FilesViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
-                            </TabItem>
+                            <TabItem Header="Evaluated" >                                       
+                                            <Views:Files IsEnabled="False" DataContext="{Binding FilesViewModel}" Margin="5"/>                                      
+                                    </TabItem>
                             <TabItem Header="Package" >
                                         <TextBox Text="{Binding FilesViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
                                         </TabItem>

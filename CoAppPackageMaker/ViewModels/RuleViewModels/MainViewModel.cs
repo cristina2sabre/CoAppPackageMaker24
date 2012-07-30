@@ -31,7 +31,7 @@ namespace CoAppPackageMaker.ViewModels.Base
                 //_reader = new PackageReader();
                 //_reader.Read(PathToFile);
                 //this._reader.Save("D:\\P\\COPKG\\test2.autopkg");
-              LoadData();
+                //LoadData();
               _errorsCollection.CollectionChanged += (ErrorsCollection_CollectionChanged);
             }
         }
@@ -80,8 +80,12 @@ namespace CoAppPackageMaker.ViewModels.Base
         private ManifestViewModel _manifestViewModel;
         private ObservableCollection<ExtraPropertiesForCollectionsViewModelBase> _allViewModels = new ObservableCollection<ExtraPropertiesForCollectionsViewModelBase>();
         private PackageReader _reader;
+        public PackageReader Reader
+        {
+        get { return _reader; }
+        }
 
-        
+
         public void SearchForAllUsings(string definePropertyName)
         {
 
@@ -138,7 +142,7 @@ namespace CoAppPackageMaker.ViewModels.Base
         {
             _reader = new PackageReader();
             _reader.Read(PathToFile);
-            if (_reader.susscesfullRead)
+            if (_reader.SusscesfullRead)
                 try
                 {
                     PackageViewModel = new PackageViewModel(_reader);
@@ -156,14 +160,12 @@ namespace CoAppPackageMaker.ViewModels.Base
                     AllViewModels.Add(PackageViewModel);
                     AllViewModels.Add(LicenseViewModel);
                     AllViewModels.Add(MetadataViewModel);
-                     AllViewModels.Add(ManifestViewModel);
+                    AllViewModels.Add(ManifestViewModel);
                     AllViewModels.Add(SigningViewModel);
                     AllViewModels.Add(RequiresViewModel);
                     AllViewModels.Add(DefineViewModel);
                     AllViewModels.Add(CompatibilityPolicy);
                     AllViewModels.Add(FilesViewModel);
-                   
-
                 }
                 catch (Exception exception)
                 {
@@ -490,7 +492,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             {
                 try
                 {
-                    this._reader.Save("D:\\P\\COPKG\\test2.autopkg");
+                    this._reader.Save("D:\\P\\COPKG\\testsave.autopkg");
                     // ResetForm();
                 }
                 catch (Exception ex)
@@ -507,6 +509,7 @@ namespace CoAppPackageMaker.ViewModels.Base
                     UndoService.Current[this].CanUndo;
 
         }
+
         void NewExecute()
         {
             if (CanNewExecute())

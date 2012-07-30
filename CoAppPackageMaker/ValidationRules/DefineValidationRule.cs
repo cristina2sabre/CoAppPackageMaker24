@@ -21,8 +21,8 @@ namespace CoAppPackageMaker.ValidationRules
             var dataItem = (value as BindingExpression).DataItem;
             if (dataItem != null)
             {
-                var label = (dataItem as ItemViewModel).Label;
-                var sourceValue = (dataItem as ItemViewModel).SourceValue;
+                var label = (dataItem as DefineItem).Label;
+                var sourceValue = (dataItem as DefineItem).SourceValue;
                 string errorHeader =label;
                
                 if (sourceValue.Contains("${" + label + "}"))

@@ -43,7 +43,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                                                 new EditCollectionViewModel(reader,
                                                                             reader.
                                                                                 GetRulesSourceValuesByNameForEditableCollections
-                                                                                (Signing, "include")),
+                                                                                (Signing, "include"), typeof(SigningIncludeItem)),
                                             IsEditable = false,
                                             IsReadOnly = true,
                                             SourceString = reader.GetRulesSourceStringPropertyValueByName(Signing),
@@ -81,6 +81,17 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
 
         #region Properties
+
+        private EditCollectionViewModel _editCollectionViewModel;
+        public EditCollectionViewModel EditCollectionViewModel
+        {
+            get { return _editCollectionViewModel; }
+            set
+            {
+                _editCollectionViewModel = value;
+                OnPropertyChanged("EditCollectionViewModel");
+            }
+        }
 
         private SigningViewModel _valueSigningViewModel;
         public SigningViewModel ValueSigningViewModel
@@ -169,17 +180,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         
         #endregion
 
-        private EditCollectionViewModel _editCollectionViewModel;
-        public EditCollectionViewModel EditCollectionViewModel
-        {
-            get { return _editCollectionViewModel; }
-            set
-            {
-                _editCollectionViewModel = value;
-                OnPropertyChanged("EditCollectionViewModel");
-            }
-        }
-
+       
      
 
         
@@ -215,6 +216,14 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
 
             ValueSigningViewModel.SourceString = _reader.GetRulesSourceStringPropertyValueByName(Signing);
+        }
+
+        public class SigningIncludeItem : BaseItemViewModel
+        {
+            public override string ProcessSourceValue(string input)
+            {//la fel ca si la requires - sa fac o singur ametoda in reader
+                return this.Reader.SetSourceRequireSigningRules("signing", "include",this.Index, input);
+            }
         }
     }
 }

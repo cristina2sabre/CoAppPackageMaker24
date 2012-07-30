@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,6 +15,8 @@ namespace CoAppPackageMaker.ViewModels
 {
     public abstract class ExtraPropertiesForCollectionsViewModelBase : ViewModelBase, ISupportsUndo, ISupportUndoNotification
     {
+       
+
         private string _ruleNameToDisplay="Rule Name to Display--TEMP";
         public string RuleNameToDisplay
         {
@@ -36,28 +39,8 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        private string _helpTip="test";
-        private bool _isRequired=false;
-
-        public string HelpTip
-        {
-            get { return _helpTip; }
-            set
-            {
-                _helpTip = value;
-                OnPropertyChanged("HelpTip");
-            }
-        }
-
-        public bool IsRequired
-        {
-            get { return _isRequired; }
-            set
-            {
-                _isRequired = value;
-                OnPropertyChanged("IsRequired");
-            }
-        }
+        
+        
 
         private string _sourceString=String.Empty;
         public string SourceString
@@ -104,9 +87,12 @@ namespace CoAppPackageMaker.ViewModels
             var result =new  List<Tuple<string, string>>(4);
             foreach (var prop in this.GetType().GetProperties())
             {
-              
-                   
-                   if(prop.Name!="SelectedFile")
+                if (prop.Name.Contains("Collection"))
+                {//cu conditie
+                   // Search(toSearch);
+                }
+
+                if (prop.Name != "SelectedFile" && prop.Name != "SourceString" && prop.Name != "EditCollectionViewModel")
                    {
                        var tempString = prop.GetValue(this, null).ToString();
                        if (tempString.Contains(toSearch))
@@ -118,18 +104,24 @@ namespace CoAppPackageMaker.ViewModels
                 
             }
             //for search in collections of editable items
+            
             var method = this.GetType().GetProperty("EditCollectionViewModel");
             if (method != null)
             {
                 var s = method.GetValue(this, null);
-                foreach (ItemViewModel item in (s as EditCollectionViewModel).EditableItems)
+                if (s != null)
                 {
-                    if (item.SourceValue.Contains(toSearch))
+                    foreach (BaseItemViewModel item in (s as EditCollectionViewModel).EditableItems)
                     {
-                        result.Add(new Tuple<string, string>(name, String.Format("Collection {0}",item.Label)));
-                        break;
+                        if (item.SourceValue.Contains(toSearch))
+                        {
+                            //item.RuleType -rule name
+                            result.Add(new Tuple<string, string>(name, String.Format("Collection {0}", item.Index)));
+                            break;
+                        }
                     }
                 }
+                
             }
             return result;
         }
@@ -155,6 +147,9 @@ namespace CoAppPackageMaker.ViewModels
 
     public abstract class ExtraPropertiesViewModelBase : ExtraPropertiesForCollectionsViewModelBase
     {
+
+        
+      
         override public object GetUndoRoot()
         {
             if (this.IsSource == true)

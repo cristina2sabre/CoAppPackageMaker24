@@ -1,8 +1,11 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using CoAppPackageMaker.ViewModels.Base;
+using MonitoredUndo;
+
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
     public class DefineViewModel : ExtraPropertiesForCollectionsViewModelBase
@@ -12,7 +15,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         public DefineViewModel(PackageReader reader)
         {
             RuleNameToDisplay = "Define";
-            EditCollectionViewModel = new EditCollectionViewModel(reader,  reader.GetDefineRules());
+            EditCollectionViewModel = new EditCollectionViewModel(reader,  reader.GetDefineRules(), typeof(DefineItem));
             SourceString = reader.GetRulesSourceStringPropertyValueByName("*");
             this.EditCollectionViewModel.EditableItems.CollectionChanged += FilesCollectionCollectionChanged;
         
@@ -39,14 +42,45 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         {
             if(e.Action==NotifyCollectionChangedAction.Remove)
             {
-                string itemToRemove = ((ItemViewModel) e.OldItems[0]).Label;
+                string itemToRemove = ((DefineItem) e.OldItems[0]).Label;
                 MainWindowViewModel.Instance.SearchForAllUsings(itemToRemove);
             }
 
             else if (e.Action==NotifyCollectionChangedAction.Add)
             {
-                string itemToAdd=((ItemViewModel) e.NewItems[0]).Label;
+                string itemToAdd = ((DefineItem)e.NewItems[0]).Label;
                 MainWindowViewModel.Instance.RemoveError(itemToAdd);
+            }
+        }
+    }
+
+
+    public class DefineItem : BaseItemViewModel
+    {
+        public override string ProcessSourceValue(string input)
+        {
+            return this.Reader.SetSourceDefineRules(this.Label, new[] {input});
+        }
+        
+
+
+        private string _sourceValue = "new";
+        public new string SourceValue
+        {
+            get { return _sourceValue; }
+            set
+            {
+                if (value != String.Empty)
+                {
+                    DefaultChangeFactory.OnChanging(this, "SourceValue", _sourceValue, value);
+                    _sourceValue = value;
+                    OnPropertyChanged("SourceValue");
+                    if (!_sourceValue.Contains("${" + this.Label + "}"))
+                    {
+                        Value = ProcessSourceValue(_sourceValue);
+
+                    }
+                }
             }
         }
     }

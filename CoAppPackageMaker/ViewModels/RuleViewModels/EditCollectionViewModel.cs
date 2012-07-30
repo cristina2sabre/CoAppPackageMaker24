@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
@@ -12,10 +9,10 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
     public class EditCollectionViewModel:ExtraPropertiesForCollectionsViewModelBase
     {
         readonly PackageReader _reader;
-        private ItemViewModel.Process _updateSource;
+        private Type _typeForNewItems;
 
-        private ObservableCollection<ItemViewModel> _editableItems;
-        public ObservableCollection<ItemViewModel> EditableItems
+        private ObservableCollection<BaseItemViewModel> _editableItems;
+        public ObservableCollection<BaseItemViewModel> EditableItems
         {
             get { return _editableItems; }
             set
@@ -26,17 +23,11 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
-        public EditCollectionViewModel(PackageReader reader, ObservableCollection<ItemViewModel> collection)
+        public EditCollectionViewModel(PackageReader reader, ObservableCollection<BaseItemViewModel> collection, Type typeForNewItems)
         {
             _reader = reader;
-            
-           // Root = root;
             _editableItems = collection;
-            if(this.EditableItems.Count>0)
-            {
-                _updateSource = this.EditableItems.FirstOrDefault().UpdateSource;
-            }
-            
+            _typeForNewItems = typeForNewItems;
             _editableItems.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
         }
 
@@ -46,8 +37,8 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             OnPropertyChanged("EditableItems");
         }
       
-        private ItemViewModel _selectedItem;
-        public ItemViewModel SelectedItem
+        private BaseItemViewModel _selectedItem;
+        public BaseItemViewModel SelectedItem
         {
             get { return _selectedItem; }
             set
@@ -95,8 +86,17 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
            }
            public void Add()
            {
-
-               this.EditableItems.Add(new ItemViewModel() { Reader = _reader, UpdateSource = _updateSource });
+              //to add type
+               Type type = _typeForNewItems;
+               object newItem = Activator.CreateInstance(type);
+               ((BaseItemViewModel) newItem).Reader = _reader;
+               ((BaseItemViewModel)newItem).Index = EditableItems.Count;
+               //if is a new collection ->fail!!!!!!!!!!!
+               ((BaseItemViewModel)newItem).Label =
+               EditableItems[0].Label;
+               ((BaseItemViewModel)newItem).CollectionName =
+              EditableItems[0].CollectionName;
+               this.EditableItems.Add((BaseItemViewModel)newItem);
            }
     
         #endregion

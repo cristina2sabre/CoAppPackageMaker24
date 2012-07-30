@@ -1,10 +1,5 @@
 ﻿﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Windows.Input;
 using CoAppPackageMaker.ViewModels.Base;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
@@ -18,42 +13,28 @@ namespace CoAppPackageMaker.ViewModels
     {
         public ApplicationRoleViewModel(PackageReader reader)
         {
-
             _applicationCollection = new ObservableCollection<RoleItemViewModel>();
 
             foreach (string parameter in reader.ReadParameters("application"))
             {
-                var includeCollection =
-                    new ObservableCollection<ItemViewModel>(reader.ApplicationIncludeList("application", parameter,
-                                                                                          "include"));
-
+                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetManifestFinal(parameter, "include", "application", typeof(ApplicationItem)));
                 var model = new RoleItemViewModel()
                 {
                     Label = "Application",
                     EditCollectionViewModel =
-                        new EditCollectionViewModel(reader, includeCollection),
+                        new EditCollectionViewModel(reader, includeCollection,typeof(ApplicationItem)),
                     Name = parameter,
                 };
                 _applicationCollection.Add(model);
             }
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName("application");
-            _applicationCollection.CollectionChanged +=
-                new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
+            _applicationCollection.CollectionChanged += FilesCollectionCollectionChanged;
         }
 
         public class RoleItemViewModel : ExtraPropertiesForCollectionsViewModelBase
         {
-            public EditCollectionViewModel _editCollectionViewModel;
-            public EditCollectionViewModel EditCollectionViewModel
-            {
-                get { return _editCollectionViewModel; }
-                set
-                {
-                    _editCollectionViewModel = value;
-                    OnPropertyChanged("EditCollectionViewModel");
-                }
-            }
+            
 
             private string _label;
             public string Label
@@ -63,6 +44,17 @@ namespace CoAppPackageMaker.ViewModels
                 {
                     _label = value;
                     OnPropertyChanged("Label");
+                }
+            }
+
+            private EditCollectionViewModel _editCollectionViewModel;
+            public EditCollectionViewModel EditCollectionViewModel
+            {
+                get { return _editCollectionViewModel; }
+                set
+                {
+                    _editCollectionViewModel = value;
+                    OnPropertyChanged("EditCollectionViewModel");
                 }
             }
 
@@ -96,7 +88,8 @@ namespace CoAppPackageMaker.ViewModels
             OnPropertyChanged("ApplicationCollection");
         }
 
-        public RoleItemViewModel _selectedFile;
+
+        private RoleItemViewModel _selectedFile;
         public RoleItemViewModel SelectedFile
         {
             get { return _selectedFile; }
@@ -162,9 +155,18 @@ namespace CoAppPackageMaker.ViewModels
         public virtual void Add()
         {
 
-            this.ApplicationCollection.Add(new ApplicationRoleViewModel.RoleItemViewModel() { Label = "Application", EditCollectionViewModel = new EditCollectionViewModel(null, new ObservableCollection<ItemViewModel>()) });
+            this.ApplicationCollection.Add(new ApplicationRoleViewModel.RoleItemViewModel() { Label = "Application", EditCollectionViewModel = new EditCollectionViewModel(null, new ObservableCollection<BaseItemViewModel>(),typeof(ApplicationItem)) });
         }
 
         #endregion
+    }
+
+    public class ApplicationItem : BaseItemViewModel
+    {
+        public override string ProcessSourceValue(string input)
+        {
+            //string ruleName, int index, string parameter, string colectionName, string newValue
+            return this.Reader.SetManifestFinal("application", this.Index, this.Label, this.CollectionName, input);
+        }
     }
 }

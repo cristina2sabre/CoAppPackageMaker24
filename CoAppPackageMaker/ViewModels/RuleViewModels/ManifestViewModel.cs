@@ -34,13 +34,13 @@ namespace CoAppPackageMaker.ViewModels
             _manifestCollection = new ObservableCollection<ManifestItemViewModel>();
             foreach (string parameter in reader.ReadParameters("manifest"))
             {
-                
-                var assemblyCollection = new ObservableCollection<ItemViewModel>(reader.GETMiFINAL(parameter, "assembly"));
-                var includeCollection = new ObservableCollection<ItemViewModel>(reader.GETMiFINAL(parameter, "include"));
+
+                var assemblyCollection = new ObservableCollection<BaseItemViewModel>(reader.GetManifestFinal(parameter, "assembly", "manifest", typeof(ManifestItem)));
+                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetManifestFinal(parameter, "include", "manifest", typeof(ManifestItem)));
                 var model = new ManifestItemViewModel()
                 {
-                    AssemblyCollection = new EditCollectionViewModel(reader, assemblyCollection),
-                    IncludeCollection = new EditCollectionViewModel(reader, includeCollection),
+                    AssemblyCollection = new EditCollectionViewModel(reader, assemblyCollection, typeof(ManifestItem)),
+                    IncludeCollection = new EditCollectionViewModel(reader, includeCollection, typeof(ManifestItem)),
                     Name = parameter,
                 };
                 _manifestCollection.Add(model);
@@ -49,11 +49,11 @@ namespace CoAppPackageMaker.ViewModels
 
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName("manifest");
-            _manifestCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
+            _manifestCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(ManifestCollectionCollectionChanged);
 
         }
 
-        void FilesCollectionCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        void ManifestCollectionCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             DefaultChangeFactory.OnCollectionChanged(this, "ManifestCollection", ManifestCollection, e);
             OnPropertyChanged("ManifestCollection");
@@ -101,8 +101,8 @@ namespace CoAppPackageMaker.ViewModels
         }
         public void Add()
         {
-
-            this.ManifestCollection.Add(new ManifestItemViewModel() { IncludeCollection = new EditCollectionViewModel(null, new ObservableCollection<ItemViewModel>()), AssemblyCollection = new EditCollectionViewModel(null, new ObservableCollection<ItemViewModel>()) });
+            
+            this.ManifestCollection.Add(new ManifestItemViewModel() { IncludeCollection = new EditCollectionViewModel(null, new ObservableCollection<BaseItemViewModel>(), null), AssemblyCollection = new EditCollectionViewModel(null, new ObservableCollection<BaseItemViewModel>(), typeof(ManifestItem)) });
         }
 
         #endregion
@@ -158,5 +158,14 @@ namespace CoAppPackageMaker.ViewModels
 
         }
 
+    }
+
+    public class ManifestItem : BaseItemViewModel
+    {
+        public override string ProcessSourceValue(string input)
+        {
+            //string ruleName, int index, string parameter, string colectionName, string newValue
+            return this.Reader.SetManifestFinal("manifest",this.Index,this.Label,this.CollectionName, input);
+        }
     }
 }

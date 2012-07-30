@@ -102,16 +102,15 @@
     <Compile Include="ViewModels\RoleViewModels\ApplicationRoleViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\AssemblyRoleViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
+    <Compile Include="ViewModels\RuleViewModels\BaseItemViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\CompatibilityPolicyViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\DefineViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\EditCollectionViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\FilesViewModel.cs" />
-    <Compile Include="ViewModels\RuleViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\LicenseViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\DeveloperLibraryRoleViewModel.cs" />
     <Compile Include="ViewModels\Base\ExtraPropertiesViewModel.cs" />
-    <Compile Include="ViewModels\RuleViewModels\ImportViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\ManifestViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\MetadataViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\PackageCompositionViewModel.cs" />
@@ -234,9 +233,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Icons\Annotate_Warning.ico" />
   </ItemGroup>

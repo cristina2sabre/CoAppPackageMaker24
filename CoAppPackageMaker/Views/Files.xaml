@@ -30,18 +30,44 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Root" Grid.Row="0" Margin="5"/>
                     <Label Content="Include" Grid.Row="1" Margin="5"/>
-                    <Label Content="Trim-Path" Grid.Row="2"  Margin="5"/>
-                   
-                    <TextBox MinWidth="200"  Grid.Column="1" Grid.Row="0" Text="{Binding  FilesRoot, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
-                    <!--<ListView Width="200" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Include , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>-->
+                    <Label Content="Trim-Path" Grid.Row="2"  Margin="5"/>                   
+                    <TextBox MinWidth="200"  Grid.Column="1" Grid.Row="0" Text="{Binding  FilesRoot, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>                  
                     <Views:EditCollectionsUC DataContext="{Binding  EditCollectionViewModel}" Grid.Column="1" Grid.Row="1" MinWidth="200" Height="100" ListTemplate="SourceValueTemplate"/>
                     <TextBox MinWidth="200" Grid.Column="1" Grid.Row="2" Text="{Binding  TrimPath , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
                </Grid>
             </Expander>       
         </DataTemplate>
-   
 
-        </UserControl.Resources>
+        <DataTemplate x:Key="FileTemplateValue">
+            <Expander  IsExpanded="True" Margin="5">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Files" FontWeight="Bold" />
+                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
+                    </StackPanel>
+                </Expander.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Root" Grid.Row="0" Margin="5"/>
+                    <Label Content="Include" Grid.Row="1" Margin="5"/>
+                    <Label Content="Trim-Path" Grid.Row="2"  Margin="5"/>
+                    <TextBox MinWidth="200"  Grid.Column="1" Grid.Row="0" Text="{Binding  FilesRoot, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+                    <Views:EditCollectionsUC DataContext="{Binding  EditCollectionViewModel}" Grid.Column="1" Grid.Row="1" MinWidth="200" Height="100" ListTemplate="ValueTemplate"/>
+                    <TextBox MinWidth="200" Grid.Column="1" Grid.Row="2" Text="{Binding  TrimPath , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+                </Grid>
+            </Expander>
+        </DataTemplate>
+
+    </UserControl.Resources>
     <DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
             <Button Width="20" Height="20" Margin="3"   Command="{Binding Path = RemoveCommand}" Content="-"/>
@@ -49,7 +75,7 @@
         </StackPanel>
 
         <ListBox Name="FilesCollections" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"
-      ItemTemplate="{StaticResource FileTemplate}" ItemsSource="{Binding FilesCollection,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  >
+     ItemsSource="{Binding FilesCollection,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  >
            
         </ListBox>
     </DockPanel>

@@ -16,23 +16,35 @@ namespace CoAppPackageMaker.ViewModels
         public AssemblyRoleViewModel(PackageReader reader)
             : base()
         {
-            // Root = root;
+           
 
             ApplicationCollection = new ObservableCollection<RoleItemViewModel>();
 
             foreach (string parameter in reader.ReadParameters("assembly"))
             {
-                ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.ApplicationIncludeList("assembly", parameter, "include"));
-
-                RoleItemViewModel model = new RoleItemViewModel()
+                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetManifestFinal(parameter, "include", "assembly", typeof(ApplicationItem)));
+                var model = new RoleItemViewModel()
                 {
                     Label = "Assembly",
-                    EditCollectionViewModel = new EditCollectionViewModel(reader, includeCollection),
+                    EditCollectionViewModel =
+                        new EditCollectionViewModel(reader, includeCollection, typeof(ApplicationItem)),
                     Name = parameter,
                 };
-
                 ApplicationCollection.Add(model);
             }
+            //foreach (string parameter in reader.ReadParameters("assembly"))
+            //{
+            //    ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.ApplicationIncludeList("assembly", parameter, "include"));
+
+            //    RoleItemViewModel model = new RoleItemViewModel()
+            //    {
+            //        Label = "Assembly",
+            //        EditCollectionViewModel = new EditCollectionViewModel(reader, includeCollection),
+            //        Name = parameter,
+            //    };
+
+            //    ApplicationCollection.Add(model);
+            //}
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName("assembly");
             ApplicationCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(base.FilesCollectionCollectionChanged);
@@ -41,7 +53,7 @@ namespace CoAppPackageMaker.ViewModels
         public override void Add()
         {
 
-            this.ApplicationCollection.Add(new ApplicationRoleViewModel.RoleItemViewModel() { Label = "Assembly", EditCollectionViewModel = new EditCollectionViewModel(null, new ObservableCollection<ItemViewModel>()) });
+            //this.ApplicationCollection.Add(new ApplicationRoleViewModel.RoleItemViewModel() { Label = "Assembly", EditCollectionViewModel = new EditCollectionViewModel(null, new ObservableCollection<ItemViewModel>()) });
         }
     }
 }
