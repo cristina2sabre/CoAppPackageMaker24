@@ -11,8 +11,8 @@
                 <Expander  IsExpanded="False" Margin="5">
                     <Expander.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="{Binding Label}" FontWeight="Bold"/>
-                            <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Name, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                            <Label Content="{Binding RuleNameToDisplay}" FontWeight="Bold"/>
+                            <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Parameter, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
                         </StackPanel>
                     </Expander.Header>
                     <Grid>

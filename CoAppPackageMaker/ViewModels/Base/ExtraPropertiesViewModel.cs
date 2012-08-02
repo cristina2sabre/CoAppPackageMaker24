@@ -13,9 +13,29 @@ using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public abstract class ExtraPropertiesForCollectionsViewModelBase : ViewModelBase, ISupportsUndo, ISupportUndoNotification
+    public  class ExtraPropertiesForCollectionsViewModelBase : ViewModelBase, ISupportsUndo, ISupportUndoNotification
     {
-       
+
+        private EditCollectionViewModel _editCollectionViewModel;
+        public EditCollectionViewModel EditCollectionViewModel
+        {
+            get { return _editCollectionViewModel; }
+            set
+            {
+                _editCollectionViewModel = value;
+                OnPropertyChanged("EditCollectionViewModel");
+            }
+        }
+
+
+
+        protected void UpdateParameterForEveryItemInTheCollection(string parameter, ObservableCollection<BaseItemViewModel> collection)
+        {
+            foreach (var item in collection)
+            {
+                item.Parameter = parameter;
+            }
+        }
 
         private string _ruleNameToDisplay="Rule Name to Display--TEMP";
         public string RuleNameToDisplay
@@ -79,53 +99,104 @@ namespace CoAppPackageMaker.ViewModels
 
         }
 
-    
-       
-        public List<Tuple<string,string>> Search(string toSearch)
+
+
+      public List<Tuple<string, string>> Search(string toSearch)
+      {
+          string name = RuleNameToDisplay;
+          var result = new List<Tuple<string, string>>();
+          foreach (var prop in this.GetType().GetProperties())
+          {
+              if (prop.Name.Equals("ManifestCollection"))
+              {
+                  result.AddRange(SearchInCollections(toSearch,prop));
+              }
+
+              if (prop.Name != "SelectedFile" && prop.Name != "SourceString" && prop.Name != "EditCollectionViewModel")
+              {
+                  var tempString = prop.GetValue(this, null).ToString();
+                  if (tempString.Contains(toSearch))
+                  {
+                      result.Add(new Tuple<string, string>(name, prop.Name));
+                  }
+              }
+
+
+          }
+          //for search in collections of editable items
+
+          var method = this.GetType().GetProperty("EditCollectionViewModel");
+          if (method != null)
+          {
+              var s = method.GetValue(this, null);
+              if (s != null)
+              {
+                  foreach (BaseItemViewModel item in (s as EditCollectionViewModel).EditableItems)
+                  {
+                      if (item.SourceValue.Contains(toSearch))
+                      {
+                          
+                          result.Add(new Tuple<string, string>(name, String.Format("Collection  {0}", item.Parameter)));
+                          break;
+                      }
+                  }
+              }
+
+          }
+          return result;
+      }
+
+      private List<Tuple<string, string>> SearchInCollections(string toSearch, PropertyInfo prop)
         {
-            string name = RuleNameToDisplay;
-            var result =new  List<Tuple<string, string>>(4);
-            foreach (var prop in this.GetType().GetProperties())
-            {
-                if (prop.Name.Contains("Collection"))
-                {//cu conditie
-                   // Search(toSearch);
-                }
+            var result = new List<Tuple<string, string>>();
+              var propertyInfo = this.GetType().GetProperty(prop.Name);
+                  if (propertyInfo != null)
+                  {
+                      var value = propertyInfo.GetValue(this, null);
+                      if (value != null)
+                      {
+                          foreach (var item in (ObservableCollection<ManifestItemViewModel>)value)
+                          {
+                              foreach (var property in item.GetType().GetProperties())
+                              {
+                                  var name = property.Name;
+                                  if (name.Contains("Collection"))
+                                  {
+                                      var propertyCollection = item.GetType().GetProperty(name);
+                                      if (propertyCollection != null)
+                                      {
+                                          var itemValue = propertyCollection.GetValue(item, null);
 
-                if (prop.Name != "SelectedFile" && prop.Name != "SourceString" && prop.Name != "EditCollectionViewModel")
-                   {
-                       var tempString = prop.GetValue(this, null).ToString();
-                       if (tempString.Contains(toSearch))
-                       {
-                           result.Add(new Tuple<string, string>(name, prop.Name));
-                       }
-                   }
-                  
-                
-            }
-            //for search in collections of editable items
-            
-            var method = this.GetType().GetProperty("EditCollectionViewModel");
-            if (method != null)
-            {
-                var s = method.GetValue(this, null);
-                if (s != null)
-                {
-                    foreach (BaseItemViewModel item in (s as EditCollectionViewModel).EditableItems)
-                    {
-                        if (item.SourceValue.Contains(toSearch))
-                        {
-                            //item.RuleType -rule name
-                            result.Add(new Tuple<string, string>(name, String.Format("Collection {0}", item.Index)));
-                            break;
-                        }
-                    }
-                }
-                
-            }
-            return result;
+                                          if (itemValue != null)
+                                          {
+                                              foreach (
+                                                  BaseItemViewModel model in
+                                                      ((EditCollectionViewModel) itemValue).EditableItems)
+                                              {
+                                                  if (model.SourceValue.Contains(toSearch))
+                                                  {
+                                                    
+                                                      result.Add(new Tuple<string, string>(model.RuleNameToDisplay,
+                                                                                           String.Format("[{0}] {1}",
+                                                                                                         model.Parameter,
+                                                                                                         model.
+                                                                                                             CollectionName)));
+                                                      break;
+                                                  }
+                                              }
+                                          }
+
+                                      }
+                                  }
+
+                              }
+                          }
+                      }
+                  }
+
+          return result;
         }
-
+        
         private int _undoCounter;
         public int UndoCounter
         {

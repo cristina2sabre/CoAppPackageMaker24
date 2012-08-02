@@ -68,7 +68,7 @@ namespace CoAppPackageMaker
                     var propertyValue = propertyRule.PropertyValues.FirstOrDefault();
                     if (propertyValue != null)
                     {
-                        model.Reader = this;
+                        //model.Reader = this;
                         model.SourceValue = propertyValue.SourceValues.FirstOrDefault();
                     }
                     result.Add(model);
@@ -92,8 +92,8 @@ namespace CoAppPackageMaker
                         if(ruleName=="signing")
                         {
                           var model  = new SigningViewModel.SigningIncludeItem();
-                          model.Index = i;
-                          model.Reader = this;
+                          //model.Index = i;
+                          //model.Reader = this;
                           model.SourceValue = sourceValue;
                           // model.Value = no need to set-is evaluated in the sourcevalue;
                           result.Add(model);
@@ -101,8 +101,8 @@ namespace CoAppPackageMaker
                         else
                         {
                           var  model2 = new RequiresViewModel.RequireItem();
-                          model2.Index = i;
-                          model2.Reader = this;
+                          //model2.Index = i;
+                          //model2.Reader = this;
                           model2.SourceValue = sourceValue;
                           // model.Value = no need to set-is evaluated in the sourcevalue;
                           result.Add(model2);
@@ -129,73 +129,119 @@ namespace CoAppPackageMaker
             return result.FirstOrDefault();
         }
 
-        public string SetManifestFinal(string ruleName, int index, string parameter, string colectionName, string newValue)
+
+        //public string SetSourceRequireSigningRules(string ruleName, string propertyName, string oldValue, string newValue)
+        //{
+        //    string result = String.Empty;
+        //    PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+        //    if (propertyRule != null)
+        //    {
+        //        PropertyValue propertyValue = propertyRule.PropertyValues.ToList()[0];
+        //        List<string> tempList = propertyValue.SourceValues.ToList();
+        //        int index = tempList.Count();
+
+        //        if (tempList.Contains(oldValue))
+        //        {
+        //            index = tempList.IndexOf(oldValue);
+        //            tempList[index] = newValue;
+        //        }
+        //        else if (tempList.Contains(newValue))
+        //        {
+        //            index = tempList.IndexOf(newValue);
+        //        }
+        //        else if (!tempList.Contains(newValue))
+        //        {
+        //            tempList.Add(newValue);
+        //            index = tempList.Count() - 1;
+        //        }
+
+
+        //        propertyValue.SourceValues = tempList;
+        //        PropertyRule p = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+        //        result = p.Values.ToList()[index];
+        //    }
+        //    return result;
+        //}
+
+        public string SetRulesWithParameters(string ruleName, string parameter, string colectionName,string oldValue, string newValue)
         {
             string result = String.Empty;
             IEnumerable<Rule> rules = _packageSource.AllRules.GetRulesByName(ruleName);
-            PropertyRule propertyRule = null;
             Rule rule = rules.FirstOrDefault(item => item.Parameter == parameter);
             if (rule != null)
-               {
-                   propertyRule = rule[colectionName];
+            {
+                PropertyRule propertyRule = rule[colectionName];
+                //e la fel ca in restul
                    if (propertyRule != null)
                    {
+                       
                        PropertyValue propertyValue = propertyRule.PropertyValues.ToList()[0];
                        List<string> tempList = propertyValue.SourceValues.ToList();
-                       if (tempList.Count <= index)
+                       int index = tempList.Count();
+
+                       if (tempList.Contains(oldValue))
                        {
-                           tempList.Add(newValue + index);
+                           index = tempList.IndexOf(oldValue);
+                           tempList[index] = newValue;
                        }
-                       else
+                       else if (tempList.Contains(newValue))
                        {
-                           tempList[index] = newValue + index;//index added for test//cum adaug gilimele?!
+                           index = tempList.IndexOf(newValue);
+                       }
+                       else if (!tempList.Contains(newValue))
+                       {
+                           tempList.Add(newValue);
+                           index = tempList.Count() - 1;
                        }
 
-                       propertyValue.SourceValues = tempList; //cu index
-                       result = propertyRule.Values.ToList()[index]; //cu index
+
+                       propertyValue.SourceValues = tempList;
+                       //PropertyRule p = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+                       result = propertyRule.Values.ToList()[index];
                }
-                   
-                    }
+            }
 
             return result;
 
         }
 
-        public ObservableCollection<BaseItemViewModel> GetManifestFinal(string parameter, string propertyName, string ruleName,Type itemType)
+        public ObservableCollection<BaseItemViewModel> GetRulesByParamater(string parameter, string propertyName, string ruleName,Type itemType)
         {
             var result = new ObservableCollection<BaseItemViewModel>();
             IEnumerable<Rule> rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            //Rule rulew = rules.FirstOrDefault().Parent.GetRule(null,parameter,null,null);
+
             Rule rule = rules.FirstOrDefault(item => item.Parameter == parameter);
 
             if (rule != null)
             {
                 PropertyRule propertyRule = rule[propertyName];
-                //sa iau doar primul??
-                PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+                if(propertyRule!=null)
                 {
-                    int i = -1;
-                    foreach (string sourceValue in propertyValue.SourceValues)
+
+                    //sa iau doar primul??
+                    PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+                    if (propertyValue != null)
                     {
-                        i++;
-                        var newItem = Activator.CreateInstance(itemType);
-                        ((BaseItemViewModel) newItem).Reader = this;
-                        ((BaseItemViewModel)newItem).Index = i;
-                        ((BaseItemViewModel)newItem).Label = parameter;
-                        ((BaseItemViewModel)newItem).CollectionName = propertyName;
-                        ((BaseItemViewModel)newItem).SourceValue = sourceValue;
-                        //var model = new ManifestItem
-                        //                {
-                        //                    Reader = this,
-                        //                    Index = i,
-                        //                    Label = parameter,
-                        //                    CollectionName = propertyName,
-                        //                    SourceValue = sourceValue
-                        //                };
+                        //int i = -1;
+                        foreach (string sourceValue in propertyValue.SourceValues)
+                        {
+                            //i++;
+                            var newItem = Activator.CreateInstance(itemType);
+                            //((BaseItemViewModel)newItem).Index = i;
+                            ((BaseItemViewModel)newItem).Parameter = parameter;
+                            ((BaseItemViewModel)newItem).CollectionName = propertyName;
+                            ((BaseItemViewModel)newItem).RuleNameToDisplay = ruleName;
+                            ((BaseItemViewModel)newItem).SourceValue = sourceValue;
+                           
+                            ((BaseItemViewModel)newItem).upper = result;
 
-                        result.Add((BaseItemViewModel) newItem);
+                            result.Add((BaseItemViewModel)newItem);
 
+                        }
                     }
                 }
+               
            
             }
            
@@ -204,26 +250,35 @@ namespace CoAppPackageMaker
         }
 
 
-        public string SetSourceRequireSigningRules(string ruleName,string propertyName, int index, string newValue)
+        public string SetSourceRequireSigningRules(string ruleName,string propertyName, string oldValue, string newValue)
         {
-            string result=String.Empty;
+            string result = String.Empty;
             PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
             if (propertyRule != null)
             {
                 PropertyValue propertyValue = propertyRule.PropertyValues.ToList()[0];
                 List<string> tempList = propertyValue.SourceValues.ToList();
-                if (tempList.Count <= index)
+                int index = tempList.Count();
+
+                if (tempList.Contains(oldValue))
                 {
-                    tempList.Add(newValue + index);
+                    index = tempList.IndexOf(oldValue);
+                    tempList[index] = newValue;
                 }
-                else
+                else if (tempList.Contains(newValue))
                 {
-                    tempList[index] = newValue + index;//index added for test//cum adaug gilimele?!
+                    index = tempList.IndexOf(newValue);
                 }
-                
-                propertyValue.SourceValues = tempList; //cu index
+                else if (!tempList.Contains(newValue))
+                {
+                    tempList.Add(newValue);
+                    index = tempList.Count() - 1;
+                }
+
+
+                propertyValue.SourceValues = tempList;
                 PropertyRule p = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
-                result = p.Values.ToList()[index]; //cu index
+                result = p.Values.ToList()[index];
             }
             return result;
         }
@@ -308,6 +363,16 @@ namespace CoAppPackageMaker
             return result;
         }
 
+        public string SetNewParameter(string ruleName, string oldValue, string newValue)
+        {
+            var rule = _packageSource.AllRules.GetRulesByName(ruleName).FirstOrDefault(item => item.Parameter == oldValue);
+            if (rule!=null)
+            {
+                return rule.Parameter = newValue;
+            }
+            return newValue;
+        }
+
         public string GetFilesRulesPropertyValueByParameterAndName(string parameter, string propertyName)
         {
            return _packageSource.FileRules.GetRulesByParameter(parameter).GetPropertyValue(propertyName);
@@ -323,11 +388,13 @@ namespace CoAppPackageMaker
                 PropertyRule propertyRule = rule[propertyName];
                 if (propertyRule != null)
                 {
-                    //in loc de source
-                    propertyRule.PropertyValues.FirstOrDefault().Value = newValue;
+                   propertyRule.PropertyValues.FirstOrDefault().Value = newValue;
                 }
+                return _packageSource.FileRules.GetRulesByParameter(parameter).GetPropertyValue(propertyName);
             }
-            return _packageSource.FileRules.GetRulesByParameter(parameter).GetPropertyValue(propertyName);
+            //Temporary solution - if rule[parameter] doesnt exist(usually for new added files[]) just return the same value
+            return newValue;
+           
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels
@@ -40,7 +41,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                                                 reader.GetRulesByNameForSigning(Signing, "attributes", "file-version",
                                                                                 false),
                                             EditCollectionViewModel =
-                                                new EditCollectionViewModel(reader,
+                                                new EditCollectionViewModel(
                                                                             reader.
                                                                                 GetRulesSourceValuesByNameForEditableCollections
                                                                                 (Signing, "include"), typeof(SigningIncludeItem)),
@@ -82,17 +83,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         #region Properties
 
-        private EditCollectionViewModel _editCollectionViewModel;
-        public EditCollectionViewModel EditCollectionViewModel
-        {
-            get { return _editCollectionViewModel; }
-            set
-            {
-                _editCollectionViewModel = value;
-                OnPropertyChanged("EditCollectionViewModel");
-            }
-        }
-
+        
         private SigningViewModel _valueSigningViewModel;
         public SigningViewModel ValueSigningViewModel
         {
@@ -220,9 +211,9 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         public class SigningIncludeItem : BaseItemViewModel
         {
-            public override string ProcessSourceValue(string input)
-            {//la fel ca si la requires - sa fac o singur ametoda in reader
-                return this.Reader.SetSourceRequireSigningRules("signing", "include",this.Index, input);
+            public override string ProcessSourceValue(string newValue, string oldValue)
+            {
+                return MainWindowViewModel.Instance.Reader.SetSourceRequireSigningRules("signing", "include", oldValue, newValue);
             }
         }
     }

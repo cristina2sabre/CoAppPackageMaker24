@@ -11,78 +11,36 @@ namespace CoAppPackageMaker.ViewModels
 {
     public class ApplicationRoleViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
+      
         public ApplicationRoleViewModel(PackageReader reader)
         {
             _applicationCollection = new ObservableCollection<RoleItemViewModel>();
 
             foreach (string parameter in reader.ReadParameters("application"))
             {
-                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetManifestFinal(parameter, "include", "application", typeof(ApplicationItem)));
+                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "include", "application", typeof(ApplicationItem)));
                 var model = new RoleItemViewModel()
                 {
-                    Label = "Application",
+                    //RoleName = "Application",
+                    RuleNameToDisplay = "application",
                     EditCollectionViewModel =
-                        new EditCollectionViewModel(reader, includeCollection,typeof(ApplicationItem)),
-                    Name = parameter,
+                        new EditCollectionViewModel( includeCollection,typeof(ApplicationItem)),
+                    Parameter = parameter,
+                    
                 };
                 _applicationCollection.Add(model);
             }
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName("application");
-            _applicationCollection.CollectionChanged += FilesCollectionCollectionChanged;
+            _applicationCollection.CollectionChanged += RolesCollectionChanged;
         }
 
-        public class RoleItemViewModel : ExtraPropertiesForCollectionsViewModelBase
+        protected ApplicationRoleViewModel()
         {
-            
-
-            private string _label;
-            public string Label
-            {
-                get { return _label; }
-                set
-                {
-                    _label = value;
-                    OnPropertyChanged("Label");
-                }
-            }
-
-            private EditCollectionViewModel _editCollectionViewModel;
-            public EditCollectionViewModel EditCollectionViewModel
-            {
-                get { return _editCollectionViewModel; }
-                set
-                {
-                    _editCollectionViewModel = value;
-                    OnPropertyChanged("EditCollectionViewModel");
-                }
-            }
-
-            private string _name = "[]";
-            public string Name
-            {
-                get { return _name; }
-                set
-                {
-
-                    if (value != null)
-                    {
-                        DefaultChangeFactory.OnChanging(this, "Name", _name, value);
-                        _name = value.StartsWith("[") && value.EndsWith("]") ? value : String.Format("[{0}]", value);
-                    }
-                    else
-                    {
-                        _name = String.Format("[{0}]", value);
-                    }
-
-                    OnPropertyChanged("Name");
-
-                }
-            }
 
         }
 
-        public void FilesCollectionCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        public void RolesCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             DefaultChangeFactory.OnCollectionChanged(this, "ApplicationCollection", ApplicationCollection, e);
             OnPropertyChanged("ApplicationCollection");
@@ -99,13 +57,10 @@ namespace CoAppPackageMaker.ViewModels
                 OnPropertyChanged("SelectedFile");
             }
         }
+
+       
+        
         private ObservableCollection<RoleItemViewModel> _applicationCollection;
-
-        protected ApplicationRoleViewModel()
-        {
-
-        }
-
         public ObservableCollection<RoleItemViewModel> ApplicationCollection
         {
             get { return _applicationCollection; }
@@ -115,14 +70,9 @@ namespace CoAppPackageMaker.ViewModels
                 OnPropertyChanged("ApplicationCollection");
             }
         }
-
-
-
-
+        
 
         #region Event Handlers
-
-
 
         public ICommand RemoveCommand
         {
@@ -155,18 +105,46 @@ namespace CoAppPackageMaker.ViewModels
         public virtual void Add()
         {
 
-            this.ApplicationCollection.Add(new ApplicationRoleViewModel.RoleItemViewModel() { Label = "Application", EditCollectionViewModel = new EditCollectionViewModel(null, new ObservableCollection<BaseItemViewModel>(),typeof(ApplicationItem)) });
+            this.ApplicationCollection.Add(new RoleItemViewModel() {RuleNameToDisplay  = "application",EditCollectionViewModel = new EditCollectionViewModel( new ObservableCollection<BaseItemViewModel>(),typeof(ApplicationItem)) });
         }
 
         #endregion
     }
 
+    public class RoleItemViewModel : ExtraPropertiesForCollectionsViewModelBase
+    {
+       
+
+        private string _parameter;
+        public string Parameter
+        {
+            get { return _parameter; }
+            set
+            {
+
+                if (value != null)
+                {
+                    MainWindowViewModel.Instance.Reader.SetNewParameter(this.RuleNameToDisplay, _parameter, value);
+                    UpdateParameterForEveryItemInTheCollection(value, this.EditCollectionViewModel.EditableItems);
+
+                    DefaultChangeFactory.OnChanging(this, "Parameter", _parameter, value);
+                    _parameter = value;
+                }
+
+                OnPropertyChanged("Parameter");
+
+            }
+        }
+
+    }
+
     public class ApplicationItem : BaseItemViewModel
     {
-        public override string ProcessSourceValue(string input)
+        
+       public override string ProcessSourceValue(string newValue,string oldValue)
         {
             //string ruleName, int index, string parameter, string colectionName, string newValue
-            return this.Reader.SetManifestFinal("application", this.Index, this.Label, this.CollectionName, input);
+            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters(this.RuleNameToDisplay, this.Parameter, this.CollectionName, oldValue, newValue);
         }
     }
 }

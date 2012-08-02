@@ -23,9 +23,9 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
-        public EditCollectionViewModel(PackageReader reader, ObservableCollection<BaseItemViewModel> collection, Type typeForNewItems)
+        public EditCollectionViewModel( ObservableCollection<BaseItemViewModel> collection, Type typeForNewItems)
         {
-            _reader = reader;
+            _reader = MainWindowViewModel.Instance.Reader;
             _editableItems = collection;
             _typeForNewItems = typeForNewItems;
             _editableItems.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
@@ -86,19 +86,27 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
            }
            public void Add()
            {
+              
               //to add type
                Type type = _typeForNewItems;
+               
                object newItem = Activator.CreateInstance(type);
-               ((BaseItemViewModel) newItem).Reader = _reader;
-               ((BaseItemViewModel)newItem).Index = EditableItems.Count;
+             
                //if is a new collection ->fail!!!!!!!!!!!
-               ((BaseItemViewModel)newItem).Label =
-               EditableItems[0].Label;
-               ((BaseItemViewModel)newItem).CollectionName =
-              EditableItems[0].CollectionName;
-               this.EditableItems.Add((BaseItemViewModel)newItem);
+               ((BaseItemViewModel)newItem).Parameter =(EditableItems.Count!=0)?
+                   EditableItems[0].Parameter:String.Empty;
+               //to add as a paramater
+               ((BaseItemViewModel)newItem).CollectionName =(EditableItems.Count!=0)?
+              EditableItems[0].CollectionName:String.Empty;
+               ((BaseItemViewModel) newItem).upper = _editableItems;
+
+               ((BaseItemViewModel)newItem).RuleNameToDisplay = _editableItems[0].RuleNameToDisplay;
+
+               this.EditableItems.Add(((BaseItemViewModel)newItem));
            }
     
         #endregion
+
+
     }
 }

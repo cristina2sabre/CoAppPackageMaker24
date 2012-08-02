@@ -22,38 +22,28 @@ namespace CoAppPackageMaker.ViewModels
 
             foreach (string parameter in reader.ReadParameters("assembly"))
             {
-                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetManifestFinal(parameter, "include", "assembly", typeof(ApplicationItem)));
+                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "include", "assembly", typeof(ApplicationItem)));
                 var model = new RoleItemViewModel()
                 {
-                    Label = "Assembly",
+                    //RoleName = "Assembly",
+                     RuleNameToDisplay = "assembly",
                     EditCollectionViewModel =
-                        new EditCollectionViewModel(reader, includeCollection, typeof(ApplicationItem)),
-                    Name = parameter,
+                        new EditCollectionViewModel( includeCollection, typeof(ApplicationItem)),
+                    Parameter = parameter,
+                   
                 };
                 ApplicationCollection.Add(model);
             }
-            //foreach (string parameter in reader.ReadParameters("assembly"))
-            //{
-            //    ObservableCollection<ItemViewModel> includeCollection = new ObservableCollection<ItemViewModel>(reader.ApplicationIncludeList("assembly", parameter, "include"));
-
-            //    RoleItemViewModel model = new RoleItemViewModel()
-            //    {
-            //        Label = "Assembly",
-            //        EditCollectionViewModel = new EditCollectionViewModel(reader, includeCollection),
-            //        Name = parameter,
-            //    };
-
-            //    ApplicationCollection.Add(model);
-            //}
+            
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName("assembly");
-            ApplicationCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(base.FilesCollectionCollectionChanged);
+            ApplicationCollection.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(base.RolesCollectionChanged);
         }
 
         public override void Add()
         {
 
-            //this.ApplicationCollection.Add(new ApplicationRoleViewModel.RoleItemViewModel() { Label = "Assembly", EditCollectionViewModel = new EditCollectionViewModel(null, new ObservableCollection<ItemViewModel>()) });
+            this.ApplicationCollection.Add(new RoleItemViewModel() {RuleNameToDisplay = "assembly",EditCollectionViewModel = new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(),typeof(ApplicationItem) ) });
         }
     }
 }

@@ -7,7 +7,7 @@ namespace CoAppPackageMaker.ViewModels
 {
 
 
-    public class PackageCompositionViewModel : ExtraPropertiesForCollectionsViewModelBase
+    public class PackageCompositionViewModel : ExtraPropertiesViewModelBase
     {
         public PackageCompositionViewModel(PackageReader reader)
         {

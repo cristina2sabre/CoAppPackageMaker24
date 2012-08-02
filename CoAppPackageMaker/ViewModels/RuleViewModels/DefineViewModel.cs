@@ -15,22 +15,13 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         public DefineViewModel(PackageReader reader)
         {
             RuleNameToDisplay = "Define";
-            EditCollectionViewModel = new EditCollectionViewModel(reader,  reader.GetDefineRules(), typeof(DefineItem));
+            EditCollectionViewModel = new EditCollectionViewModel( reader.GetDefineRules(), typeof(DefineItem));
             SourceString = reader.GetRulesSourceStringPropertyValueByName("*");
             this.EditCollectionViewModel.EditableItems.CollectionChanged += FilesCollectionCollectionChanged;
         
         }
 
-        private EditCollectionViewModel _editCollectionViewModel;
-        public EditCollectionViewModel EditCollectionViewModel
-        {
-            get { return _editCollectionViewModel; }
-            set
-            {
-                _editCollectionViewModel = value;
-                OnPropertyChanged("EditCollectionViewModel");
-            }
-        }
+        
 
         /// <summary>
         /// Add error to the collection if a define is used in some rules
@@ -42,13 +33,13 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         {
             if(e.Action==NotifyCollectionChangedAction.Remove)
             {
-                string itemToRemove = ((DefineItem) e.OldItems[0]).Label;
+                string itemToRemove = ((BaseItemViewModel)e.OldItems[0]).Label;
                 MainWindowViewModel.Instance.SearchForAllUsings(itemToRemove);
             }
 
             else if (e.Action==NotifyCollectionChangedAction.Add)
             {
-                string itemToAdd = ((DefineItem)e.NewItems[0]).Label;
+                string itemToAdd = ((BaseItemViewModel)e.NewItems[0]).Label;
                 MainWindowViewModel.Instance.RemoveError(itemToAdd);
             }
         }
@@ -57,9 +48,9 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
     public class DefineItem : BaseItemViewModel
     {
-        public override string ProcessSourceValue(string input)
+        public override string ProcessSourceValue(string newValue, string oldValue)
         {
-            return this.Reader.SetSourceDefineRules(this.Label, new[] {input});
+            return MainWindowViewModel.Instance.Reader.SetSourceDefineRules(this.Label, new[] { newValue });
         }
         
 
@@ -77,10 +68,11 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                     OnPropertyChanged("SourceValue");
                     if (!_sourceValue.Contains("${" + this.Label + "}"))
                     {
-                        Value = ProcessSourceValue(_sourceValue);
+                        Value = ProcessSourceValue(value, _sourceValue);
 
                     }
                 }
+                MainWindowViewModel.Instance.RefreshAllBindings();
             }
         }
     }

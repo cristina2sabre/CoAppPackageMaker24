@@ -34,46 +34,46 @@ namespace CoAppPackageMaker.Views
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var validationResult = new ValidationResult(true, null);
-            //if (MainWindowViewModel.Instance != null)
-            //{
-            //    var bindingExpression = (value as BindingExpression);
-            //    if (bindingExpression != null)
-            //    {
-            //        string errorHeader = bindingExpression.ParentBinding.Path.Path;
-            //        MethodInfo method = typeof (PackageValidationRule).GetMethod(errorHeader);
-            //        if ((bool) method.Invoke(this, null))
-            //        {
-            //            //check if the error exist in the list
-            //            var existingErros =
-            //                MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorHeader == errorHeader);
-            //            if (!existingErros.Any())
-            //            {
-            //                MainWindowViewModel.Instance.ErrorsCollection.Add(new Error()
-            //                                                                      {
-            //                                                                          ErrorHeader =
-            //                                                                              bindingExpression.
-            //                                                                              ParentBinding.Path.Path,
-            //                                                                          ErrorDetails =
-            //                                                                              _errorsMessages[errorHeader],
-            //                                                                          ErrorRule = "Package"
+            if (MainWindowViewModel.Instance.PackageViewModel != null)
+            {
+                var bindingExpression = (value as BindingExpression);
+                if (bindingExpression != null)
+                {
+                    string errorHeader = bindingExpression.ParentBinding.Path.Path;
+                    MethodInfo method = typeof(PackageValidationRule).GetMethod(errorHeader);
+                    if ((bool)method.Invoke(this, null))
+                    {
+                        //check if the error exist in the list
+                        var existingErros =
+                            MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorHeader == errorHeader);
+                        if (!existingErros.Any())
+                        {
+                            MainWindowViewModel.Instance.ErrorsCollection.Add(new Error()
+                                                                                  {
+                                                                                      ErrorHeader =
+                                                                                          bindingExpression.
+                                                                                          ParentBinding.Path.Path,
+                                                                                      ErrorDetails =
+                                                                                          _errorsMessages[errorHeader],
+                                                                                      ErrorRule = "Package"
 
-            //                                                                      });
-            //                MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Red;
+                                                                                  });
+                            MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Red;
 
-            //            }
+                        }
 
-            //            return new ValidationResult(false, null);
+                        return new ValidationResult(false, null);
 
-            //        }
-            //        var errorStatus =
-            //            MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorRule == "Package");
-            //        if (!errorStatus.Any())
-            //        {
-            //            MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Green;
-            //        }
-            //        MainWindowViewModel.Instance.RemoveError(errorHeader);
-            //    }
-           // }
+                    }
+                    var errorStatus =
+                        MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorRule == "Package");
+                    if (!errorStatus.Any())
+                    {
+                        MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Green;
+                    }
+                    MainWindowViewModel.Instance.RemoveError(errorHeader);
+                }
+            }
             return validationResult;
         }
 
@@ -82,17 +82,26 @@ namespace CoAppPackageMaker.Views
         public bool Version()
         {
             var valuePackageViewModel = MainWindowViewModel.Instance.PackageViewModel.ValuePackageViewModel;
-            var stringToTest = valuePackageViewModel.GetType().GetProperty("Version").GetValue(valuePackageViewModel, null).ToString();
-            return (stringToTest.Split('.').Count() != 4 ||
-                    stringToTest.Split('.').ToList().Any(item => item.Length == 0));
+           if(valuePackageViewModel.Version!=null)
+           {
+               var stringToTest = valuePackageViewModel.GetType().GetProperty("Version").GetValue(valuePackageViewModel, null).ToString();
+               return (stringToTest.Split('.').Count() != 4 ||
+                       stringToTest.Split('.').ToList().Any(item => item.Length == 0));
+           }
+            return false;
         }
 
         public bool Architecture()
         {
             var valuePackageViewModel = MainWindowViewModel.Instance.PackageViewModel.ValuePackageViewModel;
-            string stringToTest = valuePackageViewModel.GetType().GetProperty("Architecture").GetValue(valuePackageViewModel, null).ToString();
-            return !(stringToTest.Equals("x86") | stringToTest.Equals("x64") | stringToTest.Equals("any"));
+            if(valuePackageViewModel.Architecture!=null)
+            {
+                string stringToTest = valuePackageViewModel.GetType().GetProperty("Architecture").GetValue(valuePackageViewModel, null).ToString();
+                return !(stringToTest.Equals("x86") | stringToTest.Equals("x64") | stringToTest.Equals("any"));
+            }
+            return false;
         }
+           
 
     }
 }

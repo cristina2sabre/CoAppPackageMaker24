@@ -80,11 +80,11 @@ namespace CoAppPackageMaker.ViewModels.Base
         private ManifestViewModel _manifestViewModel;
         private ObservableCollection<ExtraPropertiesForCollectionsViewModelBase> _allViewModels = new ObservableCollection<ExtraPropertiesForCollectionsViewModelBase>();
         private PackageReader _reader;
+
         public PackageReader Reader
         {
-        get { return _reader; }
+            get { return _reader; }
         }
-
 
         public void SearchForAllUsings(string definePropertyName)
         {
@@ -99,7 +99,7 @@ namespace CoAppPackageMaker.ViewModels.Base
            RefreshAllBindings();
         }
 
-        private void RefreshAllBindings()
+        public void RefreshAllBindings()
         {
             foreach (ExtraPropertiesForCollectionsViewModelBase viewModel in AllViewModels)
             {
@@ -141,7 +141,8 @@ namespace CoAppPackageMaker.ViewModels.Base
         public void LoadData()
         {
             _reader = new PackageReader();
-            _reader.Read(PathToFile);
+            _reader.Read(PathToFile); 
+           //this._reader.Save("D:\\P\\COPKG\\testsave.autopkg");
             if (_reader.SusscesfullRead)
                 try
                 {

@@ -13,12 +13,12 @@ namespace CoAppPackageMaker.ViewModels
 {
     public class RequiresViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
-        private PackageReader _packageReader;
+       
         public RequiresViewModel (PackageReader reader)
         {
-            _packageReader = reader;
+          
             RuleNameToDisplay = "Require";
-            EditCollectionViewModel = new EditCollectionViewModel(reader,
+            EditCollectionViewModel = new EditCollectionViewModel(
                                                                   reader.GetRulesSourceValuesByNameForEditableCollections(
                                                                       "requires", "package"), typeof(RequireItem));
 
@@ -28,23 +28,22 @@ namespace CoAppPackageMaker.ViewModels
 
 
 
-        private EditCollectionViewModel _editCollectionViewModel;
-        public EditCollectionViewModel EditCollectionViewModel
-        {
-            get { return _editCollectionViewModel; }
-            set
-            {
-                _editCollectionViewModel = value;
-                OnPropertyChanged("EditCollectionViewModel");
-            }
-        }
+      
 
         void FilesCollectionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            //((RequireItem) e.NewItems[0]).SourceValue = "Hello world";
+            //this.EditCollectionViewModel.EditableItems
+            
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 //update source 
                 //(e.OldStartingIndex)
+                //foreach (var c in EditCollectionViewModel.EditableItems)
+                //{
+                //    c.Index
+                //}
+                
             }
             SourceString = "GETNEWWWWW -setat in viewmodelrequires";
         }
@@ -52,9 +51,9 @@ namespace CoAppPackageMaker.ViewModels
         //item for the editable collection  - get reevaluated value, after updating source 
         public class RequireItem : BaseItemViewModel
         {
-            public override string ProcessSourceValue(string input)
+            public override string ProcessSourceValue(string newValue, string oldValue)
             {
-                return this.Reader.SetSourceRequireSigningRules("requires", "package", this.Index, input); 
+                return MainWindowViewModel.Instance.Reader.SetSourceRequireSigningRules("requires", "package", oldValue, newValue); 
             }
         }
     }

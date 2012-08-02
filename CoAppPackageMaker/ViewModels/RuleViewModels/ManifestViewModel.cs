@@ -35,13 +35,15 @@ namespace CoAppPackageMaker.ViewModels
             foreach (string parameter in reader.ReadParameters("manifest"))
             {
 
-                var assemblyCollection = new ObservableCollection<BaseItemViewModel>(reader.GetManifestFinal(parameter, "assembly", "manifest", typeof(ManifestItem)));
-                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetManifestFinal(parameter, "include", "manifest", typeof(ManifestItem)));
+                var assemblyCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "assembly", "manifest", typeof(ManifestItem)));
+                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "include", "manifest", typeof(ManifestItem)));
                 var model = new ManifestItemViewModel()
                 {
-                    AssemblyCollection = new EditCollectionViewModel(reader, assemblyCollection, typeof(ManifestItem)),
-                    IncludeCollection = new EditCollectionViewModel(reader, includeCollection, typeof(ManifestItem)),
-                    Name = parameter,
+                    RuleNameToDisplay = "Manifest",
+                    AssemblyCollection = new EditCollectionViewModel( assemblyCollection, typeof(ManifestItem)),
+                    IncludeCollection = new EditCollectionViewModel( includeCollection, typeof(ManifestItem)),
+                     Parameter= parameter,
+                    
                 };
                 _manifestCollection.Add(model);
 
@@ -101,71 +103,80 @@ namespace CoAppPackageMaker.ViewModels
         }
         public void Add()
         {
-            
-            this.ManifestCollection.Add(new ManifestItemViewModel() { IncludeCollection = new EditCollectionViewModel(null, new ObservableCollection<BaseItemViewModel>(), null), AssemblyCollection = new EditCollectionViewModel(null, new ObservableCollection<BaseItemViewModel>(), typeof(ManifestItem)) });
+
+            this.ManifestCollection.Add(new ManifestItemViewModel() { IncludeCollection = new EditCollectionViewModel( new ObservableCollection<BaseItemViewModel>(), typeof(ManifestItem)), AssemblyCollection = new EditCollectionViewModel( new ObservableCollection<BaseItemViewModel>(), typeof(ManifestItem)) });
         }
 
         #endregion
 
 
-        public class ManifestItemViewModel : ExtraPropertiesForCollectionsViewModelBase
-        {
-            private EditCollectionViewModel _includeCollection;
-            public EditCollectionViewModel IncludeCollection
-            {
-                get { return _includeCollection; }
-                set
-                {
-                    _includeCollection = value;
-                    OnPropertyChanged("IncludeCollection");
-                }
-            }
-
-
-            private EditCollectionViewModel _assemblyCollection;
-            public EditCollectionViewModel AssemblyCollection
-            {
-                get { return _assemblyCollection; }
-                set
-                {
-                    _assemblyCollection = value;
-                    OnPropertyChanged("AssemblyCollection");
-                }
-            }
-
-
-            private string _name = "[]";
-            public string Name
-            {
-                get { return _name; }
-                set
-                {
-
-                    if (value != null)
-                    {
-                        DefaultChangeFactory.OnChanging(this, "Name", _name, value);
-                        _name = value.StartsWith("[") && value.EndsWith("]") ? value : String.Format("[{0}]", value);
-                    }
-                    else
-                    {
-                        _name = String.Format("[{0}]", value);
-                    }
-
-                    OnPropertyChanged("Name");
-
-                }
-            }
-
-        }
+     
 
     }
+    public class ManifestItemViewModel : ExtraPropertiesForCollectionsViewModelBase
+    {
 
+        public ManifestItemViewModel()
+        {
+            //this.IncludeCollection.EditableItems.
+        }
+
+        private EditCollectionViewModel _includeCollection;
+        public EditCollectionViewModel IncludeCollection
+        {
+            get { return _includeCollection; }
+            set
+            {
+                _includeCollection = value;
+                OnPropertyChanged("IncludeCollection");
+            }
+        }
+
+
+        private EditCollectionViewModel _assemblyCollection;
+        public EditCollectionViewModel AssemblyCollection
+        {
+            get { return _assemblyCollection; }
+            set
+            {
+                _assemblyCollection = value;
+                OnPropertyChanged("AssemblyCollection");
+            }
+        }
+
+
+        private string _parameter = "[]";
+        public string Parameter
+        {
+            get { return _parameter; }
+            set
+            {
+                
+                if (value != null)
+                {
+                    MainWindowViewModel.Instance.Reader.SetNewParameter("manifest", _parameter, value);
+                    UpdateParameterForEveryItemInTheCollection(value, AssemblyCollection.EditableItems);
+                   UpdateParameterForEveryItemInTheCollection(value,IncludeCollection.EditableItems);
+                   DefaultChangeFactory.OnChanging(this, "Parameter", _parameter, value);
+                    _parameter = value;
+                   
+                }
+
+                OnPropertyChanged("Parameter");
+
+            }
+        }
+       
+
+    }
     public class ManifestItem : BaseItemViewModel
     {
-        public override string ProcessSourceValue(string input)
+        
+        public override string ProcessSourceValue(string newValue, string oldValue)
         {
+            this.RuleNameToDisplay = "Manifest";
             //string ruleName, int index, string parameter, string colectionName, string newValue
-            return this.Reader.SetManifestFinal("manifest",this.Index,this.Label,this.CollectionName, input);
+            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("manifest", this.Parameter, this.CollectionName,oldValue, newValue);
         }
     }
 }
