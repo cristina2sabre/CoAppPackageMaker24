@@ -44,7 +44,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                                                 new EditCollectionViewModel(
                                                                             reader.
                                                                                 GetRulesSourceValuesByNameForEditableCollections
-                                                                                (Signing, "include"), typeof(SigningIncludeItem)),
+                                                                                (Signing, "include", typeof(SigningIncludeItem)), "include",Signing, typeof(SigningIncludeItem)),
                                             IsEditable = false,
                                             IsReadOnly = true,
                                             SourceString = reader.GetRulesSourceStringPropertyValueByName(Signing),
@@ -170,10 +170,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
         
         #endregion
-
-       
-     
-
         
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
@@ -209,12 +205,21 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             ValueSigningViewModel.SourceString = _reader.GetRulesSourceStringPropertyValueByName(Signing);
         }
 
-        public class SigningIncludeItem : BaseItemViewModel
+       
+    }
+
+    public class SigningIncludeItem : BaseItemViewModel
+    {
+        public SigningIncludeItem(string ruleName, string collectionName)
         {
-            public override string ProcessSourceValue(string newValue, string oldValue)
-            {
-                return MainWindowViewModel.Instance.Reader.SetSourceRequireSigningRules("signing", "include", oldValue, newValue);
-            }
+            RuleNameToDisplay = ruleName;
+            CollectionName = collectionName;
+            
+        }
+
+        public override string ProcessSourceValue(string newValue, string oldValue)
+        {
+            return MainWindowViewModel.Instance.Reader.SetSourceRequireSigningRules("signing", "include", oldValue, newValue);
         }
     }
 }

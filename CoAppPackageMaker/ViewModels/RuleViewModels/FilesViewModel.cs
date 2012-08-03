@@ -21,7 +21,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                 var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "include","files", typeof(FileItem)));
                 var model = new FilesItemViewModel()
                 {
-                    EditCollectionViewModel = new EditCollectionViewModel( includeCollection, typeof(FileItem)),
+                    EditCollectionViewModel = new EditCollectionViewModel(includeCollection, "include", "files", typeof(FileItem)),
                     Parameter = parameter,
                     FilesRoot = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "root"),
                     TrimPath = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "trim-path"),
@@ -102,7 +102,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                                          {
                                              EditCollectionViewModel =
                                                  new EditCollectionViewModel(
-                                                 new ObservableCollection<BaseItemViewModel>(), typeof (FileItem))
+                                                 new ObservableCollection<BaseItemViewModel>(), "include", "files", typeof(FileItem))
                                          });
         }
 
@@ -176,6 +176,12 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
     /// </summary>
     public class FileItem : BaseItemViewModel
     {
+        public FileItem(string ruleName, string collectionName)
+        {
+            RuleNameToDisplay = ruleName;
+            CollectionName = collectionName;
+            
+        }
         public override string ProcessSourceValue(string newValue, string oldValue)
         {
             return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("files", this.Parameter, this.CollectionName,oldValue, newValue);

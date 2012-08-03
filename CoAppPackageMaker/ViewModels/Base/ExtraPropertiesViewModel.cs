@@ -13,7 +13,7 @@ using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker.ViewModels
 {
-    public  class ExtraPropertiesForCollectionsViewModelBase : ViewModelBase, ISupportsUndo, ISupportUndoNotification
+    public abstract class ExtraPropertiesForCollectionsViewModelBase : ViewModelBase, ISupportsUndo, ISupportUndoNotification
     {
 
         private EditCollectionViewModel _editCollectionViewModel;
@@ -48,8 +48,20 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        private Color _statusColor = Colors.Green;
-        public Color StatusColor
+        //private Color _statusColor = Colors.Green;
+        //public Color StatusColor
+        //{
+        //    get { return _statusColor; }
+        //    set
+        //    {
+        //        _statusColor = value;
+        //        OnPropertyChanged("StatusColor");
+        //    }
+        //}
+
+
+        private SolidColorBrush _statusColor = Brushes.Green;
+        public SolidColorBrush StatusColor
         {
             get { return _statusColor; }
             set
@@ -58,9 +70,6 @@ namespace CoAppPackageMaker.ViewModels
                 OnPropertyChanged("StatusColor");
             }
         }
-
-        
-        
 
         private string _sourceString=String.Empty;
         public string SourceString
@@ -90,11 +99,9 @@ namespace CoAppPackageMaker.ViewModels
       
       virtual  public object GetUndoRoot()
         {
-            if (MainWindowViewModel.Instance != null) { return MainWindowViewModel.Instance; }
-            else
-            {
-                return null;
-            }
+           
+                return MainWindowViewModel.Instance;
+           
 
 
         }
@@ -218,15 +225,12 @@ namespace CoAppPackageMaker.ViewModels
 
     public abstract class ExtraPropertiesViewModelBase : ExtraPropertiesForCollectionsViewModelBase
     {
-
-        
-      
         override public object GetUndoRoot()
         {
             if (this.IsSource == true)
             {
-                if (MainWindowViewModel.Instance != null) { return MainWindowViewModel.Instance; }
-                return null;
+                return MainWindowViewModel.Instance;
+                
             }
             return null;
         }

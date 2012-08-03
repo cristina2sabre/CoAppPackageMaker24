@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Security.Policy;
-using CoAppPackageMaker.Temp;
-using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels

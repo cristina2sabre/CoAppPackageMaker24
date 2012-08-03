@@ -17,11 +17,20 @@ namespace CoAppPackageMaker.Views
     /// <summary>
     /// Interaction logic for ApplicationViewModel.xaml
     /// </summary>
-    public partial class ApplicationView : UserControl
+    public partial class RolesView : UserControl
     {
-        public ApplicationView()
+        public RolesView()
         {
             InitializeComponent();
+            Loaded += MyLoadedRoutedEventHandler;
+        }
+
+
+        void MyLoadedRoutedEventHandler(Object sender, RoutedEventArgs e)
+        {
+            //used for selecting template based on IsEnabled property - Source or Value
+            this.RolesCollection.ItemTemplate = (DataTemplate)((this.Background == (Brushes.Gainsboro)) ? FindResource("RoleTemplateValue") : FindResource("RoleTemplate"));
+            Loaded -= MyLoadedRoutedEventHandler;
         }
     }
 }

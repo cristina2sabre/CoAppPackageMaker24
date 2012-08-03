@@ -118,11 +118,8 @@
     <Compile Include="ViewModels\RuleViewModels\RequiresViewModel.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\RuleViewModels\SigningViewModel.cs" />
-    <Compile Include="Views\ApplicationView.xaml.cs">
-      <DependentUpon>ApplicationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AssemblyView.xaml.cs">
-      <DependentUpon>AssemblyView.xaml</DependentUpon>
+    <Compile Include="Views\RolesView.xaml.cs">
+      <DependentUpon>RolesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CompatibilityPolicy.xaml.cs">
       <DependentUpon>CompatibilityPolicy.xaml</DependentUpon>
@@ -164,11 +161,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\ApplicationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AssemblyView.xaml">
+    <Page Include="Views\RolesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

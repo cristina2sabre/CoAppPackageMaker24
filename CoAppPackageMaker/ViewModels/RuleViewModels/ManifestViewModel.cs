@@ -1,8 +1,4 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
+﻿﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CoAppPackageMaker.ViewModels.Base;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
@@ -39,9 +35,9 @@ namespace CoAppPackageMaker.ViewModels
                 var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "include", "manifest", typeof(ManifestItem)));
                 var model = new ManifestItemViewModel()
                 {
-                    RuleNameToDisplay = "Manifest",
-                    AssemblyCollection = new EditCollectionViewModel( assemblyCollection, typeof(ManifestItem)),
-                    IncludeCollection = new EditCollectionViewModel( includeCollection, typeof(ManifestItem)),
+                    RuleNameToDisplay = "manifest",
+                    AssemblyCollection = new EditCollectionViewModel(assemblyCollection, "assembly", "manifest", typeof(ManifestItem)),
+                    IncludeCollection = new EditCollectionViewModel(includeCollection, "include", "manifest", typeof(ManifestItem)),
                      Parameter= parameter,
                     
                 };
@@ -104,22 +100,16 @@ namespace CoAppPackageMaker.ViewModels
         public void Add()
         {
 
-            this.ManifestCollection.Add(new ManifestItemViewModel() { IncludeCollection = new EditCollectionViewModel( new ObservableCollection<BaseItemViewModel>(), typeof(ManifestItem)), AssemblyCollection = new EditCollectionViewModel( new ObservableCollection<BaseItemViewModel>(), typeof(ManifestItem)) });
+            this.ManifestCollection.Add(new ManifestItemViewModel() { IncludeCollection = new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "include", "manifest", typeof(ManifestItem)), AssemblyCollection = new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "assembly", "manifest", typeof(ManifestItem)) });
         }
 
         #endregion
 
-
-     
-
+        
     }
+
     public class ManifestItemViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
-
-        public ManifestItemViewModel()
-        {
-            //this.IncludeCollection.EditableItems.
-        }
 
         private EditCollectionViewModel _includeCollection;
         public EditCollectionViewModel IncludeCollection
@@ -166,17 +156,22 @@ namespace CoAppPackageMaker.ViewModels
 
             }
         }
-       
-
     }
+
     public class ManifestItem : BaseItemViewModel
     {
-        
+        public ManifestItem(string ruleName, string collectionName)
+        {
+            RuleNameToDisplay = ruleName;
+            CollectionName = collectionName;
+            
+        }
         public override string ProcessSourceValue(string newValue, string oldValue)
         {
-            this.RuleNameToDisplay = "Manifest";
-            //string ruleName, int index, string parameter, string colectionName, string newValue
+            this.RuleNameToDisplay = "manifest";
             return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("manifest", this.Parameter, this.CollectionName,oldValue, newValue);
         }
+
+          
     }
 }

@@ -14,11 +14,16 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
     /// </summary>
     public abstract class BaseItemViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
-        private ObservableCollection<BaseItemViewModel> _collection=new ObservableCollection<BaseItemViewModel>();
-        public BaseItemViewModel(ObservableCollection<BaseItemViewModel> editableItems)
+        protected BaseItemViewModel(ObservableCollection<BaseItemViewModel> editableItems)
         {
             _collection = editableItems;
         }
+
+        protected BaseItemViewModel()
+        {
+
+        }
+
 
         //setted the same as Source because,to avoid difference between them
         //when a new item is added is added to a temporary collection, source is not reevaluated 
@@ -33,20 +38,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
-        private ObservableCollection<BaseItemViewModel> _upper=new ObservableCollection<BaseItemViewModel>();
-
-        public ObservableCollection<BaseItemViewModel> upper
-        {
-            get { return _upper; }
-            set
-            {
-                _upper = value;
-                OnPropertyChanged("upper");
-            }
-        }
-
-        
-        //set defaultValue for SourceValue - when add a new Item to the collection
+      //set defaultValue for SourceValue - when add a new Item to the collection
         private string _sourceValue = "new";
         public string SourceValue
         {
@@ -56,7 +48,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                 if (value != String.Empty)
                 {
                     //var enumerable = _collection.Select(item => item.SourceValue == value);
-                    var existingItems = new ObservableCollection<BaseItemViewModel>(upper.Where(item => item.SourceValue == value));
+                    var existingItems = new ObservableCollection<BaseItemViewModel>(Collection.Where(item => item.SourceValue == value));
                     if (existingItems.Count==0)
                     {
                         DefaultChangeFactory.OnChanging(this, "SourceValue", _sourceValue, value);
@@ -77,36 +69,21 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         //updating source value and getting new reevaluated 
         public abstract string ProcessSourceValue(string newValue, string oldValue);
-       
 
-        ////used for updating colection
-        //private int _index;
-        //public int Index
-        //{
-        //    get { return _index; }
-        //    set
-        //    {
-        //        _index = value;
-        //        OnPropertyChanged("Index");
-        //    }
-        //}
 
-        private string _label = "NewLabel";
-        public string Label
+        private ObservableCollection<BaseItemViewModel> _collection = new ObservableCollection<BaseItemViewModel>();
+        public ObservableCollection<BaseItemViewModel> Collection
         {
-            get { return _label; }
+            get { return _collection; }
             set
             {
-                if (MainWindowViewModel.Instance != null)
-                {
-                    MainWindowViewModel.Instance.RemoveError(_label);
-                }
-
-                DefaultChangeFactory.OnChanging(this, "Label", _label, value);
-                _label = value;
-                OnPropertyChanged("Label");
+                _collection = value;
+                OnPropertyChanged("Collection");
             }
         }
+
+
+
 
         private string _parameter = "";
         public string Parameter
@@ -126,12 +103,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
 
         private string _collectionName;
-
-        public BaseItemViewModel()
-        {
-           
-        }
-
         public string CollectionName
         {
             get { return _collectionName; }
@@ -143,7 +114,5 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
        
     }
-
-   
-   
+    
 }

@@ -8,25 +8,15 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
     public class EditCollectionViewModel:ExtraPropertiesForCollectionsViewModelBase
     {
-        readonly PackageReader _reader;
+       
         private Type _typeForNewItems;
-
-        private ObservableCollection<BaseItemViewModel> _editableItems;
-        public ObservableCollection<BaseItemViewModel> EditableItems
+        private string _ruleNameToDisplay;
+        private string _collectionName;
+        public EditCollectionViewModel(ObservableCollection<BaseItemViewModel> collection, string collectionName, string ruleNameToDisplay, Type typeForNewItems)
         {
-            get { return _editableItems; }
-            set
-            {
-               
-                _editableItems = value;
-                OnPropertyChanged("EditableItems");
-            }
-        }
-
-        public EditCollectionViewModel( ObservableCollection<BaseItemViewModel> collection, Type typeForNewItems)
-        {
-            _reader = MainWindowViewModel.Instance.Reader;
             _editableItems = collection;
+            _ruleNameToDisplay = ruleNameToDisplay;
+            _collectionName = collectionName;
             _typeForNewItems = typeForNewItems;
             _editableItems.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(FilesCollectionCollectionChanged);
         }
@@ -36,7 +26,20 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             DefaultChangeFactory.OnCollectionChanged(this, "EditableItems", EditableItems, e);
             OnPropertyChanged("EditableItems");
         }
-      
+
+
+        private ObservableCollection<BaseItemViewModel> _editableItems;
+        public ObservableCollection<BaseItemViewModel> EditableItems
+        {
+            get { return _editableItems; }
+            set
+            {
+
+                _editableItems = value;
+                OnPropertyChanged("EditableItems");
+            }
+        }
+
         private BaseItemViewModel _selectedItem;
         public BaseItemViewModel SelectedItem
         {
@@ -59,11 +62,20 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         public void Remove()
         {
 
+         
+            if (this.SelectedItem.Parameter!=null)
+            {
+                MainWindowViewModel.Instance.Reader.RemoveRulesWithParameters(this.SelectedItem.RuleNameToDisplay, this.SelectedItem.Parameter,
+                                                                           this.SelectedItem.CollectionName,
+                                                                           this.SelectedItem.SourceValue);
+            }
+
            
-           
+            MainWindowViewModel.Instance.Reader.RemoveFromList(this.SelectedItem.RuleNameToDisplay,
+                                                                             this.SelectedItem.CollectionName,
+                                                                             this.SelectedItem.SourceValue);
             this.EditableItems.Remove(this.SelectedItem);
-           
-           
+
 
         }
       
@@ -86,25 +98,25 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
            }
            public void Add()
            {
-              
-              //to add type
+
                Type type = _typeForNewItems;
-               
-               object newItem = Activator.CreateInstance(type);
-             
+
+               object newItem = Activator.CreateInstance(type, _ruleNameToDisplay,
+                                                         _collectionName);
+
                //if is a new collection ->fail!!!!!!!!!!!
-               ((BaseItemViewModel)newItem).Parameter =(EditableItems.Count!=0)?
-                   EditableItems[0].Parameter:String.Empty;
+               ((BaseItemViewModel) newItem).Parameter = (EditableItems.Count != 0)
+                                                             ? EditableItems[0].Parameter
+                                                             : String.Empty;
                //to add as a paramater
-               ((BaseItemViewModel)newItem).CollectionName =(EditableItems.Count!=0)?
-              EditableItems[0].CollectionName:String.Empty;
-               ((BaseItemViewModel) newItem).upper = _editableItems;
+             
+               ((BaseItemViewModel) newItem).Collection = _editableItems;
 
-               ((BaseItemViewModel)newItem).RuleNameToDisplay = _editableItems[0].RuleNameToDisplay;
+            
 
-               this.EditableItems.Add(((BaseItemViewModel)newItem));
+               this.EditableItems.Add(((BaseItemViewModel) newItem));
            }
-    
+
         #endregion
 
 

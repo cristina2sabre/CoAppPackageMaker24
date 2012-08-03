@@ -1,8 +1,6 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
@@ -15,10 +13,9 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         public DefineViewModel(PackageReader reader)
         {
             RuleNameToDisplay = "Define";
-            EditCollectionViewModel = new EditCollectionViewModel( reader.GetDefineRules(), typeof(DefineItem));
+            EditCollectionViewModel = new EditCollectionViewModel( reader.GetDefineRules(), String.Empty,"define",typeof(DefineItem));
             SourceString = reader.GetRulesSourceStringPropertyValueByName("*");
             this.EditCollectionViewModel.EditableItems.CollectionChanged += FilesCollectionCollectionChanged;
-        
         }
 
         
@@ -33,13 +30,14 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         {
             if(e.Action==NotifyCollectionChangedAction.Remove)
             {
-                string itemToRemove = ((BaseItemViewModel)e.OldItems[0]).Label;
+                string itemToRemove = ((DefineItem)e.OldItems[0]).Label;
                 MainWindowViewModel.Instance.SearchForAllUsings(itemToRemove);
+                //MainWindowViewModel.Instance.RemoveError(itemToRemove);
             }
 
             else if (e.Action==NotifyCollectionChangedAction.Add)
             {
-                string itemToAdd = ((BaseItemViewModel)e.NewItems[0]).Label;
+                string itemToAdd = ((DefineItem)e.NewItems[0]).Label;
                 MainWindowViewModel.Instance.RemoveError(itemToAdd);
             }
         }
@@ -52,8 +50,23 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         {
             return MainWindowViewModel.Instance.Reader.SetSourceDefineRules(this.Label, new[] { newValue });
         }
-        
 
+        private string _label = "NewLabel";
+        public string Label
+        {
+            get { return _label; }
+            set
+            {
+                if (MainWindowViewModel.Instance != null)
+                {
+                    MainWindowViewModel.Instance.RemoveError(_label);
+                }
+
+                DefaultChangeFactory.OnChanging(this, "Label", _label, value);
+                _label = value;
+                OnPropertyChanged("Label");
+            }
+        }
 
         private string _sourceValue = "new";
         public new string SourceValue
@@ -66,10 +79,10 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                     DefaultChangeFactory.OnChanging(this, "SourceValue", _sourceValue, value);
                     _sourceValue = value;
                     OnPropertyChanged("SourceValue");
+                    //in order do not set self-referenced values like this: "arch :${arch}"
                     if (!_sourceValue.Contains("${" + this.Label + "}"))
                     {
                         Value = ProcessSourceValue(value, _sourceValue);
-
                     }
                 }
                 MainWindowViewModel.Instance.RefreshAllBindings();

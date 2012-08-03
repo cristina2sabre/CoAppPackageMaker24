@@ -7,16 +7,6 @@ namespace CoAppPackageMaker.ViewModels.Base
 {
     public class Error : ViewModelBase
     {
-        //private string _errorHeader;
-        //public string ErrorHeader
-        //{
-        //    get { return _errorHeader; }
-        //    set
-        //    {
-        //        _errorHeader = value;
-        //        OnPropertyChanged("ErrorHeader");
-        //    }
-        //}
         public string ErrorHeader { get; set; }
         public string ErrorDetails { get; set; }
         public string ErrorRule { get; set; }
@@ -29,7 +19,7 @@ namespace CoAppPackageMaker.ViewModels.Base
 
     public class Warning : Error
     {
-       new  public string Icon
+        public new string Icon
         {
             get { return "Icons\\eventlogWarn.ico"; }
         }

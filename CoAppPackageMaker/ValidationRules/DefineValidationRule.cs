@@ -39,7 +39,7 @@ namespace CoAppPackageMaker.ValidationRules
                                                                                   ErrorRule = "Define"
 
                                                                               });
-                        MainWindowViewModel.Instance.DefineViewModel.StatusColor = Colors.Red;
+                        MainWindowViewModel.Instance.DefineViewModel.StatusColor = Brushes.Red;
                     }
                     return new ValidationResult(false, null);
                 }
@@ -48,7 +48,7 @@ namespace CoAppPackageMaker.ValidationRules
                     MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorRule == "Define");
                 if (errorStatus.Any())
                 {
-                    MainWindowViewModel.Instance.DefineViewModel.StatusColor = Colors.Green;
+                    MainWindowViewModel.Instance.DefineViewModel.StatusColor = Brushes.Green;
                     
                 }
                 MainWindowViewModel.Instance.RemoveError(errorHeader);

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels.RuleViewModels

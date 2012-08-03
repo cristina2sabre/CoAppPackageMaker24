@@ -467,6 +467,7 @@ namespace CoAppPackageMaker.ViewModels.Base
                     this.ErrorsCollection=new ObservableCollection<Error>();
                     LoadData();
                     UndoService.Current[this].Clear();
+                    HeaderColor = Colors.Green;
                     // ResetForm();
                 }
                 catch (Exception ex)

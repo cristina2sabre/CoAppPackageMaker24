@@ -306,14 +306,8 @@
                                 </i:Interaction.Behaviors>
                                 <TabItem.Header>                               
                                 <StackPanel Orientation="Horizontal" Margin="0">
-                                        <Ellipse  Width="10" Height="10">
-                                            <!--Fill requires SolidColorBrush, in order to avoid conversion to Color, the GradientBrush is used-->
-                                            <Ellipse.Fill>
-                                                <RadialGradientBrush>
-                                                    <GradientStop Color="{Binding PackageViewModel.StatusColor}"/>                                                   
-                                                </RadialGradientBrush>
-                                            </Ellipse.Fill>
-                                       
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding PackageViewModel.StatusColor}">
+                                           
                                         </Ellipse>
                                         <!--<Label  Content="{Binding PackageViewModel.RuleNameToDisplay}" Margin="5" FontWeight="Bold"/>-->
                                         <Label  Content="Package" Margin="5" FontWeight="Bold"/>
@@ -340,13 +334,7 @@
                                 </i:Interaction.Behaviors>
                                 <TabItem.Header>
                                 <StackPanel Orientation="Horizontal" Margin="0">
-                                        <Ellipse  Width="10" Height="10">
-                                            <Ellipse.Fill>
-                                                <RadialGradientBrush>
-                                                    <GradientStop Color="{Binding MetadataViewModel.StatusColor}"/>
-                                                </RadialGradientBrush>
-                                            </Ellipse.Fill>
-                                        </Ellipse>
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding MetadataViewModel.StatusColor}"/>                                           
                                         <Label  Content="Metadata" Margin="5"/>
                                 </StackPanel>
                             </TabItem.Header>
@@ -372,13 +360,7 @@
                               
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal" Margin="0">
-                                            <Ellipse  Width="10" Height="10">
-                                                <Ellipse.Fill>
-                                                    <RadialGradientBrush>
-                                                        <GradientStop Color="{Binding ManifestViewModel.StatusColor}"/>
-                                                    </RadialGradientBrush>
-                                                </Ellipse.Fill>
-                                            </Ellipse>
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding ManifestViewModel.StatusColor}"/>                                                
                                         <Label  Content="Manifest" Margin="5" FontWeight="Bold"/>
                                         </StackPanel>
                                     </TabItem.Header>
@@ -402,14 +384,8 @@
                                     <Support:FocusReceiveBehavior/>
                                 </i:Interaction.Behaviors>
                                 <TabItem.Header>
-                                    <StackPanel Orientation="Horizontal" Margin="0">
-                                        <Ellipse  Width="10" Height="10">
-                                            <Ellipse.Fill>
-                                                <RadialGradientBrush>
-                                                    <GradientStop Color="{Binding FilesViewModel.StatusColor}"/>
-                                                </RadialGradientBrush>
-                                            </Ellipse.Fill>
-                                        </Ellipse>
+                                    <StackPanel Orientation="Horizontal" Margin="0" >
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding FilesViewModel.StatusColor}"/>                                           
                                         <Label  Content="Files" Margin="5" FontWeight="Bold"/>
                                     </StackPanel>
                                 </TabItem.Header>
@@ -434,13 +410,7 @@
                                 </i:Interaction.Behaviors>
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Margin="0">
-                                        <Ellipse  Width="10" Height="10">
-                                            <Ellipse.Fill>
-                                                <RadialGradientBrush>
-                                                    <GradientStop Color="{Binding PackageCompositionViewModel.StatusColor}"/>
-                                                </RadialGradientBrush>
-                                            </Ellipse.Fill>
-                                        </Ellipse>
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding PackageCompositionViewModel.StatusColor}"/>                                            
                                         <Label  Content="Package Composition" Margin="5" FontWeight="Bold"/>
                                     </StackPanel>
                                 </TabItem.Header>
@@ -465,13 +435,7 @@
                               
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal" Margin="0">
-                                            <Ellipse  Width="10" Height="10">
-                                                <Ellipse.Fill>
-                                                    <RadialGradientBrush>
-                                                        <GradientStop Color="{Binding RequiresViewModel.StatusColor}"/>
-                                                    </RadialGradientBrush>
-                                                </Ellipse.Fill>
-                                            </Ellipse>
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding RequiresViewModel.StatusColor}"/>                                               
                                         <Label  Content="Requires" Margin="5" FontWeight="Bold"/>
                                         </StackPanel>
                                     </TabItem.Header>
@@ -496,13 +460,7 @@
                                 </i:Interaction.Behaviors>
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Margin="0">
-                                        <Ellipse  Width="10" Height="10">
-                                            <Ellipse.Fill>
-                                                <RadialGradientBrush>
-                                                    <GradientStop Color="{Binding SigningViewModel.StatusColor}"/>
-                                                </RadialGradientBrush>
-                                            </Ellipse.Fill>
-                                        </Ellipse>
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding SigningViewModel.StatusColor}"/>                                           
                                         <Label  Content="Signing" Margin="5"/>
                                     </StackPanel>
                                 </TabItem.Header>
@@ -527,14 +485,7 @@
                                 </i:Interaction.Behaviors>
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Margin="0">
-                                        <Ellipse  Width="10" Height="10">
-                                            <!--Fill requires SolidColorBrush, in order to avoid conversion to Color, the GradientBrush is used-->
-                                            <Ellipse.Fill>
-                                                <RadialGradientBrush>
-                                                    <GradientStop Color="{Binding DefineViewModel.StatusColor}"/>
-                                                </RadialGradientBrush>
-                                            </Ellipse.Fill>
-                                        </Ellipse>
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding DefineViewModel.StatusColor}"/>                                           
                                         <Label  Content="Define" Margin="5" FontWeight="Bold"/>
                                     </StackPanel>
                                 </TabItem.Header>
@@ -558,13 +509,7 @@
                                 </i:Interaction.Behaviors>
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Margin="0">
-                                        <Ellipse  Width="10" Height="10">
-                                            <Ellipse.Fill>
-                                                <RadialGradientBrush>
-                                                    <GradientStop Color="{Binding LicenseViewModel.StatusColor}"/>
-                                                </RadialGradientBrush>
-                                            </Ellipse.Fill>
-                                        </Ellipse>
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding LicenseViewModel.StatusColor}"/>                                           
                                         <Label  Content="License" Margin="5"/>
                                     </StackPanel>
                                 </TabItem.Header>
@@ -588,13 +533,7 @@
                                 </i:Interaction.Behaviors>
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Margin="0">
-                                        <Ellipse  Width="10" Height="10">
-                                            <Ellipse.Fill>
-                                                <RadialGradientBrush>
-                                                    <GradientStop Color="{Binding LicenseViewModel.StatusColor}"/>
-                                                </RadialGradientBrush>
-                                            </Ellipse.Fill>
-                                        </Ellipse>
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding LicenseViewModel.StatusColor}"/>                                           
                                         <Label  Content="Compatibility Policy" Margin="5"/>
                                     </StackPanel>
                                 </TabItem.Header>
@@ -620,17 +559,17 @@
                             <Support:FocusReceiveBehavior/>
                         </i:Interaction.Behaviors>
                         <TabControl  Margin="0"  TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">              
-                            <TabItem Header="Application" Name="tabItem17" >
+                            <TabItem Header="Application" Name="tabApplication" >
                                 <i:Interaction.Behaviors>
                                     <Support:FocusReceiveBehavior/>
                                 </i:Interaction.Behaviors>
 
                                 <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding ApplicationRoleViewModel}" />
+                                        <Views:RolesView Margin="5,10,5,5"  DataContext="{Binding ApplicationRoleViewModel}" />
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding ApplicationRoleViewModel}"/>
+                                        <Views:RolesView Margin="5,10,5,5"  Background="Gainsboro" DataContext="{Binding ApplicationRoleViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
 
@@ -640,16 +579,16 @@
                            
                         </TabItem>
                         
-                            <TabItem Header="Assembly" Name="tabItem18" >
+                            <TabItem Header="Assembly" Name="tabAssembly" >
                                 <i:Interaction.Behaviors>
                                     <Support:FocusReceiveBehavior/>
                                 </i:Interaction.Behaviors>
                                 <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding AssemblyRoleViewModel}"/>
+                                        <Views:RolesView Margin="5,10,5,5" DataContext="{Binding AssemblyRoleViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:ApplicationView Margin="5,10,5,5" DataContext="{Binding AssemblyRoleViewModel}"/>
+                                        <Views:RolesView Margin="5,10,5,5" Background="Gainsboro" DataContext="{Binding AssemblyRoleViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding AssemblyRoleViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>

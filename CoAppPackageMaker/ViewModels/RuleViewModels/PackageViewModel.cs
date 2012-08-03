@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 
-using System.Security.Policy;
-using System.Windows.Media;
-using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
-using CoAppPackageMaker.Temp;
 
 namespace CoAppPackageMaker.ViewModels
 {
@@ -52,9 +44,7 @@ namespace CoAppPackageMaker.ViewModels
             RuleNameToDisplay = "Package";
 
             
-            //SourceString = reader.GetRulesSourceStringPropertyValueByName(Package);
-            //SourcePackageViewModel.PropertyChanged += EvaluatedChanged;
-            this.PropertyChanged += EvaluatedChanged;
+          this.PropertyChanged += EvaluatedChanged;
 
         }
 

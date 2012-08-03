@@ -58,7 +58,7 @@ namespace CoAppPackageMaker.Views
                                                                                       ErrorRule = "Package"
 
                                                                                   });
-                            MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Red;
+                            MainWindowViewModel.Instance.PackageViewModel.StatusColor = Brushes.Red;
 
                         }
 
@@ -69,7 +69,7 @@ namespace CoAppPackageMaker.Views
                         MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorRule == "Package");
                     if (!errorStatus.Any())
                     {
-                        MainWindowViewModel.Instance.PackageViewModel.StatusColor = Colors.Green;
+                        MainWindowViewModel.Instance.PackageViewModel.StatusColor =Brushes.Green;
                     }
                     MainWindowViewModel.Instance.RemoveError(errorHeader);
                 }
