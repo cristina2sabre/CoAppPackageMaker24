@@ -98,22 +98,16 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
            }
            public void Add()
            {
-
-               Type type = _typeForNewItems;
-
-               object newItem = Activator.CreateInstance(type, _ruleNameToDisplay,
+               
+               object newItem = Activator.CreateInstance( _typeForNewItems, _ruleNameToDisplay,
                                                          _collectionName);
 
-               //if is a new collection ->fail!!!!!!!!!!!
+
                ((BaseItemViewModel) newItem).Parameter = (EditableItems.Count != 0)
                                                              ? EditableItems[0].Parameter
-                                                             : String.Empty;
-               //to add as a paramater
+                                                             : null;
              
                ((BaseItemViewModel) newItem).Collection = _editableItems;
-
-            
-
                this.EditableItems.Add(((BaseItemViewModel) newItem));
            }
 

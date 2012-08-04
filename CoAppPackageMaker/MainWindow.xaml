@@ -265,7 +265,7 @@
         <local:DebugFocusedElementProxy x:Name="debugFocusedElement"/>
         <DockPanel Grid.Row="1" Margin="0,-15,0,0" Background="#D8FFD9"  FlowDirection="LeftToRight" Height="52" VerticalAlignment="Top">             
             <ToolBar  VerticalAlignment="Center" HorizontalAlignment="Right" VerticalContentAlignment="Center">
-                <Button  Width="25" Height="25" Margin="3" BorderBrush="Transparent" Background="Transparent" ToolTip="New">
+                <Button  Width="25" Height="25" Margin="3" BorderBrush="Transparent" Background="Transparent" ToolTip="New" Click="New_Click" >
                     <Image Stretch="Uniform"  Source="Icons/NewDocumentHS.png" />
                 </Button>
                 <Button  Width="25" Height="25" Margin="3" BorderBrush="Transparent" Background="Transparent" ToolTip="Open a file" Click="Open_Click">

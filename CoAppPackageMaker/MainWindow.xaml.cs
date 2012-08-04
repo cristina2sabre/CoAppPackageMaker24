@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using CoApp.Packaging;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
+using Warning = CoAppPackageMaker.ViewModels.Base.Warning;
 
 
 namespace CoAppPackageMaker
@@ -89,11 +94,7 @@ namespace CoAppPackageMaker
 
         #endregion
 
-        //private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
+    
         private void filterError_Click(object sender, RoutedEventArgs e)
         {
             var collectionView = CollectionViewSource.GetDefaultView(MainWindowViewModel.Instance.ErrorsCollection);
@@ -117,32 +118,92 @@ namespace CoAppPackageMaker
             
             collectionView.Refresh();
         }
+        
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
-            // Create OpenFileDialog
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-            // Set filter for file extension and default file extension
-            dlg.DefaultExt = ".autopkg";
-            dlg.Filter = "Text documents (.autopkg)|*.autopkg";
-
-            // Display OpenFileDialog by calling ShowDialog method
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Get the selected file name and display in a TextBox
-            if (result == true)
+            if (!SaveCancelled())
             {
-                // Open document
-                string filename = dlg.FileName;
-                //txtFileName.Text = filename;
-                VM.PathToFile = filename;
-                VM.LoadData();
-                UndoService.Current[this.VM].Clear();
+                // Create OpenFileDialog
+                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
+                // Set filter for file extension and default file extension
+                dlg.DefaultExt = ".autopkg";
+                dlg.Filter = "Autopkg files (.autopkg)|*.autopkg";
+
+                // Display OpenFileDialog by calling ShowDialog method
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Get the selected file name and display in a TextBox
+                if (result == true)
+                {
+                    // Open document
+                    string filename = dlg.FileName;
+                    VM.PathToFile = filename;
+                    VM.LoadData();
+                    UndoService.Current[this.VM].Clear();
+
+                }
             }
+          
         }
 
-       
+        private bool SaveCancelled()
+        {
+            bool cancelled = false;
+            bool modificationExist = UndoService.Current[VM].CanUndo;
+            if (modificationExist)
+            {
+                MessageBoxResult result2 = MessageBox.Show("Would you like to save the modifications?",
+                                                           "CoApp Package Maker",
+                                                           MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                if (result2 == MessageBoxResult.Cancel)
+                {
+                    cancelled = true;
+                }
+
+                if (result2 == MessageBoxResult.Yes)
+                {
+                    //this.VM.PathToFile;
+                    this.VM.Reader.Save("D:\\P\\COPKG\\testsave.autopkg");
+                }
+            }
+            return cancelled;
+        }
+
+
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (!SaveCancelled())
+            {
+                //in order to delete old changes
+                this.VM.ResetExecute();
+                var dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.Title = "Select the location for saving";
+                dlg.FileName = "New"; // Default file name
+                dlg.DefaultExt = ".autopkg"; // Default file extension
+                dlg.Filter = "Autopkg files (.autopkg)|*.autopkg"; // Filter files by extension
+
+                // Show save file dialog box
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+                    string filename = dlg.FileName;
+                    TextWriter tw = new StreamWriter(filename);
+                    tw.WriteLine(String.Format("{0}{1}{2}{3}{4}", "@import", "\"", "outercurve.inc", "\"", ";"));
+                    tw.Close();
+                    VM.PathToFile = filename;
+                    VM.LoadData();
+                }
+            }
+
+        }
+
+
     }
 }

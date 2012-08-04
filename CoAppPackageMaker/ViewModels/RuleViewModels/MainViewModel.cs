@@ -142,6 +142,7 @@ namespace CoAppPackageMaker.ViewModels.Base
         {
             _reader = new PackageReader();
             _reader.Read(PathToFile); 
+            AllViewModels=new ObservableCollection<ExtraPropertiesForCollectionsViewModelBase>();
            //this._reader.Save("D:\\P\\COPKG\\testsave.autopkg");
             if (_reader.SusscesfullRead)
                 try
@@ -458,7 +459,7 @@ namespace CoAppPackageMaker.ViewModels.Base
 
         }
 
-        void ResetExecute()
+      public  void ResetExecute()
         {
             if (CanResetExecute())
             {

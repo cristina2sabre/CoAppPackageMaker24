@@ -23,7 +23,7 @@ namespace CoAppPackageMaker.ViewModels
                 {
                     RuleNameToDisplay = "application",
                     EditCollectionViewModel =
-                        new EditCollectionViewModel(includeCollection, "application","include", typeof(ApplicationItem)),
+                        new EditCollectionViewModel(includeCollection, "include", "application", typeof(ApplicationItem)),
                     Parameter = parameter,
                     
                 };
