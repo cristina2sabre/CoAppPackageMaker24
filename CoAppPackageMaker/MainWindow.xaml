@@ -559,11 +559,16 @@
                             <Support:FocusReceiveBehavior/>
                         </i:Interaction.Behaviors>
                         <TabControl  Margin="0"  TabStripPlacement="Left"  BorderBrush="Transparent" ItemContainerStyle="{StaticResource MainTabItem}"   Background="White">              
-                            <TabItem Header="Application" Name="tabApplication" >
+                            <TabItem  Name="tabApplication" >
                                 <i:Interaction.Behaviors>
                                     <Support:FocusReceiveBehavior/>
                                 </i:Interaction.Behaviors>
-
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Margin="0">
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding ApplicationRoleViewModel.StatusColor}"/>
+                                        <Label  Content="Application" Margin="5"/>
+                                    </StackPanel>
+                                </TabItem.Header>
                                 <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
                                         <Views:RolesView Margin="5,10,5,5"  DataContext="{Binding ApplicationRoleViewModel}" />
@@ -579,10 +584,16 @@
                            
                         </TabItem>
                         
-                            <TabItem Header="Assembly" Name="tabAssembly" >
+                            <TabItem Name="tabAssembly" >
                                 <i:Interaction.Behaviors>
                                     <Support:FocusReceiveBehavior/>
                                 </i:Interaction.Behaviors>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Margin="0">
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding AssemblyRoleViewModel.StatusColor}"/>
+                                        <Label  Content="Assembly" Margin="5"/>
+                                    </StackPanel>
+                                </TabItem.Header>
                                 <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
                                         <Views:RolesView Margin="5,10,5,5" DataContext="{Binding AssemblyRoleViewModel}"/>
@@ -596,12 +607,28 @@
                                 </TabControl>
                            
                         </TabItem>
-                        <TabItem Header="Developer library " Name="TabDeveloperLibrary" >
+                        <TabItem  Name="TabDeveloperLibrary" >
                                 <i:Interaction.Behaviors>
                                     <Support:FocusReceiveBehavior/>
                                 </i:Interaction.Behaviors>
-                                <!--<TextBlock Text="to add :headers, libraries, docs" />-->
-                        </TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Margin="0">
+                                        <Ellipse  Width="10" Height="10" Fill="{Binding DeveloperLibraryViewModel.StatusColor}"/>
+                                        <Label  Content="Developer library" Margin="5"/>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
+                                    <TabItem Header="Source Value" >
+                                        <Views:DeveloperLibrary Margin="5,10,5,5" DataContext="{Binding DeveloperLibraryViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Evaluated">
+                                        <Views:DeveloperLibrary Margin="5,10,5,5" Background="Gainsboro" DataContext="{Binding DeveloperLibraryViewModel}"/>
+                                    </TabItem>
+                                    <TabItem Header="Package" >
+                                        <TextBox Text="{Binding DeveloperLibraryViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+                                    </TabItem>
+                                </TabControl>
+                            </TabItem>
                     </TabControl>
                  
                 </TabItem>

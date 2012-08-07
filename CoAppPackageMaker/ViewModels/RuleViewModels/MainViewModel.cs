@@ -158,6 +158,7 @@ namespace CoAppPackageMaker.ViewModels.Base
                     ApplicationRoleViewModel = new ApplicationRoleViewModel(_reader);
                     AssemblyRoleViewModel = new AssemblyRoleViewModel(_reader);
                     FilesViewModel = new FilesViewModel(_reader);
+                    DeveloperLibraryViewModel = new DeveloperLibraryViewModel(_reader);
                     //PackageCompositionViewModel = new PackageCompositionViewModel(_reader);
                     AllViewModels.Add(PackageViewModel);
                     AllViewModels.Add(LicenseViewModel);
@@ -168,6 +169,7 @@ namespace CoAppPackageMaker.ViewModels.Base
                     AllViewModels.Add(DefineViewModel);
                     AllViewModels.Add(CompatibilityPolicy);
                     AllViewModels.Add(FilesViewModel);
+                    AllViewModels.Add(DeveloperLibraryViewModel);
                 }
                 catch (Exception exception)
                 {
@@ -264,6 +266,19 @@ namespace CoAppPackageMaker.ViewModels.Base
             {
                 _filesViewModel = value;
                 OnPropertyChanged("FilesViewModel");
+            }
+        }
+
+        public DeveloperLibraryViewModel DeveloperLibraryViewModel
+        {
+            get
+            {
+                return _developerLibraryViewModel;
+            }
+            set
+            {
+                _developerLibraryViewModel = value;
+                OnPropertyChanged("DeveloperLibraryViewModel");
             }
         }
 
@@ -550,5 +565,7 @@ namespace CoAppPackageMaker.ViewModels.Base
 
 
 
+
+        public ViewModels.DeveloperLibraryViewModel _developerLibraryViewModel { get; set; }
     }
 }
