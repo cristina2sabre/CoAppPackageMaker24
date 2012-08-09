@@ -46,7 +46,7 @@ namespace CoAppPackageMaker.ValidationRules
 
                 var errorStatus =
                     MainWindowViewModel.Instance.ErrorsCollection.Where(item => item.ErrorRule == "Define");
-                if (errorStatus.Any())
+                if (!errorStatus.Any())
                 {
                     MainWindowViewModel.Instance.DefineViewModel.StatusColor = Brushes.Green;
                     

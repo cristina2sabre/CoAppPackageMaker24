@@ -41,7 +41,7 @@
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Developer Library" FontWeight="Bold"/>
-                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Parameter, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
+                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Parameter, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}" IsReadOnly="True"></TextBox>
                     </StackPanel>
                 </Expander.Header>
                 <Grid>

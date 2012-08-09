@@ -54,15 +54,11 @@
   <ItemGroup>
     <Reference Include="CoApp.Developer.Toolkit, Version=1.2.0.272, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.272-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Developer.Toolkit.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\ericschultz-devtools-252d128\ericschultz-devtools-252d128\output\any\debug\bin\CoApp.Developer.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="CoApp.Packaging, Version=1.2.0.272, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp.Devtools-1.2.0.272-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Packaging.dll</HintPath>
-    </Reference>
-    <Reference Include="CoApp.Toolkit, Version=1.2.0.409, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Outercurve Foundation\Coapp-1.2.0.409-Any-1E373a58e25250cb\ReferenceAssemblies\CoApp.Toolkit.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\ericschultz-devtools-252d128\ericschultz-devtools-252d128\output\any\debug\bin\CoApp.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="MonitoredUndo, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -97,7 +93,7 @@
     <Compile Include="Suport\Focus.cs" />
     <Compile Include="Suport\FocusedELement.cs" />
     <Compile Include="Suport\FocusRecieveBehavior.cs" />
-    <Compile Include="ValidationRules\DefineValidationRule.cs" />
+    <Compile Include="ViewModels\ValidationRules\DefineValidationRule.cs" />
     <Compile Include="ViewModels\Base\ErrorViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\ApplicationRoleViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\AssemblyRoleViewModel.cs" />
@@ -128,7 +124,7 @@
     <Compile Include="Views\CompatibilityPolicy.xaml.cs">
       <DependentUpon>CompatibilityPolicy.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ValidationRules\PackageValidationRule.cs" />
+    <Compile Include="ViewModels\ValidationRules\PackageValidationRule.cs" />
     <Compile Include="Views\EditCollectionsUC.xaml.cs">
       <DependentUpon>EditCollectionsUC.xaml</DependentUpon>
     </Compile>

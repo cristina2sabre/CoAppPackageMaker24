@@ -29,7 +29,7 @@ namespace CoAppPackageMaker.Views
         void MyLoadedRoutedEventHandler(Object sender, RoutedEventArgs e)
         {
             //used for selecting template based on IsEnabled property - Source or Value
-            this.RolesCollection.ItemTemplate = (DataTemplate)((this.Background == (Brushes.Gainsboro)) ? FindResource("RoleTemplateValue") : FindResource("RoleTemplate"));
+            this.RolesCollection.ItemTemplate = (DataTemplate)(this.Uid == "Source" ? FindResource("RoleTemplate") : FindResource("RoleTemplateValue"));
             Loaded -= MyLoadedRoutedEventHandler;
         }
     }

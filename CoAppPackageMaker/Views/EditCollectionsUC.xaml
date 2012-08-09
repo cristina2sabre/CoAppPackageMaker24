@@ -15,13 +15,13 @@
         </DataTemplate>
         <DataTemplate x:Key="DefineValueTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Width="170" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" FontWeight="Bold" Text="{Binding Label, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Width="170" Support:Focus.UndoOccurredInt="{Binding UndoCounter}" IsReadOnly="True"></TextBox>
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}" IsReadOnly="True"></TextBox>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="ValueTemplate">
-            <StackPanel Orientation="Horizontal">             
-                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"></TextBox>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Margin="0,2,0,0" BorderBrush="Transparent" Text="{Binding Value, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" IsReadOnly="True"></TextBox>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="DefineSourceValueTemplate">

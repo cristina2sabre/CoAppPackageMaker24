@@ -22,7 +22,7 @@
         <Label Content="License-Url" Grid.Row="1" Margin="5"/>
         <Label Content="License-Type" Grid.Row="2" Margin="5"/>
 
-        <TextBox Name="License" Grid.Column="1" Grid.Row="0" Margin="5"  IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}">
+        <TextBox Name="License" Grid.Column="1" Grid.Row="0" Margin="5"  IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}">
             <TextBox.Text>
                 <Binding  Path="License" UpdateSourceTrigger="PropertyChanged"  Mode="TwoWay" NotifyOnSourceUpdated="True" NotifyOnTargetUpdated="True">
                     <!--<Binding.ValidationRules>
@@ -31,7 +31,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox Name="LicenseUrl" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding LicenseUrl}" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
-        <TextBox Name="LicenceType" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding LicenseType}" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="LicenseUrl" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding LicenseUrl}" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="LicenceType" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding LicenseType}" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
     </Grid>
 </UserControl>

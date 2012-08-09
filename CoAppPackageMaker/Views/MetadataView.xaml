@@ -29,11 +29,11 @@
         <Label Content="Bug-tracker" Grid.Row="3" Margin="5"/>
         <Label Content="Stability" Grid.Row="4" Margin="5"/>
         <Label Content="Licenses" Grid.Row="5" Margin="5"/>
-        <TextBox Name="MetadataSummary" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Summary, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" MaxHeight="75" ScrollViewer.VerticalScrollBarVisibility="Visible" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
-        <TextBox Name="MetadataDescription" Grid.Column="1" Grid.Row="1" Margin="5"  Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" MaxHeight="75" ScrollViewer.VerticalScrollBarVisibility="Visible" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
-        <TextBox Name="MetadataAuthorVersion" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding  AuthorVersion }"  IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
-        <TextBox Name="MetadataBugTracker" Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding  BugTracker }" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
-        <TextBox Name="MetadataStability" Grid.Column="1" Grid.Row="4" Margin="5" Text="{Binding  Stability }" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
-        <TextBox Name="MetadataLicenses" Grid.Column="1" Grid.Row="5" Margin="5" Text="{Binding  Licenses }"  IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="MetadataSummary" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Summary, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" MaxHeight="75" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="MetadataDescription" Grid.Column="1" Grid.Row="1" Margin="5"  Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" MaxHeight="75" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="MetadataAuthorVersion" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding  AuthorVersion }"  IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="MetadataBugTracker" Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding  BugTracker }" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="MetadataStability" Grid.Column="1" Grid.Row="4" Margin="5" Text="{Binding  Stability }" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="MetadataLicenses" Grid.Column="1" Grid.Row="5" Margin="5" Text="{Binding  Licenses }"  IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
     </Grid>
 </UserControl>

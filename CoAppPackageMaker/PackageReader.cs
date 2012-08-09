@@ -7,7 +7,6 @@ using System.Text;
 using System.Windows;
 using CoApp.Developer.Toolkit.Scripting.Languages.PropertySheet;
 using CoApp.Packaging;
-using CoAppPackageMaker.ViewModels;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker
@@ -62,18 +61,20 @@ namespace CoAppPackageMaker
             var result = new ObservableCollection<BaseItemViewModel>();
             foreach (Rule rule in _packageSource.DefineRules)
             {
+              
                 foreach (string propertyName in rule.PropertyNames)
                 {
                    
                     PropertyRule propertyRule = rule[propertyName];
+                    //propertyRule.HasValues
                     if (propertyRule!=null)
                     {
-                        var model = new DefineItem();
+                        var model = new DefineItem("define","");
                         model.Label = propertyName;
                         var propertyValue = propertyRule.PropertyValues.FirstOrDefault();
                         if (propertyValue != null)
                         {
-                            model.RuleNameToDisplay = "define";
+                            //model.RuleNameToDisplay = "define";
                             model.SourceValue = propertyValue.SourceValues.FirstOrDefault();
                         }
                         result.Add(model);
@@ -127,6 +128,19 @@ namespace CoAppPackageMaker
         }
 
 
+        //used
+        public string GetRulesByNameForPackageComposition(string ruleName, string propertyName, string attributeName, bool isSource)
+        {
+            IEnumerable<string> result = new string[0];
+            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+            if (propertyRule != null)
+            {
+                PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
+                result = isSource ? propertyValue.SourceValues : propertyValue.Values;
+            }
+
+            return result.FirstOrDefault();
+        }
 
 
         public void RemoveRulesWithParameters(string ruleName, string parameter, string colectionName, string toRemove)
@@ -280,6 +294,7 @@ namespace CoAppPackageMaker
         {
             string result = String.Empty;
             var rules = _packageSource.AllRules.GetRulesByName(ruleName);
+           
             PropertyRule propertyRule = rules.GetProperty(ruleName, propertyName);
             if (propertyRule != null)
             {
@@ -299,6 +314,12 @@ namespace CoAppPackageMaker
 
         public string SetNewSourceValue(string ruleName, string propertyName, IEnumerable<string> value)
         {
+
+            var rul = _packageSource.GetRule(id:"define");
+            var rule = rul[propertyName];
+            var rule2s = _packageSource.AllRules.GetRulesByName(ruleName);
+            PropertyRule propertyRulet = rule2s.GetProperty(ruleName, propertyName);
+
             var rules = _packageSource.AllRules.GetRulesByName(ruleName);
             PropertyRule propertyRule = rules.GetProperty(ruleName, propertyName);
             
@@ -324,9 +345,9 @@ namespace CoAppPackageMaker
             if (propertyRule != null)
             {
                 propertyRule.PropertyValues.First((item => item.Label == attributeName)).SourceValues = value;
-
+                result = propertyRule.PropertyValues.Single((item => item.Label == attributeName)).Values;
             }
-            result = propertyRule.PropertyValues.Single((item => item.Label == attributeName)).Values;
+           
             return result.FirstOrDefault();
         }
 

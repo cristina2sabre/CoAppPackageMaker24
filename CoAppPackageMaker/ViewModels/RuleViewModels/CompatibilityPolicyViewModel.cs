@@ -20,7 +20,6 @@ namespace CoAppPackageMaker.ViewModels
            Minimum = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "minimum");
            Maximum = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "maximum");
            Versions = reader.GetRulesSourcePropertyValueByName(CompatibilityPolicy, "versions");
-           IsEditable = true;
            IsSource = true;
 
            ValueCompatibilityPolicyViewModel = new CompatibilityPolicyViewModel()
@@ -34,7 +33,7 @@ namespace CoAppPackageMaker.ViewModels
                                                        Versions =
                                                            reader.GetRulesPropertyValueByName(CompatibilityPolicy,
                                                                                               "versions"),
-                                                       IsEditable = false,
+                                                       IsReadOnly = true,
                                                         SourceString = reader.GetRulesSourceStringPropertyValueByName(CompatibilityPolicy),
                                                    };
 

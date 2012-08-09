@@ -20,9 +20,9 @@
         <Label Content="Maximum" Grid.Row="1" Margin="5"/>
         <Label Content="Versions" Grid.Row="2" Margin="5"/>
 
-        <TextBox Name="CompatibilityPolicyMinimum" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Minimum}" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
-        <TextBox Name="CompatibilityPolicyMaximum" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Maximum}" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
-        <TextBox Name="CompatibilityPolicyVersions" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding Versions}" IsEnabled="{Binding IsEditable}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="CompatibilityPolicyMinimum" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Minimum}" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="CompatibilityPolicyMaximum" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Maximum}" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
+        <TextBox Name="CompatibilityPolicyVersions" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding Versions}" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
 
     </Grid>
 </UserControl>

@@ -23,7 +23,6 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                 reader.GetRulesSourcePropertyValueByName(LicenseString, "license-type");
             LicenseUrl =
                 reader.GetRulesSourcePropertyValueByName(LicenseString, "license-url");
-            IsEditable = true;
             IsSource = true;
             RuleNameToDisplay = "License";
           
@@ -34,6 +33,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             LicenseType = reader.GetRulesPropertyValueByName(LicenseString, "license-type"),
             LicenseUrl = reader.GetRulesPropertyValueByName(LicenseString, "license-url"),
             SourceString = reader.GetRulesSourceStringPropertyValueByName(LicenseString),
+            IsReadOnly = true,
                                                };
 
             

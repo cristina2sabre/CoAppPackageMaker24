@@ -305,6 +305,24 @@ namespace CoAppPackageMaker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This role is used to package an executable application. Frequently an application package will depend upon many assembly packages, which must be listed in a requires rule and referenced by way of manifest rules..
+        /// </summary>
+        internal static string tabApplication {
+            get {
+                return ResourceManager.GetString("tabApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This role specifies shared libraries which are dynamically linked to by other assemblies and applications..
+        /// </summary>
+        internal static string tabAssembly {
+            get {
+                return ResourceManager.GetString("tabAssembly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Describes the range of previous versions this package is binary compatible with..
         /// </summary>
         internal static string TabCompatibilityPolicy {
@@ -319,6 +337,15 @@ namespace CoAppPackageMaker.Properties {
         internal static string TabDefine {
             get {
                 return ResourceManager.GetString("TabDefine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used to specify a developer link-library and associated headers. Typically a package with this role will either include an assembly role containing the related end-user library or will list the package containing it in a requires rule..
+        /// </summary>
+        internal static string tabDeveloperLibrary {
+            get {
+                return ResourceManager.GetString("tabDeveloperLibrary", resourceCulture);
             }
         }
         

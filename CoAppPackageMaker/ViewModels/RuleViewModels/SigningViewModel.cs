@@ -45,7 +45,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                                                                             reader.
                                                                                 GetRulesSourceValuesByNameForEditableCollections
                                                                                 (Signing, "include", typeof(SigningIncludeItem)), "include",Signing, typeof(SigningIncludeItem)),
-                                            IsEditable = false,
+                                          
                                             IsReadOnly = true,
                                             SourceString = reader.GetRulesSourceStringPropertyValueByName(Signing),
                                         };
@@ -74,8 +74,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                                                 "attributes",
                                                 "file-version", true);
             EditCollectionViewModel = ValueSigningViewModel.EditCollectionViewModel;
-            IsEditable = true;
-            IsReadOnly = false;
+           
             IsSource = true;
            
             this.PropertyChanged += EvaluatedChanged;

@@ -166,6 +166,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                     _parameter = value;
 
                 }
+                OnPropertyChanged("Parameter");
 
             }
         }

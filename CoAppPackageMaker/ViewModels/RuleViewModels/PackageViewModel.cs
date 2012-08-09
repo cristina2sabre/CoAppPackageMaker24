@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-
+using System.Windows.Media;
 using MonitoredUndo;
 
 namespace CoAppPackageMaker.ViewModels
@@ -28,8 +28,8 @@ namespace CoAppPackageMaker.ViewModels
             Location = reader.GetRulesPropertyValueByName(Package, "location"),
             Publisher = reader.GetRulesPropertyValueByName(Package, "publisher"),
             Version = reader.GetRulesPropertyValueByName(Package, "version"),
-            IsEditable = false,
             SourceString = _reader.GetRulesSourceStringPropertyValueByName(Package),
+            IsReadOnly = true,
                                      };
 
             Name = reader.GetRulesSourcePropertyValueByName(Package, "name");
@@ -39,13 +39,13 @@ namespace CoAppPackageMaker.ViewModels
             Location = reader.GetRulesSourcePropertyValueByName(Package, "location");
             Publisher = reader.GetRulesSourcePropertyValueByName(Package, "publisher");
             Version = reader.GetRulesSourcePropertyValueByName(Package, "version");
-            IsEditable = true;
-            IsSource = true;
+            IsSource =true;
+            IsReadOnly = false;
             RuleNameToDisplay = "Package";
 
             
           this.PropertyChanged += EvaluatedChanged;
-
+          
         }
 
         private PackageViewModel _valuePackageViewModel;

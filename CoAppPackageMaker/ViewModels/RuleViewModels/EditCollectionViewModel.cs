@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CoAppPackageMaker.ViewModels.Base;
@@ -27,6 +28,11 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             OnPropertyChanged("EditableItems");
         }
 
+        //public ObservableCollection<T> Images
+        //{
+        //    get { return (ObservableCollection<T>)GetValue(ImagesProperty); }
+        //    set { SetValue(ImagesProperty, value); }
+        //}
 
         private ObservableCollection<BaseItemViewModel> _editableItems;
         public ObservableCollection<BaseItemViewModel> EditableItems

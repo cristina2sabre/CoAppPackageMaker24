@@ -368,10 +368,10 @@
 
                                     <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                             <TabItem Name="TabManifestSourceValue" Header="Source Value" >
-                                        <Views:ManifestView IsEnabled="True" Margin="5" DataContext="{Binding ManifestViewModel}"/>
+                                        <Views:ManifestView Uid="Source" Margin="5" DataContext="{Binding ManifestViewModel}"/>
                                     </TabItem>
                             <TabItem  Name="TabManifestEvaluated" Header="Evaluated">
-                                        <Views:ManifestView IsEnabled="False" Margin="5" DataContext="{Binding ManifestViewModel}"/>
+                                        <Views:ManifestView  Margin="5" DataContext="{Binding ManifestViewModel}"/>
                                     </TabItem>
                             <TabItem Name="TabManifestSourceString" Header="Source String" >
                                         <TextBox Text="{Binding ManifestViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -392,10 +392,10 @@
 
                                 <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                         <TabItem Header="Source Value" >
-                                            <Views:Files DataContext="{Binding FilesViewModel}" Margin="5"/>
+                                        <Views:Files Uid="Source" DataContext="{Binding FilesViewModel}" Margin="5"/>
                                         </TabItem>
                             <TabItem Header="Evaluated" >                                       
-                                            <Views:Files IsEnabled="False" DataContext="{Binding FilesViewModel}" Margin="5"/>                                      
+                                            <Views:Files  DataContext="{Binding FilesViewModel}" Margin="5"/>                                      
                                     </TabItem>
                             <TabItem Header="Package" >
                                         <TextBox Text="{Binding FilesViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
@@ -443,10 +443,10 @@
 
                         <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:EditCollectionsUC IsEnabled="True" DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="SourceValueTemplate"/>                                      
+                                        <Views:EditCollectionsUC  DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="SourceValueTemplate"/>                                      
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:EditCollectionsUC IsEnabled="False" DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="ValueTemplate"/>
+                                        <Views:EditCollectionsUC  DataContext="{Binding RequiresViewModel.EditCollectionViewModel}" ListTemplate="ValueTemplate"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding RequiresViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -467,10 +467,10 @@
 
                                 <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:SigningView  IsEnabled="True"  Margin="5" DataContext="{Binding SigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        <Views:SigningView Uid="Source"   Margin="5" DataContext="{Binding SigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:SigningView IsEnabled="False" Margin="5" DataContext="{Binding  SigningViewModel.ValueSigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Views:SigningView Margin="5" DataContext="{Binding  SigningViewModel.ValueSigningViewModel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBlock Text="{Binding SigningViewModel.ValueSigningViewModel.SourceString}"/>
@@ -492,10 +492,10 @@
 
                                 <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:EditCollectionsUC IsEnabled="True"  DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineSourceValueTemplate"/>                                      
+                                        <Views:EditCollectionsUC DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineSourceValueTemplate"/>                                      
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:EditCollectionsUC IsEnabled="False" DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineValueTemplate"/>                                       
+                                        <Views:EditCollectionsUC DataContext="{Binding DefineViewModel.EditCollectionViewModel}" ListTemplate="DefineValueTemplate"/>                                       
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding DefineViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -571,10 +571,10 @@
                                 </TabItem.Header>
                                 <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:RolesView Margin="5,10,5,5"  DataContext="{Binding ApplicationRoleViewModel}" />
+                                        <Views:RolesView Margin="5,10,5,5" Uid="Source" DataContext="{Binding ApplicationRoleViewModel}" />
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:RolesView Margin="5,10,5,5"  Background="Gainsboro" DataContext="{Binding ApplicationRoleViewModel}"/>
+                                        <Views:RolesView Margin="5,10,5,5" DataContext="{Binding ApplicationRoleViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
 
@@ -596,10 +596,10 @@
                                 </TabItem.Header>
                                 <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:RolesView Margin="5,10,5,5" DataContext="{Binding AssemblyRoleViewModel}"/>
+                                        <Views:RolesView Margin="5,10,5,5" Uid="Source" DataContext="{Binding AssemblyRoleViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:RolesView Margin="5,10,5,5" Background="Gainsboro" DataContext="{Binding AssemblyRoleViewModel}"/>
+                                        <Views:RolesView Margin="5,10,5,5"  DataContext="{Binding AssemblyRoleViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding AssemblyRoleViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
@@ -607,7 +607,7 @@
                                 </TabControl>
                            
                         </TabItem>
-                        <TabItem  Name="TabDeveloperLibrary" >
+                        <TabItem  Name="tabDeveloperLibrary" >
                                 <i:Interaction.Behaviors>
                                     <Support:FocusReceiveBehavior/>
                                 </i:Interaction.Behaviors>
@@ -619,10 +619,10 @@
                                 </TabItem.Header>
                                 <TabControl  Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:DeveloperLibrary Margin="5,10,5,5" DataContext="{Binding DeveloperLibraryViewModel}"/>
+                                        <Views:DeveloperLibrary Margin="5,10,5,5" Uid="Source" DataContext="{Binding DeveloperLibraryViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:DeveloperLibrary Margin="5,10,5,5" Background="Gainsboro" DataContext="{Binding DeveloperLibraryViewModel}"/>
+                                        <Views:DeveloperLibrary Margin="5,10,5,5"  DataContext="{Binding DeveloperLibraryViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
                                         <TextBox Text="{Binding DeveloperLibraryViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>

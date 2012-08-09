@@ -19,7 +19,7 @@ namespace CoAppPackageMaker.Views
         void MyLoadedRoutedEventHandler(Object sender, RoutedEventArgs e)
         {
             //used for selecting template based on IsEnabled property - Source or Value
-          this.SingningInclude.ListTemplate = this.IsEnabled ? EditCollectionsUC.SelectTemplate.SourceValueTemplate : EditCollectionsUC.SelectTemplate.ValueTemplate;
+          this.SingningInclude.ListTemplate = this.Uid=="Source" ? EditCollectionsUC.SelectTemplate.SourceValueTemplate : EditCollectionsUC.SelectTemplate.ValueTemplate;
           Loaded -= MyLoadedRoutedEventHandler;
         }
        

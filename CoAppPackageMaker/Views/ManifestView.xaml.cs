@@ -19,7 +19,7 @@ namespace CoAppPackageMaker.Views
         void MyLoadedRoutedEventHandler(Object sender, RoutedEventArgs e)
         {
             //used for selecting template based on IsEnabled property - Source or Value
-            this.ListBoxManifestCollection.ItemTemplate = (DataTemplate)(this.IsEnabled ? FindResource("ManifestTemplate") : FindResource("ManifestTemplateValue"));
+            this.ListBoxManifestCollection.ItemTemplate = (DataTemplate)(this.Uid=="Source" ? FindResource("ManifestTemplate") : FindResource("ManifestTemplateValue"));
             Loaded -= MyLoadedRoutedEventHandler;
         }
     }

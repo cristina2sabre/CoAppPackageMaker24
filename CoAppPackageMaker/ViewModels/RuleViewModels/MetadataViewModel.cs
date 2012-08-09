@@ -26,7 +26,7 @@ namespace CoAppPackageMaker.ViewModels
                 BugTracker = reader.GetRulesPropertyValueByName(Metadata, "bug-tracker"),
                 Stability = reader.GetRulesPropertyValueByName(Metadata, "stability"),
                 Licenses = reader.GetRulesPropertyValueByName(Metadata, "licenses"),
-                IsEditable = false,
+                IsReadOnly = true,
                 SourceString = reader.GetRulesSourceStringPropertyValueByName(Metadata),                           
                                           };
             Summary = reader.GetRulesSourcePropertyValueByName(Metadata, "summary");
@@ -35,7 +35,7 @@ namespace CoAppPackageMaker.ViewModels
             BugTracker = reader.GetRulesSourcePropertyValueByName(Metadata, "bug-tracker");
             Stability = reader.GetRulesSourcePropertyValueByName(Metadata, "stability");
             Licenses = reader.GetRulesSourcePropertyValueByName(Metadata, "licenses");
-            IsEditable = true;
+            IsReadOnly = false;
             IsSource = true;
             RuleNameToDisplay = "Metadata";
            

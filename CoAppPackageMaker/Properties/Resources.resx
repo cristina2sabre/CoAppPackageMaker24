@@ -238,4 +238,13 @@
   <data name="TabPackageComposition" xml:space="preserve">
     <value>This is a critical part of any application package, though it is generally omitted in assembly packages.</value>
   </data>
+  <data name="tabApplication" xml:space="preserve">
+    <value>This role is used to package an executable application. Frequently an application package will depend upon many assembly packages, which must be listed in a requires rule and referenced by way of manifest rules.</value>
+  </data>
+  <data name="tabAssembly" xml:space="preserve">
+    <value>This role specifies shared libraries which are dynamically linked to by other assemblies and applications.</value>
+  </data>
+  <data name="tabDeveloperLibrary" xml:space="preserve">
+    <value>Used to specify a developer link-library and associated headers. Typically a package with this role will either include an assembly role containing the related end-user library or will list the package containing it in a requires rule.</value>
+  </data>
 </root>

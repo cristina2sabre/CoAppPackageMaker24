@@ -159,7 +159,7 @@ namespace CoAppPackageMaker.ViewModels.Base
                     AssemblyRoleViewModel = new AssemblyRoleViewModel(_reader);
                     FilesViewModel = new FilesViewModel(_reader);
                     DeveloperLibraryViewModel = new DeveloperLibraryViewModel(_reader);
-                    //PackageCompositionViewModel = new PackageCompositionViewModel(_reader);
+                    PackageCompositionViewModel = new PackageCompositionViewModel(_reader);
                     AllViewModels.Add(PackageViewModel);
                     AllViewModels.Add(LicenseViewModel);
                     AllViewModels.Add(MetadataViewModel);

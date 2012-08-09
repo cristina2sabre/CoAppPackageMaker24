@@ -46,6 +46,14 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
     public class DefineItem : BaseItemViewModel
     {
+
+        public DefineItem(string ruleName, string collectionName)
+        {
+            RuleNameToDisplay = ruleName;
+            CollectionName = collectionName;
+            
+        }
+
         public override string ProcessSourceValue(string newValue, string oldValue)
         {
             return MainWindowViewModel.Instance.Reader.SetSourceDefineRules(this.Label, new[] { newValue });

@@ -1,6 +1,7 @@
 ﻿﻿using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using System.Drawing;
+﻿using System.Windows.Input;
 using CoAppPackageMaker.ViewModels.Base;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
 using MonitoredUndo;
@@ -31,6 +32,9 @@ namespace CoAppPackageMaker.ViewModels
             }
 
             SourceString = reader.GetRulesSourceStringPropertyValueByName("application");
+
+           
+              
             _roleCollection.CollectionChanged += RolesCollectionChanged;
         }
 

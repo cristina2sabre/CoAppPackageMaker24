@@ -48,18 +48,6 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        //private Color _statusColor = Colors.Green;
-        //public Color StatusColor
-        //{
-        //    get { return _statusColor; }
-        //    set
-        //    {
-        //        _statusColor = value;
-        //        OnPropertyChanged("StatusColor");
-        //    }
-        //}
-
-
         private SolidColorBrush _statusColor = Brushes.Green;
         public SolidColorBrush StatusColor
         {
@@ -82,78 +70,68 @@ namespace CoAppPackageMaker.ViewModels
             }
         }
 
-        private bool _isEditable;
-
-        public bool IsEditable
-        {
-            get { return _isEditable; }
-            set
-            {
-                _isEditable = value;
-                OnPropertyChanged("IsEditable");
-            }
-        }
-
+       
+        
         public bool IsReadOnly { get; set; }
 
-      
-      virtual  public object GetUndoRoot()
-        {
-           
-                return MainWindowViewModel.Instance;
-           
 
+        virtual public object GetUndoRoot()
+        {
+
+            return MainWindowViewModel.Instance;
 
         }
 
 
 
-      public List<Tuple<string, string>> Search(string toSearch)
-      {
-          string name = RuleNameToDisplay;
-          var result = new List<Tuple<string, string>>();
-          foreach (var prop in this.GetType().GetProperties())
-          {
-              if (prop.Name.Equals("ManifestCollection"))
-              {
-                  result.AddRange(SearchInCollections(toSearch,prop));
-              }
-
-              if (prop.Name != "SelectedFile" && prop.Name != "SourceString" && prop.Name != "EditCollectionViewModel")
-              {
-                  var tempString = prop.GetValue(this, null).ToString();
-                  if (tempString.Contains(toSearch))
-                  {
-                      result.Add(new Tuple<string, string>(name, prop.Name));
-                  }
-              }
 
 
-          }
-          //for search in collections of editable items
+        public List<Tuple<string, string>> Search(string toSearch)
+        {
+            string name = RuleNameToDisplay;
+            var result = new List<Tuple<string, string>>();
+            foreach (var prop in this.GetType().GetProperties())
+            {
+                if (prop.Name.Equals("ManifestCollection") )
+                {
+                    result.AddRange(SearchInCollections(toSearch, prop));
+                }
 
-          var method = this.GetType().GetProperty("EditCollectionViewModel");
-          if (method != null)
-          {
-              var s = method.GetValue(this, null);
-              if (s != null)
-              {
-                  foreach (BaseItemViewModel item in (s as EditCollectionViewModel).EditableItems)
-                  {
-                      if (item.SourceValue.Contains(toSearch))
-                      {
-                          
-                          result.Add(new Tuple<string, string>(name, String.Format("Collection  {0}", item.Parameter)));
-                          break;
-                      }
-                  }
-              }
 
-          }
-          return result;
-      }
+                if (prop.Name != "SelectedFile" && prop.Name != "SourceString" && prop.Name != "EditCollectionViewModel")
+                {
+                    var tempString = prop.GetValue(this, null).ToString();
+                    if (tempString.Contains(toSearch))
+                    {
+                        result.Add(new Tuple<string, string>(name, prop.Name));
+                    }
+                }
 
-      private List<Tuple<string, string>> SearchInCollections(string toSearch, PropertyInfo prop)
+
+            }
+            //for search in collections of editable items
+
+            var method = this.GetType().GetProperty("EditCollectionViewModel");
+            if (method != null)
+            {
+                var value = method.GetValue(this, null);
+                if (value != null)
+                {
+                    foreach (BaseItemViewModel item in ((EditCollectionViewModel) value).EditableItems)
+                    {
+                        if (item.SourceValue.Contains(toSearch))
+                        {
+                            result.Add(new Tuple<string, string>(name, String.Format("Collection  {0}", item.Parameter)));
+                            break;
+                        }
+                    }
+                }
+
+            }
+            return result;
+        }
+
+        private List<Tuple<string, string>> SearchInCollections(string toSearch, PropertyInfo prop)
         {
             var result = new List<Tuple<string, string>>();
               var propertyInfo = this.GetType().GetProperty(prop.Name);

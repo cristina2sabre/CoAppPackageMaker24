@@ -8,6 +8,7 @@ namespace CoAppPackageMaker.ViewModels
 {
     public class ManifestViewModel : ExtraPropertiesForCollectionsViewModelBase
     {
+            
 
         private ObservableCollection<ManifestItemViewModel> _manifestCollection;
         public ObservableCollection<ManifestItemViewModel> ManifestCollection

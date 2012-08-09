@@ -32,28 +32,24 @@
 
         <DataTemplate x:Key="RoleTemplateValue">
             <DockPanel>
-                <Expander  IsExpanded="True" Margin="5">
+                <Expander  Margin="5">
                     <Expander.Header>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{Binding RuleNameToDisplay}" FontWeight="Bold"/>
-                            <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Parameter, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" ></TextBox>
+                            <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Parameter, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" IsReadOnly="True"></TextBox>
                         </StackPanel>
                     </Expander.Header>
                     <Grid>
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-
                         <Label Content="Include" Grid.Row="1" Margin="5"/>
-
-                        <Views:EditCollectionsUC DataContext="{Binding  EditCollectionViewModel}" Grid.Column="1" Grid.Row="1" MinWidth="200" Height="100"  ListTemplate="ValueTemplate" IsEnabled="False"/>
+                        <Views:EditCollectionsUC DataContext="{Binding  EditCollectionViewModel}" Grid.Column="1" Grid.Row="1" MinWidth="200" Height="100"  ListTemplate="ValueTemplate" />
                     </Grid>
                 </Expander>
             </DockPanel>
         </DataTemplate>
-
 
     </UserControl.Resources>
 
