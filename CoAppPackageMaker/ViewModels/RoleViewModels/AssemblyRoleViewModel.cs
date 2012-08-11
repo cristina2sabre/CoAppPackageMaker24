@@ -1,5 +1,7 @@
 ﻿﻿using System.Collections.ObjectModel;
-using CoAppPackageMaker.ViewModels.RuleViewModels;
+﻿using System.Linq;
+﻿using System.Windows.Forms;
+﻿using CoAppPackageMaker.ViewModels.RuleViewModels;
 
 namespace CoAppPackageMaker.ViewModels
 {
@@ -19,7 +21,7 @@ namespace CoAppPackageMaker.ViewModels
                 {
                     RuleNameToDisplay = "assembly",
                     EditCollectionViewModel =
-                        new EditCollectionViewModel( includeCollection, "include", "assembly", typeof(ApplicationItem)),
+                        new EditCollectionViewModel( includeCollection, "include", "assembly", typeof(ApplicationItem),parameter),
                     Parameter = parameter,
                    
                 };
@@ -33,8 +35,24 @@ namespace CoAppPackageMaker.ViewModels
 
         public override void Add()
         {
-
-            this.RoleCollection.Add(new RoleItemViewModel() { RuleNameToDisplay = "assembly", EditCollectionViewModel = new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "include", "assembly", typeof(ApplicationItem)) });
+            var col = this.RoleCollection.Where(item => item.Parameter == "[]");
+            if (!col.Any())
+            {
+                var newItem =
+                    new RoleItemViewModel()
+                        {
+                            RuleNameToDisplay = "assembly",
+                            EditCollectionViewModel =
+                                new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "include",
+                                                            "assembly", typeof (ApplicationItem))
+                        };
+                this.RoleCollection.Add(newItem);
+            }
+            else
+            {
+                MessageBox.Show("An item with the same parameters exist aready in the collection");
+            }
+           
         }
     }
 }

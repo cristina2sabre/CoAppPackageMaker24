@@ -96,21 +96,18 @@ namespace CoAppPackageMaker.ViewModels
 
        public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
        {
-           IEnumerable<string> newValues;
-           {
+         
+          
                switch (args.PropertyName)
                {
                    case "Minimum":
-                        newValues= new[]{ Minimum};
-                        ValueCompatibilityPolicyViewModel.Minimum = _reader.SetNewSourceValue(CompatibilityPolicy, "minimum", newValues);
+                        ValueCompatibilityPolicyViewModel.Minimum = _reader.SetNewSourceValue(CompatibilityPolicy, "minimum", Minimum);
                         break;
                    case "Maximum":
-                       newValues = new[] { Maximum };
-                       ValueCompatibilityPolicyViewModel.Maximum = _reader.SetNewSourceValue(CompatibilityPolicy, "maximum", newValues);
+                       ValueCompatibilityPolicyViewModel.Maximum = _reader.SetNewSourceValue(CompatibilityPolicy, "maximum", Maximum);
                        break;
                    case "Versions":
-                       newValues = new[] { Versions };
-                       ValueCompatibilityPolicyViewModel.Versions = _reader.SetNewSourceValue(CompatibilityPolicy, "versions", newValues);
+                       ValueCompatibilityPolicyViewModel.Versions = _reader.SetNewSourceValue(CompatibilityPolicy, "versions", Versions);
                        break;
 
                }
@@ -118,7 +115,7 @@ namespace CoAppPackageMaker.ViewModels
                ValueCompatibilityPolicyViewModel.SourceString = _reader.GetRulesSourceStringPropertyValueByName(CompatibilityPolicy);
            }
 
-       }
+       
      
        
     }

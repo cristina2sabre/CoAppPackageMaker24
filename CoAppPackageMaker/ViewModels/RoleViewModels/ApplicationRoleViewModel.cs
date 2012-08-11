@@ -1,6 +1,8 @@
 ﻿﻿using System;
 using System.Collections.ObjectModel;
 ﻿using System.Drawing;
+﻿using System.Linq;
+﻿using System.Windows.Forms;
 ﻿using System.Windows.Input;
 using CoAppPackageMaker.ViewModels.Base;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
@@ -24,7 +26,7 @@ namespace CoAppPackageMaker.ViewModels
                 {
                     RuleNameToDisplay = "application",
                     EditCollectionViewModel =
-                        new EditCollectionViewModel(includeCollection, "include", "application", typeof(ApplicationItem)),
+                        new EditCollectionViewModel(includeCollection, "include", "application", typeof(ApplicationItem),parameter),
                     Parameter = parameter,
                     
                 };
@@ -107,8 +109,23 @@ namespace CoAppPackageMaker.ViewModels
 
         public virtual void Add()
         {
-
-            this.RoleCollection.Add(new RoleItemViewModel() {RuleNameToDisplay  = "application",EditCollectionViewModel = new EditCollectionViewModel( new ObservableCollection<BaseItemViewModel>(), "include", "application", typeof(ApplicationItem)) });
+            var col = this.RoleCollection.Where(item => item.Parameter == "[]");
+            if (!col.Any())
+            {
+                var newItem =
+                    new RoleItemViewModel()
+                        {
+                            RuleNameToDisplay = "application",
+                            EditCollectionViewModel =
+                                new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "include",
+                                                            "application", typeof (ApplicationItem))
+                        };
+                this.RoleCollection.Add(newItem);
+            }
+            else
+            {
+                MessageBox.Show("An item with the same parameters exist aready in the collection");
+            }
         }
 
         #endregion
@@ -129,7 +146,7 @@ namespace CoAppPackageMaker.ViewModels
                 {
                     MainWindowViewModel.Instance.Reader.SetNewParameter(this.RuleNameToDisplay, _parameter, value);
                     UpdateParameterForEveryItemInTheCollection(value, this.EditCollectionViewModel.EditableItems);
-
+                    EditCollectionViewModel.Parameter = value;
                     DefaultChangeFactory.OnChanging(this, "Parameter", _parameter, value);
                     _parameter = value;
                 }
@@ -152,7 +169,7 @@ namespace CoAppPackageMaker.ViewModels
         
        public override string ProcessSourceValue(string newValue,string oldValue)
         {
-            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters(this.RuleNameToDisplay, this.Parameter, this.CollectionName, oldValue, newValue);
+            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters(this.RuleNameToDisplay, this.CollectionName, oldValue, newValue, this.Parameter);
         }
     }
 }

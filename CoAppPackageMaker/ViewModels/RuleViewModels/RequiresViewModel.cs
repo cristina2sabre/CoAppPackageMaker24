@@ -54,7 +54,7 @@ namespace CoAppPackageMaker.ViewModels
 
         public override string ProcessSourceValue(string newValue, string oldValue)
         {
-            return MainWindowViewModel.Instance.Reader.SetSourceRequireSigningRules("requires", "package", oldValue, newValue);
+            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("requires", "package", oldValue, newValue);
         }
     }
     }

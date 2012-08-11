@@ -194,9 +194,10 @@ namespace CoAppPackageMaker
                 {
                     // Save document
                     string filename = dlg.FileName;
-                    //TextWriter tw = new StreamWriter(filename);
+                    TextWriter tw = new StreamWriter(filename);
                     //tw.WriteLine(String.Format("{0}{1}{2}{3}{4}", "@import", "\"", "outercurve.inc", "\"", ";"));
-                    //tw.Close();
+                    tw.WriteLine("#define{}");
+                    tw.Close();
                     VM.PathToFile = filename;
                     VM.LoadData();
                 }

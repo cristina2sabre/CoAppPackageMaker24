@@ -16,7 +16,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
     {
         protected BaseItemViewModel(ObservableCollection<BaseItemViewModel> editableItems)
         {
-            _collection = editableItems;
+            Collection= editableItems;
         }
 
         protected BaseItemViewModel()

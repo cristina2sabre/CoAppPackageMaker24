@@ -93,7 +93,7 @@
     <Compile Include="Suport\Focus.cs" />
     <Compile Include="Suport\FocusedELement.cs" />
     <Compile Include="Suport\FocusRecieveBehavior.cs" />
-    <Compile Include="ViewModels\ValidationRules\DefineValidationRule.cs" />
+    <Compile Include="ValidationRules\DefineValidationRule.cs" />
     <Compile Include="ViewModels\Base\ErrorViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\ApplicationRoleViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModels\AssemblyRoleViewModel.cs" />
@@ -106,7 +106,6 @@
     <Compile Include="ViewModels\RuleViewModels\FilesViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\LicenseViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\RoleViewModels\DeveloperLibraryRoleViewModel.cs" />
     <Compile Include="ViewModels\Base\ExtraPropertiesViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\ManifestViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModels\MetadataViewModel.cs" />
@@ -124,7 +123,7 @@
     <Compile Include="Views\CompatibilityPolicy.xaml.cs">
       <DependentUpon>CompatibilityPolicy.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ValidationRules\PackageValidationRule.cs" />
+    <Compile Include="ValidationRules\PackageValidationRule.cs" />
     <Compile Include="Views\EditCollectionsUC.xaml.cs">
       <DependentUpon>EditCollectionsUC.xaml</DependentUpon>
     </Compile>

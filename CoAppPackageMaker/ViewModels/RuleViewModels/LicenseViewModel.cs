@@ -96,22 +96,20 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
-            
-           IEnumerable<string> newValues;
-                switch (args.PropertyName)
+            switch (args.PropertyName)
                 {
                    case "License":
-                        //reevaluate
-                        newValues= new[]{License};
-                        this.ValueLicenseViewModel.License = _reader.SetNewSourceValue(LicenseString, "license", newValues);
+                        //reevaluate SetNewSourceValue
+                        //this.ValueLicenseViewModel.License = _reader.SetNewSourceValueLicense(LicenseString, "license", License);
+                        this.ValueLicenseViewModel.License = _reader.SetNewSourceValue(LicenseString, "license", License);
                         break;
                     case "LicenseType":
-                        newValues = new[] {LicenseType};
-                        this.ValueLicenseViewModel.LicenseType = _reader.SetNewSourceValue(LicenseString, "license-type", newValues);
+                        //this.ValueLicenseViewModel.LicenseType = _reader.SetNewSourceValueLicense(LicenseString, "license-type", LicenseType);
+                        this.ValueLicenseViewModel.LicenseType = _reader.SetNewSourceValue(LicenseString, "license-type", LicenseType);
                         break;
                     case "LicenseUrl":
-                        newValues = new[] { LicenseUrl };
-                        this.ValueLicenseViewModel.LicenseUrl = _reader.SetNewSourceValue(LicenseString, "license-url", newValues);
+                        //this.ValueLicenseViewModel.LicenseUrl = _reader.SetNewSourceValueLicense(LicenseString, "license-url", LicenseUrl);
+                        this.ValueLicenseViewModel.LicenseUrl = _reader.SetNewSourceValue(LicenseString, "license-url", LicenseUrl);
                         break;
                  
                 }

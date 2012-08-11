@@ -151,37 +151,31 @@ namespace CoAppPackageMaker.ViewModels
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
             
-                IEnumerable<string> newValues;
+               
                 switch (args.PropertyName)
                 {
                     case "Name":
                         //reevaluate
-                        newValues = new[] { Name };
-                        this.ValuePackageViewModel.Name = _reader.SetNewSourceValue(Package, "name", newValues);
+                      
+                        this.ValuePackageViewModel.Name = _reader.SetNewSourceValue(Package, "name", Name);
                         break;
                     case "Version":
-                        newValues = new[] {Version};
-                       this.ValuePackageViewModel.Version = _reader.SetNewSourceValue(Package, "version", newValues);
+                        this.ValuePackageViewModel.Version = _reader.SetNewSourceValue(Package, "version", Version);
                         break;
                     case "DisplayName":
-                        newValues = new[] { DisplayName };
-                        this.ValuePackageViewModel.DisplayName = _reader.SetNewSourceValue(Package, "display-name", newValues);
+                        this.ValuePackageViewModel.DisplayName = _reader.SetNewSourceValue(Package, "display-name", DisplayName);
                         break;
                     case "Location":
-                        newValues = new[] { Location };
-                        this.ValuePackageViewModel.Location = _reader.SetNewSourceValue(Package, "location", newValues);
+                        this.ValuePackageViewModel.Location = _reader.SetNewSourceValue(Package, "location", Location);
                         break;
                     case "Feed":
-                        newValues = new[] { Feed };
-                        this.ValuePackageViewModel.Feed = _reader.SetNewSourceValue(Package, "feed", newValues);
+                        this.ValuePackageViewModel.Feed = _reader.SetNewSourceValue(Package, "feed", Feed);
                         break;
                     case "Architecture":
-                        newValues = new[] { Architecture };
-                        this.ValuePackageViewModel.Architecture = _reader.SetNewSourceValue(Package, "arch", newValues);
+                        this.ValuePackageViewModel.Architecture = _reader.SetNewSourceValue(Package, "arch", Architecture);
                         break;
                     case "Publisher":
-                        newValues = new[] { Publisher };
-                        this.ValuePackageViewModel.Publisher = _reader.SetNewSourceValue(Package, "publisher", newValues);
+                        this.ValuePackageViewModel.Publisher = _reader.SetNewSourceValue(Package, "publisher", Publisher);
                         break;
                 }
 

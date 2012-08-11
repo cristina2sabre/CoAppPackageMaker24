@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
@@ -100,9 +101,12 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _companyAttribute; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "CompanyAttribute", _companyAttribute, value);
-                _companyAttribute = value;
-                OnPropertyChanged("CompanyAttribute");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "CompanyAttribute", _companyAttribute, value);
+                    _companyAttribute = value;
+                    OnPropertyChanged("CompanyAttribute");
+                }
             }
         }
 
@@ -113,9 +117,12 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _descriptionAttribute; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "DescriptionAttribute", _descriptionAttribute, value);
-                _descriptionAttribute = value;
-                OnPropertyChanged("DescriptionAttribute");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "DescriptionAttribute", _descriptionAttribute, value);
+                    _descriptionAttribute = value;
+                    OnPropertyChanged("DescriptionAttribute");
+                }
             }
         }
 
@@ -126,9 +133,12 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _productNameAttribute; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "ProductNameAttribute", _productNameAttribute, value);
-                _productNameAttribute = value;
-                OnPropertyChanged("ProductNameAttribute");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "ProductNameAttribute", _productNameAttribute, value);
+                    _productNameAttribute = value;
+                    OnPropertyChanged("ProductNameAttribute");
+                }
             }
         }
 
@@ -138,9 +148,13 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _productVersionAttribute; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "ProductVersion", _productVersionAttribute, value);
-                _productVersionAttribute = value;
-                OnPropertyChanged("ProductVersion");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "ProductVersion", _productVersionAttribute, value);
+                    _productVersionAttribute = value;
+                    OnPropertyChanged("ProductVersion");
+                }
+               
             }
         }
 
@@ -150,9 +164,13 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _fileVersionAttribute; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "FileVersionAttribute", _fileVersionAttribute, value);
-                _fileVersionAttribute = value;
-                OnPropertyChanged("FileVersionAttribute");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "FileVersionAttribute", _fileVersionAttribute, value);
+                    _fileVersionAttribute = value;
+                    OnPropertyChanged("FileVersionAttribute");
+                }
+               
             }
         }
 
@@ -172,29 +190,23 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
-            IEnumerable<string> newValues;
             switch (args.PropertyName)
             {
                 case "CompanyAttribute":
                     //reevaluate
-                    newValues = new[] {CompanyAttribute};
-                    ValueSigningViewModel.CompanyAttribute = _reader.SetNewSourceValueSigning(Signing, "attributes", "company", newValues);
+                    ValueSigningViewModel.CompanyAttribute = _reader.SetNewSourceValue(Signing, "attributes", CompanyAttribute,attributeName: "company");
                     break;
                 case "DescriptionAttribute":
-                    newValues = new[] {DescriptionAttribute};
-                    ValueSigningViewModel.DescriptionAttribute = _reader.SetNewSourceValueSigning(Signing, "attributes", "description", newValues);
+                    ValueSigningViewModel.DescriptionAttribute = _reader.SetNewSourceValue(Signing, "attributes", DescriptionAttribute, attributeName: "description");
                     break;
                 case "ProductNameAttribute":
-                    newValues = new[] { ProductNameAttribute };
-                    ValueSigningViewModel.ProductNameAttribute = _reader.SetNewSourceValueSigning(Signing, "attributes", "product-name", newValues);
+                    ValueSigningViewModel.ProductNameAttribute = _reader.SetNewSourceValue(Signing, "attributes", ProductNameAttribute, attributeName: "product-name");
                     break;
                 case "ProductVersion":
-                    newValues = new[] { ProductVersion };
-                    ValueSigningViewModel.ProductVersion = _reader.SetNewSourceValueSigning(Signing, "attributes", "product-version", newValues);
+                    ValueSigningViewModel.ProductVersion = _reader.SetNewSourceValue(Signing, "attributes", ProductVersion, attributeName: "product-version");
                     break;
                 case "FileVersionAttribute":
-                    newValues = new[] { FileVersionAttribute };
-                    ValueSigningViewModel.FileVersionAttribute = _reader.SetNewSourceValueSigning(Signing, "attributes", "file-version", newValues);
+                    ValueSigningViewModel.FileVersionAttribute = _reader.SetNewSourceValue(Signing, "attributes", FileVersionAttribute, attributeName: "file-version");
                     break;
                 case "ReplaceSignature":
                     ValueSigningViewModel.ReplaceSignature = ReplaceSignature;
@@ -218,7 +230,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         public override string ProcessSourceValue(string newValue, string oldValue)
         {
-            return MainWindowViewModel.Instance.Reader.SetSourceRequireSigningRules("signing", "include", oldValue, newValue);
+            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("signing", "include", oldValue, newValue);
         }
     }
 }

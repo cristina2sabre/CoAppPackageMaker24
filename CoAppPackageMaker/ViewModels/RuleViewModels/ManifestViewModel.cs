@@ -1,5 +1,7 @@
 ﻿﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using System.Linq;
+﻿using System.Windows.Forms;
+﻿using System.Windows.Input;
 using CoAppPackageMaker.ViewModels.Base;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
 using MonitoredUndo;
@@ -37,8 +39,8 @@ namespace CoAppPackageMaker.ViewModels
                 var model = new ManifestItemViewModel()
                 {
                     RuleNameToDisplay = "manifest",
-                    AssemblyCollection = new EditCollectionViewModel(assemblyCollection, "assembly", "manifest", typeof(ManifestItem)),
-                    IncludeCollection = new EditCollectionViewModel(includeCollection, "include", "manifest", typeof(ManifestItem)),
+                    AssemblyCollection = new EditCollectionViewModel(assemblyCollection, "assembly", "manifest", typeof(ManifestItem),parameter),
+                    IncludeCollection = new EditCollectionViewModel(includeCollection, "include", "manifest", typeof(ManifestItem),parameter),
                      Parameter= parameter,
                     
                 };
@@ -100,8 +102,26 @@ namespace CoAppPackageMaker.ViewModels
         }
         public void Add()
         {
+           
 
-            this.ManifestCollection.Add(new ManifestItemViewModel() { IncludeCollection = new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "include", "manifest", typeof(ManifestItem)), AssemblyCollection = new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "assembly", "manifest", typeof(ManifestItem)) });
+            var col = this.ManifestCollection.Where(item => item.Parameter == null);
+            if (!col.Any())
+            {
+                var newItem = new ManifestItemViewModel()
+                {
+                    IncludeCollection =
+                        new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(),
+                                                    "include", "manifest", typeof(ManifestItem)),
+                    AssemblyCollection =
+                        new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(),
+                                                    "assembly", "manifest", typeof(ManifestItem))
+                };
+               this.ManifestCollection.Add(newItem);
+            }
+            else
+            {
+                MessageBox.Show("An item with the same parameters exist aready in the collection");
+            }
         }
 
         #endregion
@@ -136,7 +156,7 @@ namespace CoAppPackageMaker.ViewModels
         }
 
 
-        private string _parameter = "[]";
+        private string _parameter ;
         public string Parameter
         {
             get { return _parameter; }
@@ -147,6 +167,8 @@ namespace CoAppPackageMaker.ViewModels
                 {
                     MainWindowViewModel.Instance.Reader.SetNewParameter("manifest", _parameter, value);
                     UpdateParameterForEveryItemInTheCollection(value, AssemblyCollection.EditableItems);
+                    AssemblyCollection.Parameter = value;
+                    IncludeCollection.Parameter = value;
                    UpdateParameterForEveryItemInTheCollection(value,IncludeCollection.EditableItems);
                    DefaultChangeFactory.OnChanging(this, "Parameter", _parameter, value);
                     _parameter = value;
@@ -165,12 +187,13 @@ namespace CoAppPackageMaker.ViewModels
         {
             RuleNameToDisplay = ruleName;
             CollectionName = collectionName;
-            
+           
+
         }
         public override string ProcessSourceValue(string newValue, string oldValue)
         {
             this.RuleNameToDisplay = "manifest";
-            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("manifest", this.Parameter, this.CollectionName,oldValue, newValue);
+            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("manifest", this.CollectionName, oldValue, newValue, this.Parameter);
         }
 
           

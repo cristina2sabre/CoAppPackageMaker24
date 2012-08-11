@@ -31,6 +31,7 @@ namespace CoAppPackageMaker.ViewModels
 
         protected void UpdateParameterForEveryItemInTheCollection(string parameter, ObservableCollection<BaseItemViewModel> collection)
         {
+           
             foreach (var item in collection)
             {
                 item.Parameter = parameter;

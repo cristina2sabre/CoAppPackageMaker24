@@ -50,9 +50,13 @@ namespace CoAppPackageMaker.ViewModels
             get { return _summary; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "Summary", _summary, value);
-                _summary = value;
-                OnPropertyChanged("Summary");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "Summary", _summary, value);
+                    _summary = value;
+                    OnPropertyChanged("Summary");
+                }
+               
             }
         }
 
@@ -63,9 +67,12 @@ namespace CoAppPackageMaker.ViewModels
             get { return _description; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "Description", _description, value);
-                _description = value;
-                OnPropertyChanged("Description");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "Description", _description, value);
+                    _description = value;
+                    OnPropertyChanged("Description");
+                }
             }
         }
 
@@ -75,9 +82,12 @@ namespace CoAppPackageMaker.ViewModels
             get { return _authorVersion; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "AuthorVersion", _authorVersion, value);
-                _authorVersion = value;
-                OnPropertyChanged("AuthorVersion");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "AuthorVersion", _authorVersion, value);
+                    _authorVersion = value;
+                    OnPropertyChanged("AuthorVersion");
+                }
             }
         }
 
@@ -87,9 +97,12 @@ namespace CoAppPackageMaker.ViewModels
             get { return _bugTracker; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "BugTracker", _bugTracker, value);
-                _bugTracker = value;
-                OnPropertyChanged("BugTracker");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "BugTracker", _bugTracker, value);
+                    _bugTracker = value;
+                    OnPropertyChanged("BugTracker");
+                }
             }
         }
 
@@ -99,9 +112,12 @@ namespace CoAppPackageMaker.ViewModels
             get { return _stability; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "Stability", _stability, value);
-                _stability = value;
-                OnPropertyChanged("Stability");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "Stability", _stability, value);
+                    _stability = value;
+                    OnPropertyChanged("Stability");
+                }
             }
         }
 
@@ -111,9 +127,12 @@ namespace CoAppPackageMaker.ViewModels
             get { return _licenses; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "Licenses", _licenses, value);
-                _licenses = value;
-                OnPropertyChanged("Licenses");
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DefaultChangeFactory.OnChanging(this, "Licenses", _licenses, value);
+                    _licenses = value;
+                    OnPropertyChanged("Licenses");
+                }
             }
         }
 
@@ -133,34 +152,26 @@ namespace CoAppPackageMaker.ViewModels
        
         public void EvaluatedChanged(object sender, PropertyChangedEventArgs args)
         {
-
-            IEnumerable<string> newValues;
-                switch (args.PropertyName)
+            switch (args.PropertyName)
                 {
                     case "Summary":
                         //reevaluate
-                        newValues = new[] { Summary };
-                        ValueMetadataViewModel.Summary = _reader.SetNewSourceValue(Metadata, "summary", newValues);
+                        ValueMetadataViewModel.Summary = _reader.SetNewSourceValue(Metadata, "summary", Summary);
                         break;
                     case "Description":
-                        newValues = new [] { Description };
-                        ValueMetadataViewModel.Description = _reader.SetNewSourceValue(Metadata, "description", newValues);
+                        ValueMetadataViewModel.Description = _reader.SetNewSourceValue(Metadata, "description", Description );
                         break;
                     case "AuthorVersion":
-                        newValues = new [] { AuthorVersion };
-                        ValueMetadataViewModel.AuthorVersion = _reader.SetNewSourceValue(Metadata, "author-version", newValues);
+                        ValueMetadataViewModel.AuthorVersion = _reader.SetNewSourceValue(Metadata, "author-version", AuthorVersion);
                         break;
                     case "BugTracker":
-                        newValues = new [] { BugTracker };
-                        ValueMetadataViewModel.BugTracker = _reader.SetNewSourceValue(Metadata, "bug-tracker", newValues);
+                        ValueMetadataViewModel.BugTracker = _reader.SetNewSourceValue(Metadata, "bug-tracker", BugTracker);
                         break;
                     case "Stability":
-                        newValues = new[] { Stability };
-                        ValueMetadataViewModel.Stability = _reader.SetNewSourceValue(Metadata, "stability", newValues);
+                        ValueMetadataViewModel.Stability = _reader.SetNewSourceValue(Metadata, "stability", Stability);
                         break;
                     case "Licenses":
-                        newValues = new[] { Licenses };
-                        ValueMetadataViewModel.Licenses = _reader.SetNewSourceValue(Metadata, "licenses", newValues);
+                        ValueMetadataViewModel.Licenses = _reader.SetNewSourceValue(Metadata, "licenses", Licenses);
                         break;
 
                 }

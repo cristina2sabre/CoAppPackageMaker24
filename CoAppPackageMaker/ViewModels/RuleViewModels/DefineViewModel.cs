@@ -56,7 +56,8 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         public override string ProcessSourceValue(string newValue, string oldValue)
         {
-            return MainWindowViewModel.Instance.Reader.SetSourceDefineRules(this.Label, new[] { newValue });
+          //return MainWindowViewModel.Instance.Reader.SetSourceDefineRules(this.Label, newValue);
+            return MainWindowViewModel.Instance.Reader.SetNewSourceValue("*", this.Label, newValue, id:"define");
         }
 
         private string _label = "NewLabel";

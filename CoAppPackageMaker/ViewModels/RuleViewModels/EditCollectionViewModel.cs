@@ -9,12 +9,13 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 {
     public class EditCollectionViewModel:ExtraPropertiesForCollectionsViewModelBase
     {
-       
+        public string Parameter;
         private Type _typeForNewItems;
         private string _ruleNameToDisplay;
         private string _collectionName;
-        public EditCollectionViewModel(ObservableCollection<BaseItemViewModel> collection, string collectionName, string ruleNameToDisplay, Type typeForNewItems)
+        public EditCollectionViewModel(ObservableCollection<BaseItemViewModel> collection, string collectionName, string ruleNameToDisplay, Type typeForNewItems, string parameter=null)
         {
+             Parameter = parameter;
             _editableItems = collection;
             _ruleNameToDisplay = ruleNameToDisplay;
             _collectionName = collectionName;
@@ -111,7 +112,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
                ((BaseItemViewModel) newItem).Parameter = (EditableItems.Count != 0)
                                                              ? EditableItems[0].Parameter
-                                                             : null;
+                                                             : Parameter;
              
                ((BaseItemViewModel) newItem).Collection = _editableItems;
                this.EditableItems.Add(((BaseItemViewModel) newItem));

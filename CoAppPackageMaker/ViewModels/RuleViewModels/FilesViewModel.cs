@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Windows.Forms;
 using System.Windows.Input;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
@@ -21,7 +23,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                 var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "include","files", typeof(FileItem)));
                 var model = new FilesItemViewModel()
                 {
-                    EditCollectionViewModel = new EditCollectionViewModel(includeCollection, "include", "files", typeof(FileItem)),
+                    EditCollectionViewModel = new EditCollectionViewModel(includeCollection, "include", "files", typeof(FileItem),parameter),
                     Parameter = parameter,
                     FilesRoot = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "root"),
                     TrimPath = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "trim-path"),
@@ -76,6 +78,9 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         public void Remove()
         {
          this.FilesCollection.Remove(this.SelectedFile);
+         //MainWindowViewModel.Instance.Reader.RemoveFromList(this.SelectedFile.RuleNameToDisplay,
+         //                                                                this.SelectedFile.CollectionName,
+         //                                                                this.SelectedFile.SourceValue);
         }
 
         bool CanRemove()
@@ -97,13 +102,24 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
 
         public void Add()
         {
-
-            this.FilesCollection.Add(new FilesItemViewModel()
-                                         {
-                                             EditCollectionViewModel =
-                                                 new EditCollectionViewModel(
-                                                 new ObservableCollection<BaseItemViewModel>(), "include", "files", typeof(FileItem))
-                                         });
+           
+           var col= this.FilesCollection.Where(item => item.Parameter==null);
+            if(!col.Any())
+            {
+                FilesItemViewModel newItem = new FilesItemViewModel()
+                {
+                    EditCollectionViewModel =
+                        new EditCollectionViewModel(
+                        new ObservableCollection<BaseItemViewModel>(), "include", "files",
+                        typeof(FileItem))
+                };
+                this.FilesCollection.Add(newItem);
+            }
+            else
+            {
+                MessageBox.Show("An item with the same parameters exist aready in the collection");
+            }
+            
         }
 
         #endregion
@@ -121,9 +137,13 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _filesRoot; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "FilesRoot", _filesRoot, value);
-                _filesRoot = MainWindowViewModel.Instance.Reader.SetFiles(this.Parameter, "root", value);
-                OnPropertyChanged("FilesRoot");
+                if(value!=null)
+                {
+                    DefaultChangeFactory.OnChanging(this, "FilesRoot", _filesRoot, value);
+                    _filesRoot = MainWindowViewModel.Instance.Reader.SetNewSourceValue("files", "root", value, this.Parameter);
+                    OnPropertyChanged("FilesRoot");
+                }
+               
             }
         }
 
@@ -134,9 +154,12 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             get { return _trimPath; }
             set
             {
-                DefaultChangeFactory.OnChanging(this, "TrimPath", _trimPath, value);
-                _trimPath = MainWindowViewModel.Instance.Reader.SetFiles(this.Parameter, "trim-path", value);
-                OnPropertyChanged("TrimPath");
+                if (value != null)
+                {
+                    DefaultChangeFactory.OnChanging(this, "TrimPath", _trimPath, value);
+                    _trimPath = MainWindowViewModel.Instance.Reader.SetNewSourceValue("files", "trim-path", value, this.Parameter);
+                    OnPropertyChanged("TrimPath");
+                }
             }
         }
 
@@ -152,7 +175,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             }
         }
 
-        private string _parameter = "[]";
+        private string _parameter;
         public string Parameter
         {
             get { return _parameter; }
@@ -162,6 +185,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                 {
                     MainWindowViewModel.Instance.Reader.SetNewParameter("files", _parameter, value);
                     UpdateParameterForEveryItemInTheCollection(value, EditCollectionViewModel.EditableItems);
+                    EditCollectionViewModel.Parameter = value;
                     DefaultChangeFactory.OnChanging(this,"Parameter", _parameter, value);
                     _parameter = value;
 
@@ -185,7 +209,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
         }
         public override string ProcessSourceValue(string newValue, string oldValue)
         {
-            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("files", this.Parameter, this.CollectionName,oldValue, newValue);
+            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("files", this.CollectionName, oldValue, newValue, this.Parameter);
         }
     }
 

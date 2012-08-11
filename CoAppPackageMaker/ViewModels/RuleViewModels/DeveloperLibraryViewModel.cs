@@ -1,5 +1,7 @@
 ﻿﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using System.Linq;
+﻿using System.Windows.Forms;
+﻿using System.Windows.Input;
 using CoAppPackageMaker.ViewModels.Base;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
 using MonitoredUndo;
@@ -37,9 +39,9 @@ namespace CoAppPackageMaker.ViewModels
                 var model = new DeveloperLibraryItemViewModel()
                 {
                     RuleNameToDisplay = "developer-library",
-                    LibrariesCollection = new EditCollectionViewModel(headersCollection, "headers", "developer-library", typeof(DeveloperLibraryItem)),
-                    HeadersCollection = new EditCollectionViewModel(librariesCollection, "libraries", "developer-library", typeof(DeveloperLibraryItem)),
-                    DocsCollection = new EditCollectionViewModel(docsCollection, "docs", "developer-library", typeof(DeveloperLibraryItem)),
+                    LibrariesCollection = new EditCollectionViewModel(headersCollection, "headers", "developer-library", typeof(DeveloperLibraryItem),parameter),
+                    HeadersCollection = new EditCollectionViewModel(librariesCollection, "libraries", "developer-library", typeof(DeveloperLibraryItem),parameter),
+                    DocsCollection = new EditCollectionViewModel(docsCollection, "docs", "developer-library", typeof(DeveloperLibraryItem),parameter),
                     Parameter= parameter,
                     
                 };
@@ -101,8 +103,29 @@ namespace CoAppPackageMaker.ViewModels
         }
         public void Add()
         {
-
-            this.DeveloperLibraryCollection.Add(new DeveloperLibraryItemViewModel() { HeadersCollection = new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "headers", "developer-library", typeof(DeveloperLibraryItem)), LibrariesCollection = new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "libraries", "developer-library", typeof(DeveloperLibraryItem)) });
+            var col = this.DeveloperLibraryCollection.Where(item => item.Parameter == "[]");
+            if (!col.Any())
+            {
+                var newItem =
+                    new DeveloperLibraryItemViewModel()
+                        {
+                            HeadersCollection =
+                                new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "headers",
+                                                            "developer-library", typeof (DeveloperLibraryItem)),
+                            LibrariesCollection =
+                                new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "libraries",
+                                                            "developer-library", typeof (DeveloperLibraryItem)),
+                            DocsCollection =
+                                new EditCollectionViewModel(new ObservableCollection<BaseItemViewModel>(), "docs",
+                                                            "developer-library", typeof (DeveloperLibraryItem))
+                        };
+                this.DeveloperLibraryCollection.Add(newItem);
+            }
+            else
+            {
+                MessageBox.Show("An item with the same parameters exist aready in the collection");
+            }
+         
         }
 
         #endregion
@@ -160,6 +183,9 @@ namespace CoAppPackageMaker.ViewModels
                     UpdateParameterForEveryItemInTheCollection(value, LibrariesCollection.EditableItems);
                     UpdateParameterForEveryItemInTheCollection(value,HeadersCollection.EditableItems);
                     UpdateParameterForEveryItemInTheCollection(value,DocsCollection.EditableItems);
+                    LibrariesCollection.Parameter = value;
+                    HeadersCollection.Parameter = value;
+                    DocsCollection.Parameter = value;
                     DefaultChangeFactory.OnChanging(this, "Parameter", _parameter, value);
                     _parameter = value;
                    
@@ -182,7 +208,7 @@ namespace CoAppPackageMaker.ViewModels
         public override string ProcessSourceValue(string newValue, string oldValue)
         {
             this.RuleNameToDisplay = "developer-library";
-            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("developer-library", this.Parameter, this.CollectionName, oldValue, newValue);
+            return MainWindowViewModel.Instance.Reader.SetRulesWithParameters("developer-library", this.CollectionName, oldValue, newValue, this.Parameter);
         }
 
           
