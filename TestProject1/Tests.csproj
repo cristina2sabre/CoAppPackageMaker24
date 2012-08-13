@@ -33,8 +33,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CoApp.Developer.Toolkit, Version=1.2.0.272, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Downloads\ericschultz-devtools-252d128\ericschultz-devtools-252d128\output\any\debug\bin\CoApp.Developer.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="CoApp.Packaging, Version=1.2.0.272, Culture=neutral, PublicKeyToken=1e373a58e25250cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Downloads\ericschultz-devtools-252d128\ericschultz-devtools-252d128\output\any\debug\bin\CoApp.Packaging.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="MonitoredUndo, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Moq">
+      <HintPath>..\..\..\..\Downloads\Moq.4.0.10827.Final\Moq.4.0.10827\NET40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -43,9 +55,15 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="UndoRedoFramework.Core">
+      <HintPath>..\..\..\..\Downloads\wpfundoredo-44675\Main\UndoRedoFramework\UndoRedoFramework.Core\bin\Debug\UndoRedoFramework.Core.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +72,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainWindowViewModelTest.cs" />
+    <Compile Include="PackageReaderTest.cs" />
     <Compile Include="PackageViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelTest.cs" />

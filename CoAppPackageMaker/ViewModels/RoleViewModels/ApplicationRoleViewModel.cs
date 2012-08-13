@@ -21,7 +21,7 @@ namespace CoAppPackageMaker.ViewModels
 
             foreach (string parameter in reader.ReadParameters("application"))
             {
-                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "include", "application", typeof(ApplicationItem)));
+                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParameter(parameter, "include", "application", typeof(ApplicationItem)));
                 var model = new RoleItemViewModel()
                 {
                     RuleNameToDisplay = "application",

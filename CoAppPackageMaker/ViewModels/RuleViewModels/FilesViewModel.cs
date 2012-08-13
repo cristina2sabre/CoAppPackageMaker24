@@ -20,7 +20,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
             //create FilesItemViewModel() for each parameter
             foreach (string parameter in reader.ReadParameters("files"))
             {
-                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "include","files", typeof(FileItem)));
+                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParameter(parameter, "include","files", typeof(FileItem)));
                 var model = new FilesItemViewModel()
                 {
                     EditCollectionViewModel = new EditCollectionViewModel(includeCollection, "include", "files", typeof(FileItem),parameter),

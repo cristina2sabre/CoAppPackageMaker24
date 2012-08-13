@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Windows;
+using System.Windows.Forms;
 using CoApp.Developer.Toolkit.Scripting.Languages.PropertySheet;
 using CoApp.Packaging;
 using CoAppPackageMaker.ViewModels.RuleViewModels;
@@ -13,36 +12,34 @@ namespace CoAppPackageMaker
 {
     public class PackageReader
     {
-        public bool SusscesfullRead = true;
-        private PackageSource _packageSource;
-
+        public bool SuccesfullRead = true;
+        public PackageSource PackageSource=new PackageSource();
+       
         public void Read(string pathToSourceFile)
         {
             try
             {
-                _packageSource = new PackageSource(pathToSourceFile, new Dictionary<string, string>());
+                PackageSource = new PackageSource(pathToSourceFile, new Dictionary<string, string>());
             }
 
             catch (Exception exception)
             {
-                SusscesfullRead = false;
-                MessageBox.Show(exception.Message);
+                SuccesfullRead = false;
+                MessageBox.Show(exception.Message); 
+              
             }
 
         }
 
         public void Save(string destinationFilename)
         {
-            _packageSource.SavePackageFile(destinationFilename);
+            PackageSource.SavePackageFile(destinationFilename);
         }
-
-     
-
 
         public ObservableCollection<BaseItemViewModel> GetDefineRules()
         {
             var result = new ObservableCollection<BaseItemViewModel>();
-            foreach (Rule rule in _packageSource.DefineRules)
+            foreach (Rule rule in PackageSource.DefineRules)
             {
               
                 foreach (string propertyName in rule.PropertyNames)
@@ -72,7 +69,7 @@ namespace CoAppPackageMaker
         public ObservableCollection<BaseItemViewModel> GetRulesSourceValuesByNameForEditableCollections(string ruleName, string propertyName, Type type)
         {
             var result = new ObservableCollection<BaseItemViewModel>();
-            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName,
+            PropertyRule propertyRule = PackageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName,
                                                                                                      propertyName);
             if (propertyRule != null)
             {
@@ -101,7 +98,7 @@ namespace CoAppPackageMaker
         public string GetRulesByNameForSigning(string ruleName, string propertyName, string attributeName, bool isSource)
         {
             IEnumerable<string> result = new string[0];
-            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+            PropertyRule propertyRule = PackageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
             if (propertyRule != null)
             {
                 PropertyValue propertyValue = propertyRule.PropertyValues.Single((item => item.Label == attributeName));
@@ -116,7 +113,7 @@ namespace CoAppPackageMaker
         public string GetRulesByNameForPackageComposition(string ruleName, string propertyName, string attributeName, bool isSource)
         {
             IEnumerable<string> result = new string[0];
-            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+            PropertyRule propertyRule = PackageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
             if (propertyRule != null)
             {
                 PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();
@@ -129,7 +126,7 @@ namespace CoAppPackageMaker
 
         public void RemoveRulesWithParameters(string ruleName, string parameter, string colectionName, string toRemove)
         {
-            IEnumerable<Rule> rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            IEnumerable<Rule> rules = PackageSource.AllRules.GetRulesByName(ruleName);
             Rule rule = rules.FirstOrDefault(item => item.Parameter == parameter);
             if (rule != null)
             {
@@ -147,10 +144,10 @@ namespace CoAppPackageMaker
         }
         
 
-        public ObservableCollection<BaseItemViewModel> GetRulesByParamater(string parameter, string propertyName, string ruleName, Type itemType)
+        public ObservableCollection<BaseItemViewModel> GetRulesByParameter(string parameter, string propertyName, string ruleName, Type itemType)
         {
             var result = new ObservableCollection<BaseItemViewModel>();
-            IEnumerable<Rule> rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            IEnumerable<Rule> rules = PackageSource.AllRules.GetRulesByName(ruleName);
             Rule rule = rules.FirstOrDefault(item => item.Parameter == parameter);
 
             if (rule != null)
@@ -184,7 +181,7 @@ namespace CoAppPackageMaker
         public string GetRulesSourcePropertyValueByName(string ruleName, string propertyName)
         {
             string result = String.Empty;
-            var rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            var rules = PackageSource.AllRules.GetRulesByName(ruleName);
 
             PropertyRule propertyRule = rules.GetProperty(ruleName, propertyName);
             if (propertyRule != null)
@@ -199,13 +196,13 @@ namespace CoAppPackageMaker
         //used
         public string GetRulesPropertyValueByName(string ruleName, string propertyName)
         {
-            var rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            var rules = PackageSource.AllRules.GetRulesByName(ruleName);
             return (rules != null) ? rules.GetPropertyValue(propertyName) : String.Empty;
         }
 
         public string GetRulesSourceStringPropertyValueByName(string ruleName)
         {
-            IEnumerable<Rule> rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            IEnumerable<Rule> rules = PackageSource.AllRules.GetRulesByName(ruleName);
             var result = new StringBuilder();
             foreach (Rule rule in rules)
             {
@@ -216,7 +213,7 @@ namespace CoAppPackageMaker
 
         public List<string> ReadParameters(string ruleName)
         {
-            var rules = _packageSource.AllRules.GetRulesByName(ruleName);
+            var rules = PackageSource.AllRules.GetRulesByName(ruleName);
 
             return rules.Select(rule => rule.Parameter).ToList();
         }
@@ -224,7 +221,7 @@ namespace CoAppPackageMaker
         public string GetFilesRulesPropertyValueByParameterAndName(string parameter, string propertyName)
         {
          
-           return _packageSource.FileRules.GetRulesByParameter(parameter).GetPropertyValue(propertyName);
+           return PackageSource.FileRules.GetRulesByParameter(parameter).GetPropertyValue(propertyName);
         }
 
 
@@ -233,7 +230,7 @@ namespace CoAppPackageMaker
             string result = String.Empty;
 
            {
-                var rule = _packageSource.GetRule(ruleName, parameter);
+                var rule = PackageSource.GetRule(ruleName, parameter);
                 PropertyRule propertyRule = rule.GetRuleProperty(propertyName);
                 var propertyValue = propertyRule.GetPropertyValue("");
 
@@ -269,26 +266,14 @@ namespace CoAppPackageMaker
 
         public void SetNewParameter(string ruleName, string oldValue, string newValue)
         {
-            //var rule = _packageSource.AllRules.GetRulesByName(ruleName).FirstOrDefault(item => item.Parameter == oldValue);
-            //if (rule != null)
-            //{
-            //    rule.Parameter = newValue;
-            //}
-            //else
-            //{
-            //    rule = _packageSource.GetRule(ruleName, newValue);
-                
-            //    rule.Parameter = newValue;
-            //}
+            var rule = PackageSource.GetRule(ruleName, oldValue);
+            rule.Parameter = newValue;
 
-          var  rule = _packageSource.GetRule(ruleName, oldValue);
-          rule.Parameter = newValue;  
-         
         }
 
         public string SetNewSourceValue(string ruleName, string propertyName, string newValue, string parameter = null, string attributeName = "", string id = null)
         {
-            var rule = _packageSource.GetRule(ruleName, parameter, id: id);
+            var rule = PackageSource.GetRule(ruleName, parameter, id: id);
             PropertyRule propertyRule = rule.GetRuleProperty(propertyName);
             var propertyValue = propertyRule.GetPropertyValue(attributeName);
             propertyValue.SourceValues = new string[] { newValue };
@@ -304,7 +289,7 @@ namespace CoAppPackageMaker
         public void RemoveFromList(string ruleName, string propertyName, string toRemove)
         {
 
-            PropertyRule propertyRule = _packageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
+            PropertyRule propertyRule = PackageSource.AllRules.GetRulesByName(ruleName).GetProperty(ruleName, propertyName);
             if (propertyRule != null)
             {
                 PropertyValue propertyValue = propertyRule.PropertyValues.FirstOrDefault();

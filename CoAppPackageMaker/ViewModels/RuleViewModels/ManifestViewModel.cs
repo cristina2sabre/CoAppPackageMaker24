@@ -34,8 +34,8 @@ namespace CoAppPackageMaker.ViewModels
             foreach (string parameter in reader.ReadParameters("manifest"))
             {
 
-                var assemblyCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "assembly", "manifest", typeof(ManifestItem)));
-                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "include", "manifest", typeof(ManifestItem)));
+                var assemblyCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParameter(parameter, "assembly", "manifest", typeof(ManifestItem)));
+                var includeCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParameter(parameter, "include", "manifest", typeof(ManifestItem)));
                 var model = new ManifestItemViewModel()
                 {
                     RuleNameToDisplay = "manifest",

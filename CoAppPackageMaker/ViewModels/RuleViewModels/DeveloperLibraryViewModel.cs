@@ -33,9 +33,9 @@ namespace CoAppPackageMaker.ViewModels
             foreach (string parameter in reader.ReadParameters("developer-library"))
             {
 
-                var headersCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "headers", "developer-library", typeof(DeveloperLibraryItem)));
-                var librariesCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "libraries", "developer-library", typeof(DeveloperLibraryItem)));
-                var docsCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParamater(parameter, "docs", "developer-library", typeof(DeveloperLibraryItem)));
+                var headersCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParameter(parameter, "headers", "developer-library", typeof(DeveloperLibraryItem)));
+                var librariesCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParameter(parameter, "libraries", "developer-library", typeof(DeveloperLibraryItem)));
+                var docsCollection = new ObservableCollection<BaseItemViewModel>(reader.GetRulesByParameter(parameter, "docs", "developer-library", typeof(DeveloperLibraryItem)));
                 var model = new DeveloperLibraryItemViewModel()
                 {
                     RuleNameToDisplay = "developer-library",
