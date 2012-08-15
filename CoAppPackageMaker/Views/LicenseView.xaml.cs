@@ -22,6 +22,15 @@ namespace CoAppPackageMaker.Views
         public LicenseView()
         {
             InitializeComponent();
+            Loaded += MyLoadedRoutedEventHandler;
         }
+
+        void MyLoadedRoutedEventHandler(Object sender, RoutedEventArgs e)
+        {
+            //used for selecting template based on IsEnabled property - Source or Value
+            this.FilesCollections.ItemTemplate = (DataTemplate)(this.Uid == "Source" ? FindResource("LicenseTemplate") : FindResource("LicenseTemplateValue"));
+            Loaded -= MyLoadedRoutedEventHandler;
+        }
+
     }
 }

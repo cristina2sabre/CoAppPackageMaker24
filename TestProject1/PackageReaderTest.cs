@@ -62,7 +62,7 @@ namespace TestProject1
             var propertyValue = propertyRule.GetPropertyValue("");
             propertyValue.SourceValues = new string[] { "minimal" };
 
-            string  actual = _reader.GetFilesRulesPropertyValueByParameterAndName("A", "trim-path");
+            string  actual = _reader.GetFilesRulesPropertyValueByParameterAndName("files","A", "trim-path");
 
             Assert.AreEqual("minimal", actual);
         }

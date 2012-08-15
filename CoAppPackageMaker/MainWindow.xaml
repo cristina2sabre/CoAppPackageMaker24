@@ -516,13 +516,13 @@
 
                         <TabControl Style="{StaticResource SubTabContorolStyle}" ItemContainerStyle="{StaticResource ValueSourceStringTab}" >
                                     <TabItem Header="Source Value" >
-                                        <Views:LicenseView Margin="5" DataContext="{Binding LicenseViewModel}"/>
+                                        <Views:LicenseView Uid="Source" Margin="5" DataContext="{Binding LicenseViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Evaluated">
-                                        <Views:LicenseView Margin="5" DataContext="{Binding LicenseViewModel.ValueLicenseViewModel}"/>
+                                        <Views:LicenseView Margin="5" DataContext="{Binding LicenseViewModel}"/>
                                     </TabItem>
                                     <TabItem Header="Package" >
-                                        <TextBox Text="{Binding LicenseViewModel.ValueLicenseViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+                                        <TextBox Text="{Binding LicenseViewModel.SourceString}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
                           

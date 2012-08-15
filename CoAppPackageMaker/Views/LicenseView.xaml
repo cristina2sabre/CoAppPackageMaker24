@@ -1,37 +1,82 @@
 ﻿<UserControl x:Class="CoAppPackageMaker.Views.LicenseView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:c="clr-namespace:CoAppPackageMaker.Views" xmlns:Support="clr-namespace:CoAppPackageMaker.Support"
-             mc:Ignorable="d" 
+             xmlns:RuleViewModels="clr-namespace:CoAppPackageMaker.ViewModels.RuleViewModels"
+             xmlns:Views="clr-namespace:CoAppPackageMaker.Views"
+             xmlns:Support="clr-namespace:CoAppPackageMaker.Support" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        
-        <Label Content="License" Grid.Row="0" Margin="5"/>
-        <Label Content="License-Url" Grid.Row="1" Margin="5"/>
-        <Label Content="License-Type" Grid.Row="2" Margin="5"/>
+    <UserControl.Resources>
+        <DataTemplate x:Key="LicenseTemplate">
+            <Expander   Margin="5">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="License" FontWeight="Bold" />
+                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent"  Text="{Binding  Parameter, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"></TextBox>
+                    </StackPanel>
+                </Expander.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="License" Grid.Row="0" Margin="5"/>
+                    <Label Content="License Url" Grid.Row="1" Margin="5"/>
+                    <Label Content="License Type" Grid.Row="2"  Margin="5"/>
+                    <TextBox Name="License" MinWidth="200"  Grid.Column="1" Grid.Row="0" Text="{Binding  License, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+                    <TextBox Name="LicenseUrl"  MinWidth="200"  Grid.Column="1" Grid.Row="1" Text="{Binding  LicenseUrl, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+                    <TextBox Name="LicenseType" MinWidth="200" Grid.Column="1" Grid.Row="2" Text="{Binding  LicenseType, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+                </Grid>
+            </Expander>
+        </DataTemplate>
 
-        <TextBox Name="License" Grid.Column="1" Grid.Row="0" Margin="5"  IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}">
-            <TextBox.Text>
-                <Binding  Path="License" UpdateSourceTrigger="PropertyChanged"  Mode="TwoWay" NotifyOnSourceUpdated="True" NotifyOnTargetUpdated="True">
-                    <!--<Binding.ValidationRules>
-                        <c:DefineUpdateValidationRule  ValidationStep="UpdatedValue"  ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>-->
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-        <TextBox Name="LicenseUrl" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding LicenseUrl}" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
-        <TextBox Name="LicenceType" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding LicenseType}" IsReadOnly="{Binding IsReadOnly}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"/>
-    </Grid>
+        <DataTemplate x:Key="LicenseTemplateValue">
+            <Expander  Margin="5">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="License" FontWeight="Bold" />
+                        <TextBox Margin="0,2,0,0" FontWeight="Bold" BorderBrush="Transparent" Text="{Binding  Parameter, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}" IsReadOnly="True"></TextBox>
+                    </StackPanel>
+                </Expander.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="License" Grid.Row="0" Margin="5"/>
+                    <Label Content="License Url" Grid.Row="1" Margin="5"/>
+                    <Label Content="License Type" Grid.Row="2"  Margin="5"/>
+                    <TextBox  Name="License" MinWidth="200" IsReadOnly="True"  Grid.Column="1" Grid.Row="0" Text="{Binding  License, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+                    <TextBox Name="LicenseUrl" MinWidth="200" IsReadOnly="True"  Grid.Column="1" Grid.Row="1" Text="{Binding  LicenseUrl, Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+                    <TextBox  Name="LicenseType" MinWidth="200" IsReadOnly="True" Grid.Column="1" Grid.Row="2" Text="{Binding  LicenseType , Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  Margin="5"/>
+                </Grid>
+            </Expander>
+        </DataTemplate>
+
+    </UserControl.Resources>
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
+            <Button Width="20" Height="20" Margin="3"   Command="{Binding Path = RemoveCommand}" Content="-"/>
+            <Button Width="20" Height="20" Margin="3"  Command="{Binding Path = AddCommand}" Content="+"/>
+        </StackPanel>
+
+        <ListBox Name="FilesCollections" SelectedItem="{Binding SelectedFile,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True}" Support:Focus.UndoOccurredInt="{Binding UndoCounter}"
+     ItemsSource="{Binding LicenseCollection,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"  >
+
+        </ListBox>
+    </DockPanel>
 </UserControl>

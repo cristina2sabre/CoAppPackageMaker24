@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using CoAppPackageMaker.ViewModels.Base;
 using MonitoredUndo;
 
@@ -209,7 +210,7 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                     ValueSigningViewModel.FileVersionAttribute = _reader.SetNewSourceValue(Signing, "attributes", FileVersionAttribute, attributeName: "file-version");
                     break;
                 case "ReplaceSignature":
-                    ValueSigningViewModel.ReplaceSignature = ReplaceSignature;
+                    ValueSigningViewModel.ReplaceSignature =Convert.ToBoolean( _reader.SetNewSourceValue(Signing, "attributes", ReplaceSignature.ToString().ToLower(), attributeName: "replace-signature") );
                     break;
             }
 

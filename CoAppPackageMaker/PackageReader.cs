@@ -218,12 +218,11 @@ namespace CoAppPackageMaker
             return rules.Select(rule => rule.Parameter).ToList();
         }
 
-        public string GetFilesRulesPropertyValueByParameterAndName(string parameter, string propertyName)
+        public string GetFilesRulesPropertyValueByParameterAndName(string ruleName, string parameter, string propertyName)
         {
-         
-           return PackageSource.FileRules.GetRulesByParameter(parameter).GetPropertyValue(propertyName);
+            IEnumerable<Rule> rules = PackageSource.AllRules.GetRulesByName(ruleName);
+            return rules.GetPropertyValue(propertyName);
         }
-
 
         public string SetRulesWithParameters(string ruleName, string propertyName, string oldValue, string newValue, string parameter = null)
         {

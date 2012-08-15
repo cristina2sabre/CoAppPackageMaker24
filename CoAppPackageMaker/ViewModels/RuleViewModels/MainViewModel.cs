@@ -143,7 +143,7 @@ namespace CoAppPackageMaker.ViewModels.Base
             _reader = new PackageReader();
             _reader.Read(PathToFile); 
             AllViewModels=new ObservableCollection<ExtraPropertiesForCollectionsViewModelBase>();
-           //this._reader.Save("D:\\P\\COPKG\\testsave.autopkg");
+            //this._reader.Save("D:\\P\\COPKG\\testsave.autopkg");
             if (_reader.SuccesfullRead)
                 try
                 {

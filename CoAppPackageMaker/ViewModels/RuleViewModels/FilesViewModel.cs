@@ -25,8 +25,8 @@ namespace CoAppPackageMaker.ViewModels.RuleViewModels
                 {
                     EditCollectionViewModel = new EditCollectionViewModel(includeCollection, "include", "files", typeof(FileItem),parameter),
                     Parameter = parameter,
-                    FilesRoot = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "root"),
-                    TrimPath = reader.GetFilesRulesPropertyValueByParameterAndName(parameter, "trim-path"),
+                    FilesRoot = reader.GetFilesRulesPropertyValueByParameterAndName("files",parameter, "root"),
+                    TrimPath = reader.GetFilesRulesPropertyValueByParameterAndName("files",parameter, "trim-path"),
                 };
 
                 _filesCollection.Add(model);
